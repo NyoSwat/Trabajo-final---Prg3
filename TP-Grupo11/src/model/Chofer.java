@@ -1,8 +1,8 @@
 package model;
 
 public class Chofer extends Usuario {
-    /**
-     * @aggregation shared
-     */
+    
+	System.out.print("Hola Mundo");
+	
     private TipoCategoria categoria;
 }
