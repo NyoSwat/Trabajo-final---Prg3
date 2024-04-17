@@ -1,4 +1,4 @@
 package model;
 
-public class Temporario extends TipoCategoria {
+public class Temporario {
 }

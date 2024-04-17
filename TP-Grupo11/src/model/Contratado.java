@@ -1,4 +1,4 @@
 package model;
 
-public class Contratado extends TipoCategoria {
+public class Contratado extends Chofer {
 }

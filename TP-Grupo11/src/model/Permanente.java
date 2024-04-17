@@ -1,4 +1,4 @@
 package model;
 
-public class Permanente extends TipoCategoria {
+public class Permanente extends Empleado {
 }

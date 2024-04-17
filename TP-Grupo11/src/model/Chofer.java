@@ -1,8 +1,7 @@
 package model;
 
-public class Chofer extends Usuario {
+public class Chofer extends Sistema {
     
-	System.out.print("Hola Mundo");
-	
-    private TipoCategoria categoria;
+	System.out.print ;
+
 }
