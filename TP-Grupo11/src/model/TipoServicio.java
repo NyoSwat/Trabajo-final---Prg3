@@ -1,4 +1,4 @@
 package model;
 
-public class TipoServicio {
+public abstract class TipoServicio {
 }

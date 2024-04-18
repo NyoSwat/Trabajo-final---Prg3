@@ -1,14 +1,13 @@
 package model;
 
-public class Peligrosa extends ViajeDecorador {
+public class Baul extends ViajeDecorador {
     
-    public Peligrosa(IViaje viaje){
+    public Baul(IViaje viaje){
         super.setViaje(viaje);
     }
-    
     @Override
     public double getCosto() {
-        // TODO Implement this method
+        
         return 0.0;
     }
 }

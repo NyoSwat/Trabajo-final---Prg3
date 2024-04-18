@@ -1,8 +1,8 @@
 package model;
 
-public class Peligrosa extends ViajeDecorador {
+public class PetFriendly extends ViajeDecorador {
     
-    public Peligrosa(IViaje viaje){
+    public PetFriendly(IViaje viaje){
         super.setViaje(viaje);
     }
     

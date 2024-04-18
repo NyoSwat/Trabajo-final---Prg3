@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class Sistema {
+    private static Sistema _instance = null;
+
     /**
      * @aggregation composite
      */
@@ -17,4 +19,25 @@ public class Sistema {
      * @aggregation composite
      */
     private ArrayList<Vehiculo> vehiculos;
+
+    /**
+     * @aggregation composite
+     */
+    private FactoryVehiculo factoryVehiculo = new FactoryVehiculo();
+    
+    public static Sistema getInstance(){
+        if (_instance == null )
+            _instance = new Sistema();
+        
+        return _instance;
+    }
+    
+    public void crearVehiculo(){
+        Vehiculo auto = factoryVehiculo.getVehiculo("Automovil", "abc 123");
+    }
+    
+    
+    public void crearChofer(){
+        
+    }
 }

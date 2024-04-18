@@ -1,23 +1,12 @@
 package model;
 
+import java.util.Date;
+
 public class Pedido {
-    /**
-     * @aggregation shared
-     */
-    private Cliente cliente;
-
-    /**
-     * @aggregation shared
-     */
-    private Vehiculo vehiculo;
-
-    /**
-     * @aggregation shared
-     */
-    private Zona zona;
-
-    /**
-     * @aggregation shared
-     */
-    private TipoServicio tipoServicio;
+    private int cantPasajeros;
+    private String zona;
+    private boolean petFriendly;
+    private boolean baul;
+    private Date fecha;
+    //Tipo de servicio?? Que funcion tiene este atributo?
 }
