@@ -1,32 +1,43 @@
 package model;
 
-public class Viaje implements IViaje {
-    private static double valorBase = 1000.0;
+public abstract class Viaje implements IViaje {
     private Pedido pedido;
-
-    /**
-     * @aggregation shared
-     */
     private Chofer chofer;
-    private double costo;
-    private IViaje viaje;
     private double distanciaRecorrida;
-
-    /**
-     * @aggregation shared
-     */
     private Vehiculo vehiculo;
+    public static double valorBase = 1000.0;
+    
 
-
-
-    @Override
-    public double getCosto() {
-        //Secuencias de IF calculando el costo del viaje
-        return 0.0;
+    protected Viaje(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia) {
+    	this.pedido = pedido;
+    	this.chofer = chofer;
+    	this.vehiculo = vehiculo;
+    	this.distanciaRecorrida = distancia;
     }
 
 
-    public static void setValorBase(double valorBase) {
-        Viaje.valorBase = valorBase;
+    public Vehiculo getVehiculo(){
+        return this.vehiculo;
     }
+    
+    public Chofer getChofer(){
+        return this.chofer;
+    }
+    
+    public Pedido getPedido() {
+    	return this.pedido;
+    }
+    
+    public double getDistancia() {
+    	return this.distanciaRecorrida;
+    }
+    
+    public double getValorBase() {
+    	return this.valorBase;
+    }
+    
+    public void setValorBase(double valorBase) {
+    	this.valorBase = valorBase;
+    }
+    
 }

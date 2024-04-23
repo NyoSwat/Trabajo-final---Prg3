@@ -1,14 +1,13 @@
 package model;
 
-public class Estandar extends ViajeDecorador {
+public class Estandar extends Viaje {
     
-    public Estandar(IViaje viaje){
-        super.setViaje(viaje);
+    public Estandar(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia){
+        super(pedido,chofer,vehiculo,distancia);
     }
     
     @Override
     public double getCosto() {
-        // TODO Implement this method
-        return 0.0;
+        return getValorBase()+getValorBase()*(.1*getDistancia()+0.1*getPedido().getCantPasajeros());
     }
 }

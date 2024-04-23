@@ -1,14 +1,13 @@
 package model;
 
-public class SinAsfaltar extends ViajeDecorador {
+public class SinAsfaltar extends Viaje {
     
-    public SinAsfaltar(IViaje viaje){
-        super.setViaje(viaje);
+    public SinAsfaltar(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia){
+        super(pedido,chofer,vehiculo,distancia);
     }
     
     @Override
     public double getCosto() {
-        // TODO Implement this method
-        return 0.0;
+        return getValorBase()+getValorBase()*(.15*getDistancia()+0.2*getPedido().getCantPasajeros()); // se le adiciona el valor terreno sin asfaltar
     }
 }

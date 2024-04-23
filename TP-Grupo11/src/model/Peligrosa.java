@@ -1,14 +1,13 @@
 package model;
 
-public class Peligrosa extends ViajeDecorador {
+public class Peligrosa extends Viaje {
     
-    public Peligrosa(IViaje viaje){
-        super.setViaje(viaje);
+    public Peligrosa(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia){
+        super(pedido,chofer,vehiculo,distancia);
     }
     
     @Override
     public double getCosto() {
-        // TODO Implement this method
-        return 0.0;
+        return getValorBase()+getValorBase()*(.2*getDistancia()+0.1*getPedido().getCantPasajeros()); // se le adiciona el valor por ser zona peligrosa
     }
 }
