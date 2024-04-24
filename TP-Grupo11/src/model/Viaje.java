@@ -2,8 +2,16 @@ package model;
 
 public abstract class Viaje implements IViaje {
     private Pedido pedido;
+
+    /**
+     * @aggregation shared
+     */
     private Chofer chofer;
     private double distanciaRecorrida;
+
+    /**
+     * @aggregation shared
+     */
     private Vehiculo vehiculo;
     public static double valorBase = 1000.0;
     

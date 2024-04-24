@@ -4,26 +4,11 @@ import java.util.ArrayList;
 
 public class Sistema {
     private static Sistema _instance = null;
-
-    /**
-     * @aggregation composite
-     */
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-
-    /**
-     * @aggregation composite
-     */
     private ArrayList<Chofer> choferes;
-
-    /**
-     * @aggregation composite
-     */
     private ArrayList<Vehiculo> vehiculos;
-
-    /**
-     * @aggregation composite
-     */
     private FactoryVehiculo factoryVehiculo = new FactoryVehiculo();
+    private ArrayList<IViaje> viajes = new ArrayList<IViaje>();
     
     public static Sistema getInstance(){
         if (_instance == null )
@@ -33,7 +18,7 @@ public class Sistema {
     }
     
     public void crearVehiculo(){
-        Vehiculo auto = factoryVehiculo.getVehiculo("Automovil", "abc 123");
+        
     }
     
     
