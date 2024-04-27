@@ -8,7 +8,7 @@ public class Prueba{
     	
     	Sistema sistema = new Sistema();
         
-        sistema.getInstance().crearChofer();
+        sistema.getInstance().crearUsuario("MiCuenta1234", "contrasena", "Facundo Criado");
     	
     }
 }
