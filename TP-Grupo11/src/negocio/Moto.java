@@ -1,4 +1,4 @@
-package model;
+package negocio;
 
 public class Moto extends Vehiculo{
 

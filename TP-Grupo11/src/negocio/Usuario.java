@@ -1,4 +1,4 @@
-package model;
+package negocio;
 
 public abstract class Usuario {
     private String usuario;

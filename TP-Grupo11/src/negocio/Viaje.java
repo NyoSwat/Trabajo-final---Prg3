@@ -1,4 +1,4 @@
-package model;
+package negocio;
 
 public abstract class Viaje implements IViaje {
     private Pedido pedido;

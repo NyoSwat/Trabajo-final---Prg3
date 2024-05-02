@@ -1,6 +1,6 @@
-package Vista;
+package presentacion;
 
-import model.Sistema;
+import negocio.Sistema;
 
 
 public class Prueba{

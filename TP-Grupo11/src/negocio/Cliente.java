@@ -1,6 +1,4 @@
-package model;
-
-import java.util.ArrayList;
+package negocio;
 
 public class Cliente extends Usuario{
 

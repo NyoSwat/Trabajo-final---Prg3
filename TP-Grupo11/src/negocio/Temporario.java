@@ -1,4 +1,4 @@
-package model;
+package negocio;
 
 public class Temporario extends Empleado {
     private double plusCantViajes;

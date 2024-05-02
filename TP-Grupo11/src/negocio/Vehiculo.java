@@ -1,4 +1,4 @@
-package model;
+package negocio;
 
 public abstract class Vehiculo {
     private String patente;

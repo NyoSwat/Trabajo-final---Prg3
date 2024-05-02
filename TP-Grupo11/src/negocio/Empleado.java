@@ -1,4 +1,4 @@
-package model;
+package negocio;
 
 public abstract class Empleado extends Categoria {
     public static double sueldoBasico = 1000; //Cambiar
