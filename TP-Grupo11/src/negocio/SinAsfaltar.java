@@ -1,5 +1,7 @@
 package negocio;
 
+import datos.Viaje;
+
 public class SinAsfaltar extends Viaje {
     
     public SinAsfaltar(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia){

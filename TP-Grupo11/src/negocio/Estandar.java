@@ -1,5 +1,7 @@
 package negocio;
 
+import datos.Viaje;
+
 public class Estandar extends Viaje {
     
     public Estandar(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia){

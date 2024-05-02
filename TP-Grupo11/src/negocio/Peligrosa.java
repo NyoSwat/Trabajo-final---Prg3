@@ -1,5 +1,7 @@
 package negocio;
 
+import datos.Viaje;
+
 public class Peligrosa extends Viaje {
     
     public Peligrosa(Pedido pedido,Chofer chofer,Vehiculo vehiculo,double distancia){
