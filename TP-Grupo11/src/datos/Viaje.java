@@ -10,7 +10,7 @@ import negocio.Vehiculo;
  * el chofer, el vehículo y la distancia recorrida. Las clases concretas que heredan de esta
  * deben implementar los detalles específicos del viaje.
  */
-public abstract class Viaje implements IViaje {
+public abstract class Viaje implements IViaje, Comparable<Viaje> {
 
     private Pedido pedido; // El pedido asociado al viaje
 
@@ -97,5 +97,15 @@ public abstract class Viaje implements IViaje {
      */
     public void setValorBase(double valorBase) {
         this.valorBase = valorBase;
+    }
+    
+    @Override
+    public int compareTo(Viaje o) {
+    	if(this.getCosto() > o.getCosto())
+    		return -1;
+    	else if(this.getCosto() < o.getCosto())
+    		return 1;
+    	else
+    		return 0;
     }
 }

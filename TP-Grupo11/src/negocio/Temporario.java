@@ -5,7 +5,8 @@ package negocio;
  * Hereda de la clase Empleado y agrega un atributo adicional para el plus por cantidad de viajes.
  */
 public class Temporario extends Empleado {
-    private double plusCantViajes; // Plus por cantidad de viajes realizados
+    private double plusCantViajes; // Plus por cantidad de viajes  
+    private int cantidadViajes;
 
     /**
      * Constructor para crear un objeto Temporario.
@@ -15,6 +16,7 @@ public class Temporario extends Empleado {
         super("Temporario");
     }
 
+    
     /**
      * Calcula el sueldo del empleado temporal.
      * En esta implementación, el sueldo siempre es 0.0 (sin considerar el plus por cantidad de viajes).
@@ -22,7 +24,9 @@ public class Temporario extends Empleado {
      * @return Sueldo del empleado temporal.
      */
     @Override
-    public double getSueldo() {
-        return 0.0;
+    public double getSueldo() {    	
+    	double sueldo = Empleado.sueldoBasico + plusCantViajes*cantidadViajes;
+    	sueldo -= Empleado.sueldoBasico*Empleado.aporte;
+        return sueldo;
     }
 }

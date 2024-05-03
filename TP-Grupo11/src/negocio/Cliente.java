@@ -16,5 +16,12 @@ public class Cliente extends Usuario {
     public Cliente(String usuario, String password, String nombre) {
         super(usuario, password, nombre);
     }
+
+	@Override
+	public boolean esAdministrador() {
+		return false;
+	}
+    
+    
 }
 
