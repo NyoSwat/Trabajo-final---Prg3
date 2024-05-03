@@ -1,5 +1,7 @@
 package negocio;
 
+import datos.Viaje;
+
 /**
  * La clase SinAsfaltar representa un tipo de viaje que se realiza en terrenos sin asfaltar.
  * Hereda de la clase Viaje y agrega un cálculo específico para el costo del viaje.
