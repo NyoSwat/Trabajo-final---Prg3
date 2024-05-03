@@ -11,7 +11,7 @@ public abstract class Categoria {
     /**
      * Constructor para crear un objeto Categoria.
      *
-     * @param nombre Nombre de la categoría.
+     * @param nombre: de tipo String, nombre de la categoría.
      */
     public Categoria(String nombre) {
         this.nombre = nombre;
@@ -20,7 +20,7 @@ public abstract class Categoria {
     /**
      * Obtiene el sueldo de la categoría.
      *
-     * @return Sueldo de la categoría.
+     * @return double con sueldo de la categoría.
      */
     abstract public double getSueldo();
 }
