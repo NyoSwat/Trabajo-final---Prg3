@@ -7,7 +7,7 @@ import java.util.Date;
  * Hereda de la clase Empleado y agrega atributos relacionados con la antigüedad y beneficios.
  */
 public class Permanente extends Empleado {
-    private int antiguedad; // Años de antigüedad del empleado
+    private int antiguedad; // Años de antigüedad del empleado 
     private double plusHijos; // Beneficio adicional por tener hijos
     private Date fechaIngreso; // Fecha de ingreso del empleado
 
@@ -27,6 +27,8 @@ public class Permanente extends Empleado {
      */
     @Override
     public double getSueldo() {
-        return 0.0;
+        double sueldo = Empleado.sueldoBasico*(1 + antiguedad + plusHijos);
+        sueldo -= Empleado.sueldoBasico*Empleado.aporte;
+    	return sueldo;
     }
 }

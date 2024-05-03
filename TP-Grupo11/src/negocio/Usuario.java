@@ -19,4 +19,6 @@ public abstract class Usuario {
     	this.password = password;
     	this.nombre = nombre;
     }
+    
+    public abstract boolean esAdministrador();
 }

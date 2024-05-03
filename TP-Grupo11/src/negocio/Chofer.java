@@ -32,4 +32,5 @@ public class Chofer {
     public double getSueldo() {
         return categoria.getSueldo();
     }
+    
 }

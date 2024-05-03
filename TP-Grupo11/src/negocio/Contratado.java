@@ -5,7 +5,9 @@ package negocio;
  * Hereda de la clase Categoria y establece que el sueldo siempre es 0.0.
  */
 public class Contratado extends Categoria {
-
+	private int cantidadViajes;
+	private double porcentaje;
+	
     /**
      * Constructor para crear un objeto Contratado.
      * Inicializa el nombre de la categoría como "Contratado".
@@ -22,7 +24,8 @@ public class Contratado extends Categoria {
      */
     @Override
     public double getSueldo() {
-        return 0.0;
+    	double sueldo = cantidadViajes * porcentaje;
+        return sueldo;
     }
 }
 
