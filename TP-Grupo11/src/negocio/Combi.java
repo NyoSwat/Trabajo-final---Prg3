@@ -1,8 +1,8 @@
 package negocio;
 
 /**
- * La clase Combi representa un vehículo tipo combi.
- * Hereda de la clase Vehículo y establece que tiene espacio para pasajeros adicionales y espacio en el baúl.
+ * La clase Combi representa un vehiculo tipo combi.
+ * Hereda de la clase Vehiculo y establece que tiene espacio para pasajeros adicionales y espacio en el baul.
  */
 public class Combi extends Vehiculo {
 
@@ -12,9 +12,9 @@ public class Combi extends Vehiculo {
      * @param patente La patente de la combi.
      */
     public Combi(String patente) {
-        super(patente, true, true, 10);
+        super(patente, true, false, 10);
     }
-    /**Verificar si se puede acceder al servicio de baúl deseado.
+    /**Verificar si se puede acceder al servicio de baul deseado.
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
 	protected boolean VerificaBaul(boolean deseaBaul) {
@@ -32,11 +32,11 @@ public class Combi extends Vehiculo {
 	}
 
 	
-	/** Método abstracto que calcula el valor de la prioridad de un vehículo de acuerdo a un pedido
+	/** Metodo abstracto que calcula el valor de la prioridad de un vehículo de acuerdo a un pedido
      * <b> Pre:</b> pedido.isPetFriendly()=false <br>
      *              pedido.getCantPasajeros()<=10 <br>
-     * <b> Post:se asigna el valor de prioridad correspondiente, según se trate de un viaje que necesite
-     * baúl o no</b>
+     * <b> Post:se asigna el valor de prioridad correspondiente, segun se trate de un viaje que necesite
+     * baul o no</b>
      * @param pedido:de tipo Pedido, datos de un pedido en particular
      * @return int con valor de prioridad asignado
      */
