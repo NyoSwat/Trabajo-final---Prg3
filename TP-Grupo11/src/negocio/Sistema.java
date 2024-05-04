@@ -9,7 +9,7 @@ import negocio.Chofer;
 import negocio.IViaje;
 import negocio.Usuario;
 import negocio.Vehiculo;
-import principal.Cliente;
+import negocio.Cliente;
 
 /**
  * La clase Sistema representa la gestion de peticiones del usuario, informes, viajes, etc.
