@@ -3,6 +3,7 @@ package datos;
 import negocio.Chofer;
 import negocio.IViaje;
 import negocio.Pedido;
+import negocio.Usuario;
 import negocio.Vehiculo;
 
 /**
@@ -11,24 +12,32 @@ import negocio.Vehiculo;
  * deben implementar los detalles específicos del viaje.
  */
 public abstract class Viaje implements IViaje, Comparable<Viaje> {
-
-    private Pedido pedido; // El pedido asociado al viaje
+	private Usuario cliente;
+	/**
+	 * referencia al pedido que origino el viaje
+	 */
+    private Pedido pedido; 
 
     /**
      * El chofer asignado al viaje.
      * @aggregation shared
      */
     private Chofer chofer;
-
-    private double distanciaRecorrida; // La distancia total recorrida en el viaje
+    /**
+     * distancia total recorrida en el viaje
+     */
+    private double distanciaRecorrida; 
 
     /**
      * El vehículo utilizado en el viaje.
      * @aggregation shared
      */
     private Vehiculo vehiculo;
-
-    public static double valorBase = 1000.0; // Valor base común para todos los viajes
+    
+    /**
+     * Valor base comun para todos los viajes 
+     */
+    public static double valorBase = 1000.0; 
 
     /**
      * Crea un nuevo objeto Viaje con los parámetros especificados.
@@ -38,14 +47,25 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
      * @param vehiculo   El vehículo utilizado en el viaje.
      * @param distancia  La distancia total recorrida en el viaje (en kilómetros).
      */
-    protected Viaje(Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
+    protected Viaje(Usuario cliente,Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
+    	this.cliente = cliente;
         this.pedido = pedido;
         this.chofer = chofer;
         this.vehiculo = vehiculo;
         this.distanciaRecorrida = distancia;
     }
 
+    
     /**
+     * Obtiene el cliente vinculado al viaje.
+     * 
+     * @param cliente
+     */
+    public Usuario getCliente() {
+		return this.cliente;
+	}
+
+	/**
      * Obtiene el vehículo utilizado en el viaje.
      *
      * @return El vehículo asociado al viaje.

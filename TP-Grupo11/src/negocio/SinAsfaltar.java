@@ -16,8 +16,8 @@ public class SinAsfaltar extends Viaje {
      * @param vehiculo  El vehículo utilizado en el viaje.
      * @param distancia La distancia del viaje en kilómetros.
      */
-    public SinAsfaltar(Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
-        super(pedido, chofer, vehiculo, distancia);
+    public SinAsfaltar(Usuario cliente,Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
+        super(cliente, pedido, chofer, vehiculo, distancia);
     }
 
     /**

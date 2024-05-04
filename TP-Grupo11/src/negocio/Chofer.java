@@ -32,5 +32,47 @@ public class Chofer {
     public double getSueldo() {
         return categoria.getSueldo();
     }
+
+	public String getDni() {
+		return this.dni;
+	}
+	
+	
+	
+	/**
+	 * Modificar el DNI despues de creado.
+	 * @param dni
+	 */
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	/**
+	 * Modificar el nombre despues de creado.
+	 * @param nombre
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * Modificar la categoria despues de creado.
+	 * @param categoria
+	 */
+	public void setCategoria(String categoria) {
+		this.categoria = factoryCategoria.getCategoria(categoria);
+	}
+	
+
+	@Override
+	public String toString() {
+		return "\n********"+
+				"\nNombre: "+this.nombre+
+				"\nDNI: "+this.dni+
+				"\nCategoria: "+this.categoria.getCategoria()+
+				categoria.toString()+
+				"\nSueldo: $"+getSueldo()+
+				"\n";
+	}
     
 }

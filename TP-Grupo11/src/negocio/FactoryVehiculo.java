@@ -16,11 +16,11 @@ public class FactoryVehiculo {
     public Vehiculo getVehiculo(String vehiculoType, String patente) {
         if (vehiculoType == null)
             throw new IllegalArgumentException("El tipo de vehiculo no puede ser vacio.");
-        else if (vehiculoType.equalsIgnoreCase("Moto"))
+        else if (vehiculoType.equalsIgnoreCase("moto"))
             return new Moto(patente);
-        else if (vehiculoType.equalsIgnoreCase("Automovil"))
+        else if (vehiculoType.equalsIgnoreCase("automovil"))
             return new Automovil(patente);
-        else if (vehiculoType.equalsIgnoreCase("Combi"))
+        else if (vehiculoType.equalsIgnoreCase("combi"))
             return new Combi(patente);
         else
             throw new IllegalArgumentException("Tipo de vehiculo no valido.");

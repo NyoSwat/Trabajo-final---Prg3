@@ -20,5 +20,44 @@ public abstract class Usuario {
     	this.nombre = nombre;
     }
     
-    public abstract boolean esAdministrador();
+    /**
+     * Informa el nombre del titular de la cuenta
+     * @return retorna el nombre del usuario
+     */
+	public String getUsuario() {
+		return this.nombre+"\n";
+	}
+	
+	
+	/**
+	 * Modificar el usuario despues de creado.
+	 * 
+	 * @param usuario
+	 */
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	/**
+	 * Modificar la contraseña despues de creada.
+	 * 
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * Modificar el nombre despues de creado.
+	 * 
+	 * @param nombre
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	@Override
+	public String toString() {
+		return this.nombre;
+	}
 }

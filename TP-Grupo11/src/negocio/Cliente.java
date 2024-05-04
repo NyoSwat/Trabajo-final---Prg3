@@ -17,11 +17,10 @@ public class Cliente extends Usuario {
         super(usuario, password, nombre);
     }
 
-	@Override
-	public boolean esAdministrador() {
-		return false;
-	}
     
-    
+   @Override
+   public String toString() {
+	   return "\nCliente: "+super.toString();
+   }
 }
 
