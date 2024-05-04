@@ -2,29 +2,29 @@ package negocio;
 
 /**
  * La clase Automovil representa un vehículo tipo automóvil.
- * Hereda de la clase Vehiculo y establece que tiene espacio para pasajeros adicionales y espacio en el baúl.
+ * Hereda de la clase Vehículo y establece que tiene espacio para pasajeros adicionales y espacio en el baúl.
  */
 public class Automovil extends Vehiculo {
 
     /**
      * Constructor para crear un objeto Automovil.
      *
-     * @param patente La patente del automóvil.
+     * @param patente:parámetro de tipo String que representa la patente del automóvil.
      */
     public Automovil(String patente) {
         super(patente, true, true, 4);
     }
 
 
-    /**Verificar si se puede acceder al servicio de baúl deseado.
+    /**Verifica si se puede acceder al servicio de baúl deseado.
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
 	protected boolean VerificaBaul(boolean deseaBaul) {
 		return true;
 	}
 
-	/**Verificar si se puede acceder al servicio PetFrienly deseado
-     * @return boolean boolean true ya que este servicio esta disponible se solicite o no.
+	/**Verificar si se puede acceder al servicio PetFriendly deseado
+     * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
 	protected boolean VerificaPetFriendly(boolean deseaPetFrienly) {
 		return true;
@@ -32,7 +32,7 @@ public class Automovil extends Vehiculo {
 
 	
 	/** Método abstracto que calcula el valor de la prioridad de un vehículo de acuerdo a un pedido
-     * @param pedido:de tipo Pedido, datos de un pedido en particular
+     * @param pedido:parámetro de tipo Pedido, datos del pedido en cuestión
      * @return int con valor de prioridad asignado
      */
 	
