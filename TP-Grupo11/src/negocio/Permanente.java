@@ -11,28 +11,21 @@ import java.util.GregorianCalendar;
 public class Permanente extends Empleado {
 	private static double plusAntiguedad; //Porcentaje de aumento que se aplica al sueldo basico por antiguedad
 	private static double plusHijos; //Porcentaje de aumento que se aplica al sueldo basico por cantidad de hijos
-	private GregorianCalendar fechaIngreso; // Fecha de ingreso del empleado a la empresa
+	private GregorianCalendar fechaIngreso = new GregorianCalendar(); // Fecha de ingreso del empleado a la empresa
 	private int cantidadHijos;//Numero de hijos del empleado
-    /**
+    
+	/**
      * Constructor para crear un objeto Permanente.<br>
      * Inicializa el nombre de la categoría como "Permanente". El valor inicial de plusHijos sera 0.01
      * y el de plusAntiguedad 0.02
      */
-    
-    
     public Permanente() {
         super("Permanente");
         plusHijos=0.01;
         plusAntiguedad=0.02;
     }
     
-   
-    /**Metodo que devuelve valor del aributo plusAntiguedad
-     * @return double con el valor de plusAntiguedad
-     */
-    public static double getPlusAntiguedad() {
-		return plusAntiguedad;
-	}
+ 
     /**Metodo que le asigna otro valor al aributo plusAntiguedad
      */
     public static void setPlusAntiguedad(double plusAntiguedad) {
@@ -61,7 +54,7 @@ public class Permanente extends Empleado {
     public double getSueldo() {
     	 int antiguedad;
       	 antiguedad=calcAntiguedad(this.fechaIngreso);
-   	     return Empleado.sueldoBasico*(1+plusAntiguedad*antiguedad+plusHijos*cantidadHijos)-Empleado.aportes;
+   	     return Empleado.sueldoBasico*(1+plusAntiguedad*antiguedad+plusHijos*cantidadHijos-Empleado.aportes);
         
      	 
        }
@@ -84,5 +77,11 @@ public class Permanente extends Empleado {
 	     // Asumiendo que un año tiene 365.25 días en promedio
 	     long diferenciaAnios = diferenciaMilisegundos / (1000L * 60L * 60L * 24L * 365L);
 	     return (int) diferenciaAnios;
+    }
+    
+    
+    @Override
+    public String toString() {
+    	return "\nCant. hijos: "+this.cantidadHijos;
     }
 }

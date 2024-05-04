@@ -68,6 +68,10 @@ public abstract class Vehiculo {
      */
     protected abstract int CalculaPrioridad(Pedido pedido);
 
+    /**
+     * Informa la patente del vehiculo
+     * @return String con la patente del vehiculo
+     */
 	public String getPatente() {
 			return patente;
 		}
@@ -85,5 +89,14 @@ public abstract class Vehiculo {
 	public boolean isPetFriendly() {
 			return petFriendly;
 		}
+	
+	@Override
+	public String toString() {
+		return "\nPatente: "+this.patente+
+				"\nBaul: "+this.baul+
+				"\nPetFriendly: "+this.petFriendly+
+				"\nCant. Max. Pasajeros: "+this.maxPasajeros+
+				"\n";
+	}
 
 }

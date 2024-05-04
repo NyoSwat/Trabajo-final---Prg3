@@ -18,6 +18,11 @@ public class Contratado extends Categoria {
         this.cantidadViajes=0;
         gananciaViaje=0.2;
     }
+    
+    public void setGananciaViaje(double ganancia) {
+    	gananciaViaje = ganancia;
+    }
+    
 
     /**
      * Calcula el sueldo del empleado contratado.
@@ -29,6 +34,11 @@ public class Contratado extends Categoria {
     public double getSueldo() {
     	return gananciaViaje*cantidadViajes;
 
+    }
+    
+    @Override
+    public String toString() {
+    	return "\nCant. viajes: "+cantidadViajes;
     }
 }
 

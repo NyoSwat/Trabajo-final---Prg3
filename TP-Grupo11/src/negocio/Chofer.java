@@ -32,5 +32,21 @@ public class Chofer {
     public double getSueldo() {
         return categoria.getSueldo();
     }
+
+	public String getDni() {
+		return this.dni;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "\n********"+
+				"\nNombre: "+this.nombre+
+				"\nDNI: "+this.dni+
+				"\nCategoria: "+this.categoria.getCategoria()+
+				categoria.toString()+
+				"\nSueldo: $"+getSueldo()+
+				"\n";
+	}
     
 }

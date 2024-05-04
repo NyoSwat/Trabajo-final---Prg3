@@ -46,4 +46,10 @@ public class Moto extends Vehiculo {
 		return 1000;
 		
 	}
+	
+	@Override
+	public String toString() {
+		return "\n********"+
+				"\nMoto"+super.toString();
+	}
 }

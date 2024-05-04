@@ -21,4 +21,18 @@ public abstract class Usuario {
     }
     
     public abstract boolean esAdministrador();
+
+    /**
+     * Informa el nombre del titular de la cuenta
+     * @return retorna el nombre del usuario
+     */
+	public String getUsuario() {
+		return this.nombre+"\n";
+	}
+	
+	
+	@Override
+	public String toString() {
+		return this.nombre;
+	}
 }

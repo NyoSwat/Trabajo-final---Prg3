@@ -49,5 +49,11 @@ public class Combi extends Vehiculo {
          else
         	return pedido.getCantPasajeros()*ptosPas;
 	}
+	
+	@Override
+	public String toString() {
+		return "\n**********"+
+				"\nCombi"+super.toString();
+	}
 }
 

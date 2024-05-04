@@ -11,24 +11,31 @@ import negocio.Vehiculo;
  * deben implementar los detalles específicos del viaje.
  */
 public abstract class Viaje implements IViaje, Comparable<Viaje> {
-
-    private Pedido pedido; // El pedido asociado al viaje
+	/**
+	 * referencia al pedido que origino el viaje
+	 */
+    private Pedido pedido; 
 
     /**
      * El chofer asignado al viaje.
      * @aggregation shared
      */
     private Chofer chofer;
-
-    private double distanciaRecorrida; // La distancia total recorrida en el viaje
+    /**
+     * distancia total recorrida en el viaje
+     */
+    private double distanciaRecorrida; 
 
     /**
      * El vehículo utilizado en el viaje.
      * @aggregation shared
      */
     private Vehiculo vehiculo;
-
-    public static double valorBase = 1000.0; // Valor base común para todos los viajes
+    
+    /**
+     * Valor base comun para todos los viajes 
+     */
+    public static double valorBase = 1000.0; 
 
     /**
      * Crea un nuevo objeto Viaje con los parámetros especificados.

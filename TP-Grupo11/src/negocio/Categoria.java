@@ -23,4 +23,8 @@ public abstract class Categoria {
      * @return double con sueldo de la categoría.
      */
     abstract public double getSueldo();
+    
+    public String getCategoria() {
+    	return this.nombre;
+    }
 }

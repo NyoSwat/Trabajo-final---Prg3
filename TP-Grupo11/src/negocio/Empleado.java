@@ -17,7 +17,7 @@ public abstract class Empleado extends Categoria {
     }
     
   
-    /***Método que le asigna otro valor al aributo SueldoBasico
+    /***Método que le asigna otro valor al atributo SueldoBasico
      * @param sueldo: double, sueldo básico del empleado
      */
     public void setSueldoBasico(double sueldo){

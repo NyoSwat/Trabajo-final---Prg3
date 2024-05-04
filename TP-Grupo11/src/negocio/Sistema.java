@@ -10,14 +10,23 @@ import negocio.IViaje;
 import negocio.Usuario;
 import negocio.Vehiculo;
 
+/**
+ * La clase Sistema representa la gestion de peticiones del usuario, informes, viajes, etc.
+ */
+
 public class Sistema {
     private static Sistema _instance = null;
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-    private ArrayList<Chofer> choferes;
-    private ArrayList<Vehiculo> vehiculos;
+    private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
+    private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
     private FactoryVehiculo factoryVehiculo = new FactoryVehiculo();
     private ArrayList<IViaje> viajes = new ArrayList<IViaje>();
     
+    
+    /**
+     * Patron singleton, genera una unica instancia de la clase sistema
+     * @return referencia a la clase sistema(unica)
+     */
     public static Sistema getInstance(){
         if (_instance == null )
             _instance = new Sistema();
@@ -25,27 +34,27 @@ public class Sistema {
         return _instance;
     }
     
-	/*
+	/**
 	 * Consulta un vehiculo existente
 	 * @param usuario: Que usuario va a realizar la consulta
 	 * @param patente: Patente del auto a consultar
 	 * @throws IllegalArgumentException Si el usuario no es administrador o la
 	 * patente no existe
 	 */
-	public Vehiculo consultarVehiculo(Usuario usuario, String patente) throws IllegalArgumentException {
+	public Vehiculo consultarVehiculo(String patente) throws IllegalArgumentException {
 
-		if (!usuario.esAdministrador()) {
-			throw new IllegalArgumentException("Usuario no autorizado");
-		} else if (patente.equals("") || patente.equals(null)) {
-			throw new IllegalArgumentException("Parametro patente invalido");
-		} else {
+//		if (!usuario.esAdministrador()) {
+//			throw new IllegalArgumentException("Usuario no autorizado");
+//		} else if (patente.equals("") || patente.equals(null)) {
+//			throw new IllegalArgumentException("Parametro patente invalido");
+//		} else {
 
 			for (int i = 0; i < this.vehiculos.size(); i++) {
 				if (this.vehiculos.get(i).getPatente().equals(patente))
 					return this.vehiculos.get(i);
 			}
 
-		}
+//		}
 
 		return null;
 	}
@@ -56,20 +65,20 @@ public class Sistema {
      * @param patente: dni del chofer a consultar
      * @throws IllegalArgumentException Si el usuario no es administrador o la patente no existe
      */
-    public Chofer consultarChofer(Usuario usuario, String dni) {
+    public Chofer consultarChofer(String dni) {
     	
-    	if(!usuario.esAdministrador()) {
-    		throw new IllegalArgumentException("Usuario no autorizado");
-    	}else if(dni.equals("") || dni.equals(null)){
-    		throw new IllegalArgumentException("Parametro patente invalido");
-    	}else {
+//    	if(!usuario.esAdministrador()) {
+//    		throw new IllegalArgumentException("Usuario no autorizado");
+//    	}else if(dni.equals("") || dni.equals(null)){
+//    		throw new IllegalArgumentException("Parametro patente invalido");
+//    	}else {
     		
     		for(int i=0;i<this.choferes.size();i++) {
     			if(this.choferes.get(i).getDni().equals(dni))
     				return this.choferes.get(i);
     		}
     		
-    	}
+//    	}
     	
     	return null;
     }
@@ -80,23 +89,19 @@ public class Sistema {
      * @param patente: Usuario del chofer a consultar
      * @throws IllegalArgumentException Si el usuario no es administrador o la patente no existe
      */
-    public Usuario consultarUsuario(Usuario usuario, String cliente)throws IllegalArgumentException {
+    public Usuario consultarUsuario(String cliente)throws IllegalArgumentException {
     	 	
-    	if(!usuario.esAdministrador()) {
-    		throw new IllegalArgumentException("Usuario no autorizado");
-    	}else if(cliente.equals("") || cliente.equals(null)){
-    		throw new IllegalArgumentException("Parametro patente invalido");
-    	}else {
-    		
+//    	if(!usuario.esAdministrador()) {
+//    		throw new IllegalArgumentException("Usuario no autorizado");
+//    	}else if(cliente.equals("") || cliente.equals(null)){
+//    		throw new IllegalArgumentException("Parametro patente invalido");
+//    	}else {
     		for(int i=0;i<this.usuarios.size();i++) {
     			if(this.usuarios.get(i).getUsuario().equals(cliente))
     				return this.usuarios.get(i);
-    		}
-    		
-    	}
-    	
+    		}	
+//    	}
     	return null;
-    	
     }
 
     /**
@@ -107,12 +112,13 @@ public class Sistema {
      * @throws IllegalArgumentException		Si tipo,patente son null o vacios, tipo no existe o el usuario no es el administrador.
      * @throws (agregar excepcion de que existe patente)    
      */
-    public void agregarVehiculo(Usuario usuario,Vehiculo nuevoVehiculo) throws IllegalArgumentException{
-        if(!usuario.esAdministrador()) {
-        	throw new IllegalArgumentException("Usuario no autorizado");
-        }else {
-        	this.vehiculos.add(nuevoVehiculo);
-        }
+    public void agregarVehiculo(String tipo,String patente) throws IllegalArgumentException{
+//        if(!usuario.esAdministrador()) {
+//        	throw new IllegalArgumentException("Usuario no autorizado");
+//        }else {
+    		
+        	this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente));
+//        }
     }
     
     /**
@@ -123,12 +129,12 @@ public class Sistema {
      * @throws IllegalArgumentException		En caso de que categoria sea null, vacia o no exista.
      * @throws (Agregar excepcion de que ya existe dni)
      */   
-    public void agregarChofer(Usuario usuario,Chofer nuevoChofer)throws IllegalArgumentException{
-       if(!usuario.esAdministrador()) {
-    	   throw new IllegalArgumentException("Usuario no autorizado");
-       }else {
+    public void agregarChofer(Chofer nuevoChofer)throws IllegalArgumentException{
+//       if(!usuario.esAdministrador()) {
+//    	   throw new IllegalArgumentException("Usuario no autorizado");
+//       }else {
     	   this.choferes.add(nuevoChofer);
-       }
+//       }
     }
      
     /**
@@ -140,17 +146,19 @@ public class Sistema {
      */
     
     //Verificar entrada de datos en este motodo o constructor de la clase a crear?
-    public void crearUsuario(String usuario,String password,String nombre) {
+    public void crearCliente(String usuario,String password,String nombre,String tipo) {
     	try {
-    		if(usuario != null && !usuario.isEmpty() && usuario.matches("^(?!.*[.-].*[.-])[a-zA-Z0-9.-]{6,}+$") 
-    				&& password != null && !password.isEmpty() && password.matches("^[a-zA-Z0-9.]{8,}+$") 
-    				&& nombre != null && !nombre.isEmpty() && nombre.matches("^[a-zA-Z\\s]{8,20}$")) 
-    		{
-    			System.out.println("entro");
-    		}
+    		if(usuario != null && !usuario.isEmpty() && usuario.matches("^(?!.*[.-].*[.-])[a-zA-Z0-9.-]{6,}+$")) 
+    			if(password != null && !password.isEmpty() && password.matches("^[a-zA-Z0-9.]{8,}+$"))
+    				if(nombre != null && !nombre.isEmpty() && nombre.matches("^[a-zA-Z\\s]{8,20}$"))
+    					usuarios.add(new Cliente(usuario, password, nombre));
+    				else
+    					System.out.println("Nombre invalido");
+    			else
+    				System.out.println("Contrasena invalida");
     		else 
-    			System.out.println("no entro");
-    		
+    			System.out.println("Usuario invalido");
+    		//Sacar prints y poner excepciones
     	}
     	catch (Exception e){
     		
@@ -158,16 +166,30 @@ public class Sistema {
     	
     }
     
-    
+    /**
+     * Devuelve un arraylist de todos los vehiculos almacenados en sistema
+     * con un formato de impresion dado por toString
+     * @return Arraylist de vehiculos
+     */
     public ArrayList<Vehiculo> listaVehiculos(){
     	
     	return this.vehiculos;
     }
     
+    /**
+     * Devuelve un arraylist de todos los choferes almacenados en sistema
+     * con un formato de impresion dado por toString
+     * @return ArrayList de choferes
+     */
     public ArrayList<Chofer> listaChoferes(){
     	return this.choferes;
     }
     
+    /**
+     * Devuelve un arrayList de todos los usuarios almacenados en sistema
+     * con formato de impresion dado por toString
+     * @return ArrayList de usuarios
+     */
     public ArrayList<Usuario> listaUsuarios(){
     	return this.usuarios;
     }
@@ -181,6 +203,18 @@ public class Sistema {
     	return listaOrdenada;
     }
 
-    
+    public void validarPedido(Pedido pedido) {
+    	IViaje viaje;
+    	
+    	if(("sinasfaltar estandar peligrosa".contains(pedido.getZona().toLowerCase()))) {
+    		
+    	}
+    	else {
+    		
+    	}
+    		
+    	
+    	
+    }
     
 }

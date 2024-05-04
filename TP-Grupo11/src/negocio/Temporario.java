@@ -31,4 +31,9 @@ public class Temporario extends Empleado {
       return Empleado.sueldoBasico*(1+plusCantViajes*this.cantidadViajes-Empleado.aportes);
    
     }
+    
+    @Override
+    public String toString() {
+    	return "\nCant. viajes: "+cantidadViajes;
+    }
 }

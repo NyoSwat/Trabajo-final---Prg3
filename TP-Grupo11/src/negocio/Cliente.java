@@ -22,6 +22,9 @@ public class Cliente extends Usuario {
 		return false;
 	}
     
-    
+   @Override
+   public String toString() {
+	   return "\nCliente: "+super.toString();
+   }
 }
 

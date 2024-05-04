@@ -44,4 +44,11 @@ public class Automovil extends Vehiculo {
         else
            return pedido.getCantPasajeros()*ptosSinBaul;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "\n*********"+
+				"\nAutomovil"+super.toString();
+	}
 }

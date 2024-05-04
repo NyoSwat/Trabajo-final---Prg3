@@ -32,17 +32,17 @@ public class Administrador extends Usuario {
 	 * Agregar un vehiculo nuevo en el sistema.
 	 * @param nuevoVehiculo
 	 */
-	public void agregarVehiculo(Vehiculo nuevoVehiculo) {
-		sistema.agregarVehiculo(this, nuevoVehiculo);
-	}
+//	public void agregarVehiculo(Vehiculo nuevoVehiculo) {
+//		sistema.agregarVehiculo(this, nuevoVehiculo);
+//	}
 	
 	/**
 	 * Agrega un nuevo chofer en el sistema. 
 	 * @param nuevoChofer
 	 */
-	public void agregarChofer(Chofer nuevoChofer) {
-		sistema.agregarChofer(this, nuevoChofer);
-	}
+//	public void agregarChofer(Chofer nuevoChofer) {
+//		sistema.agregarChofer(this, nuevoChofer);
+//	}
 	
 	
 	/**
@@ -50,9 +50,9 @@ public class Administrador extends Usuario {
 	 * @param dni :Es el parametro necesario para consultar un chofer especifico.
 	 * @return
 	 */
-	public Chofer consultarChofer(String dni) {
-		return sistema.consultarChofer(this, dni);
-	}
+//	public Chofer consultarChofer(String dni) {
+//		return sistema.consultarChofer(this, dni);
+//	}
 	
 	
 	/**
@@ -60,18 +60,18 @@ public class Administrador extends Usuario {
 	 * @param patente: Es el paramentro necesario para consultar un vehiculo especifico.
 	 * @return
 	 */
-	public Vehiculo consultarVehiculo(String patente) {
-		return sistema.consultarVehiculo(this, patente);
-	}
+//	public Vehiculo consultarVehiculo(String patente) {
+//		return sistema.consultarVehiculo(this, patente);
+//	}
 	
 	/**
 	 * Devuelve el usuario buscado.
 	 * @param usuario: Es el parametro necesario para consultar un vehiculo especifico. 
 	 * @return
 	 */
-	public Usuario consultarUsuario(String usuario) {
-		return sistema.consultarUsuario(this, usuario);
-	}
+//	public Usuario consultarUsuario(String usuario) {
+//		return sistema.consultarUsuario(this, usuario);
+//	}
 	
 	public ArrayList<Chofer> getListaChoferes(){
 		return sistema.listaChoferes();
@@ -99,9 +99,9 @@ public class Administrador extends Usuario {
 	 * @param chofer
 	 * @return
 	 */
-	public double calcularSalario(String dni) {	
-		return sistema.consultarChofer(this, dni).getSueldo();
-	}
+//	public double calcularSalario(String dni) {	
+//		return sistema.consultarChofer(this, dni).getSueldo();
+//	}
 	
 	
 	/**
