@@ -1,5 +1,7 @@
 package negocio;
 
+
+
 /**
  * La clase Temporario representa a un empleado temporal en la empresa.
  * Hereda de la clase Empleado y agrega un atributo adicional para el plus por cantidad de viajes.
@@ -43,4 +45,18 @@ public class Temporario extends Empleado {
     public String toString() {
     	return "\nCant. viajes: "+cantidadViajes;
     }
+
+
+	@Override
+	public void setCantidadHijos(int cantHijos) {
+		// no se usa en esta clase
+		
+	}
+
+
+	@Override
+	public  void setFechaIngreso(int dia, int mes, int ano) {
+		// no se usa en esta clase
+		
+	}
 }

@@ -1,5 +1,6 @@
 package negocio;
 
+
 /**
  * La clase Contratado representa una categoría de empleados contratados en la empresa.
  * Hereda de la clase Categoria.
@@ -53,5 +54,15 @@ public class Contratado extends Categoria {
     public String toString() {
     	return "\nCant. viajes: "+cantidadViajes;
     }
+	@Override
+	public void setCantidadHijos(int cantHijos) {
+		// No genera cambios.
+		
+	}
+	
+	@Override
+	public void setFechaIngreso(int dia, int mes, int ano) {
+		// No genera cambios
+	}
 }
 

@@ -18,6 +18,8 @@ public class Prueba{
     	Administrador admin = new Administrador(sistema,"Admin", "1234", "Admin Admin");
     	
     	admin.agregarChofer("1", "chofer1", "Permanente");
+    	admin.consultarChofer("1").getCategoria().setCantidadHijos(4);
+    	admin.consultarChofer("1").getCategoria().setFechaIngreso(12,12,2004);
     	admin.agregarChofer("2", "chofer2", "Temporario");
     	admin.agregarChofer("3", "chofer3", "Contratado");
     	admin.agregarChofer("2", "chofer2", "Temporario");//Prueba de cliente existente

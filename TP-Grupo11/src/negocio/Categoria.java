@@ -7,7 +7,6 @@ package negocio;
 
 public abstract class Categoria {
     private String nombre; // Nombre de la categoría
-    private double sueldo; // Sueldo base de la categoría (puede variar según la implementación)
 
     /**
      * Constructor para crear un objeto Categoria.
@@ -34,4 +33,7 @@ public abstract class Categoria {
     public String getNombreCategoria() {
     	return this.nombre;
     }
+    
+    abstract public void setCantidadHijos(int cantHijos);
+    abstract public void setFechaIngreso(int dia, int mes, int ano);
 }

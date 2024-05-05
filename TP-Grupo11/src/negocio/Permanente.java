@@ -33,19 +33,7 @@ public class Permanente extends Empleado {
     public static void setPlusAntiguedad(double plusAntiguedad) {
 		Permanente.plusAntiguedad = plusAntiguedad;
 	}
-    /**Método que le asigna otro valor al atributo FechaIngreso.
-     * @param fechaIngreso: de tipo GregorianCalendar, nuevo valor de fechaIngreso.
-     */
-
-    public void setFechaIngreso(GregorianCalendar fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-    /**Método que le asigna otro valor al aributo CantHijos.
-     * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
-     */
-    public void setCantHijos(int cantHijos) {
-		this.cantidadHijos = cantHijos;
-	}
+  
 
 
     /**
@@ -96,4 +84,34 @@ public class Permanente extends Empleado {
     public String toString() {
     	return "\nCant. hijos: "+this.cantidadHijos;
     }
+
+
+    /**Método que le asigna otro valor al aributo CantHijos.
+     * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
+     */
+	public void setCantidadHijos(int cantHijos) {
+		this.cantidadHijos=cantHijos;
+		
+	}
+
+
+	/**Método que le asigna otro valor al atributo FechaIngreso.
+     * @param dia: int, dia.
+     * @param mes: int, mes.
+     * @param ano: int, ano.
+     */
+	
+	public void setFechaIngreso(int dia, int mes, int ano) {
+		// GregorianCalendar toma el mes empezando desde 0
+		GregorianCalendar fecha = new GregorianCalendar(ano, mes - 1, dia);
+        this.fechaIngreso=fecha;
+		
+	}
+
+
+	
+
+
+
+	
 }
