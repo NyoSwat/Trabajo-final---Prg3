@@ -73,7 +73,7 @@ public class Chofer {
 		return "\n********"+
 				"\nNombre: "+this.nombre+
 				"\nDNI: "+this.dni+
-				"\nCategoria: "+this.categoria.getCategoria()+
+				"\nCategoria: "+this.categoria.getNombreCategoria()+
 				categoria.toString()+
 				"\nSueldo: $"+getSueldo()+
 				"\n";

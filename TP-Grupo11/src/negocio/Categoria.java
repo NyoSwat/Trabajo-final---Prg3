@@ -31,7 +31,7 @@ public abstract class Categoria {
      * @return String con el valor actual de nombre.
      */
 
-    public String getCategoria() {
+    public String getNombreCategoria() {
     	return this.nombre;
     }
 }

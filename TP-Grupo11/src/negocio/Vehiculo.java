@@ -8,8 +8,8 @@ package negocio;
 
 public abstract class Vehiculo {
     private String patente; // La patente del vehículo
-    protected boolean baul; // Indica si el vehiculo tiene espacio de carga (baul)
-    protected boolean petFriendly; // Indica si el vehiculo es apto para mascotas
+    private boolean baul; // Indica si el vehiculo tiene espacio de carga (baul)
+    private boolean petFriendly; // Indica si el vehiculo es apto para mascotas
     protected int maxPasajeros; // El numero maximo de pasajeros que puede transportar el vehiculo
 
     /**
@@ -25,7 +25,7 @@ public abstract class Vehiculo {
         this.patente = patente;
         this.setBaul(baul);
         this.setPetFriendly(petFriendly);
-        this.setCantPasajeros(maxPasajeros);
+        this.maxPasajeros = maxPasajeros;
     }
 
   
@@ -35,13 +35,13 @@ public abstract class Vehiculo {
      */
 
 	public int getPrioridad(Pedido pedido)
-    {   Integer prioridad= null;
-        boolean condicion1=this.Verifica_Cant_Pas(pedido.getCantPasajeros());
-        boolean condicion2=this.VerificaBaul(pedido.isBaul());
-        boolean condicion3=this.VerificaPetFriendly(pedido.isPetFriendly());
+    {   Integer prioridad = null;
+        boolean condicion1=this.verifica_Cant_Pas(pedido.getCantPasajeros());
+        boolean condicion2=this.verificaBaul(pedido.isBaul());
+        boolean condicion3=this.verificaPetFriendly(pedido.isPetFriendly());
         if(condicion1 && condicion2)
     	   if(condicion3)
-    			prioridad=this.CalculaPrioridad(pedido);
+    			prioridad=this.calculaPrioridad(pedido);
     	return prioridad;
     }
 	/** Verifica si se pueden transportar cierta cantidad de pasajeros
@@ -52,8 +52,9 @@ public abstract class Vehiculo {
 	 * @return boolean que indica si el vehículo puede llevar a la cantidad de gente del pedido.
 	 */
 
-	protected boolean Verifica_Cant_Pas(int cantidadPasajeros)
-	    {    return cantidadPasajeros<=this.maxPasajeros;}
+	protected boolean verifica_Cant_Pas(int cantidadPasajeros){
+		return (cantidadPasajeros>= 0 && cantidadPasajeros<=this.maxPasajeros);
+	}
 	    
 	 /** Método abstracto que se implementara según sea necesario, debe verificar si se puede acceder 
      * al servicio de baúl deseado.
@@ -61,19 +62,19 @@ public abstract class Vehiculo {
 
      */
 
-    protected abstract boolean VerificaBaul(boolean deseaBaul);
+    protected abstract boolean verificaBaul(boolean deseaBaul);
     /** Método abstracto que se implementará según sea necesario, debe verificar si se puede acceder 
      * al servicio PetFriendly deseado.
      * @return boolean que indica si se puede brindar el servicio PetFriendly requerido.
      */
 
-    protected abstract boolean VerificaPetFriendly(boolean deseaPetFrienly);
+    protected abstract boolean verificaPetFriendly(boolean deseaPetFrienly);
     /**Método abstracto que calcula el valor de la prioridad de un vehículo de acuerdo a un pedido. 
      * @param pedido: de tipo Pedido, datos de un pedido en particular.
      * @return int con valor de prioridad asignado.
       */
 
-    protected abstract int CalculaPrioridad(Pedido pedido);
+    protected abstract int calculaPrioridad(Pedido pedido);
 
     /**
      * Informa la patente del vehículo
@@ -82,6 +83,14 @@ public abstract class Vehiculo {
 	public String getPatente() {
 			return patente;
 		}
+	
+	/**
+	 * Informa la cantidad maxima que puede llevar el vehiculo.
+	 * @return entero , cantidad de pasajeros permitidos por el vehiculo.
+	 */
+	public int getCantMaxPasajeros() {
+		return this.maxPasajeros;
+	}
 
 	/**Informa si el vehículo tiene espacio de carga (baúl)
 	 * @return boolean que indica si se cuenta con espacio de carga.
@@ -98,6 +107,31 @@ public abstract class Vehiculo {
 	public boolean isPetFriendly() {
 			return petFriendly;
 		}
+
+	/**
+	 * Establece si el vehiculo permite el uso de baul
+	 * @param condicion: verdadero o false, depende si permite el uso o no
+	 */
+	public void setBaul(boolean condicion) {
+		this.baul = condicion;
+	}
+	
+	/**
+	 * Establece si el vehiculo permite llevar mascota
+	 * @param condicion: verdadero o false, depende si permite llevar o no
+	 */
+	public void setPetFriendly(boolean condicion) {
+		this.petFriendly = condicion;
+	}
+	
+	/**
+	 * Permine moficiar la cantidad de maximos pasajeros, dependiendo de cada vehiculo.
+	 * Auto: max 4. Combi max 10. Moto Max 1.
+	 * @param cantidad: entero que determina la cantidad maxima de pasajeros.
+	 * @throws IllegalArgumentException Si la cantidad ingresada es invalida. Si es negativo o excede la maxima cantidad.
+	 */
+	abstract public void setCantPasajeros(int cantidad) throws IllegalArgumentException;
+	
 	/**
 	 * Devuelve una representación en forma de cadena de Vehiculo.
 	 * La cadena resultante contiene información detallada sobre el vehículo, incluyendo su patente,
@@ -106,18 +140,6 @@ public abstract class Vehiculo {
 	 *
 	 * @return String que representa la información detallada del vehículo.
 	 */
-
-	
-	public void setBaul(boolean condicion) {
-		this.baul = condicion;
-	}
-	
-	public void setPetFriendly(boolean condicion) {
-		this.petFriendly = condicion;
-	}
-	
-	abstract public void setCantPasajeros(int cantidad)throws IllegalArgumentException;
-	
 	@Override
 	public String toString() {
 		return "\nPatente: "+this.patente+

@@ -11,15 +11,15 @@ public class Moto extends Vehiculo {
      *
      * @param patente: de tipo String, patente de la motocicleta.
      */
-    public Moto(String patente,int cantPasajeros,boolean baul,boolean pet) {
-        super(patente, baul, pet, cantPasajeros);
+    public Moto(String patente,boolean baul,boolean pet) {
+        super(patente, baul, pet, 1);
     }
 
     /**Verificar si se puede acceder al servicio de baúl deseado
      * @return boolean que indica si se puede brindar el servicio necesario de baúl
      */
 
-	protected boolean VerificaBaul(boolean deseaBaul) {
+	protected boolean verificaBaul(boolean deseaBaul) {
 		if( deseaBaul)
 			return false;
 	    else
@@ -30,7 +30,7 @@ public class Moto extends Vehiculo {
      * @return boolean que indica si se puede brindar el servicio necesario de traslado de mascotas.
      */
 
-	protected boolean VerificaPetFriendly(boolean deseaPetFrienly) {
+	protected boolean verificaPetFriendly(boolean deseaPetFrienly) {
 		if( deseaPetFrienly)
 			return false;
 	    else
@@ -45,7 +45,7 @@ public class Moto extends Vehiculo {
      * @return int con valor de prioridad 1000.
      */
 
-	protected int CalculaPrioridad(Pedido pedido) {
+	protected int calculaPrioridad(Pedido pedido) {
 		return 1000;
 		
 	}

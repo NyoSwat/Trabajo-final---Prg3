@@ -41,9 +41,9 @@ public class Administrador extends Usuario {
      * @param petFriendly: de tipo boolean, indica si el vehículo transporta mascotas.
      */
 
-	public void agregarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly) {
+	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly) {
 		try {
-			sistema.agregarVehiculo(tipo, patente, cantPasajeros, baul, petFriendly);
+			sistema.agregarVehiculo(tipo, patente, baul, petFriendly);
 		} catch (Exception e) {
 			System.out.println("Error al agregar vehiculo: " + e.getMessage());
 		}		

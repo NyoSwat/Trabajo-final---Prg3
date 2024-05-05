@@ -13,14 +13,14 @@ public class Combi extends Vehiculo {
      *
      * @param patente: de tipo String, con la patente de la combi.
      */
-    public Combi(String patente,int cantPasajeros,boolean baul,boolean pet) {
-        super(patente, baul, pet, cantPasajeros);
+    public Combi(String patente,boolean baul,boolean pet) {
+        super(patente, baul, pet,10);
     }
     /**Verifica si se puede acceder al servicio de baul deseado.
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
 
-	protected boolean VerificaBaul(boolean deseaBaul) {
+	protected boolean verificaBaul(boolean deseaBaul) {
 		return true;
 	}
 
@@ -28,7 +28,7 @@ public class Combi extends Vehiculo {
      * @return boolean que indica si se puede brindar el servicio necesario de traslado de mascotas
      */
 
-	protected boolean VerificaPetFriendly(boolean deseaPetFrienly) {
+	protected boolean verificaPetFriendly(boolean deseaPetFrienly) {
 		if( deseaPetFrienly)
 			return false;
 	    else
@@ -46,7 +46,7 @@ public class Combi extends Vehiculo {
      */
 
 	
-	protected int CalculaPrioridad(Pedido pedido) {
+	protected int calculaPrioridad(Pedido pedido) {
 		 final int ptosBaul=100;
 	     final int ptosPas=10;
 	     if(pedido.isBaul())
@@ -67,10 +67,12 @@ public class Combi extends Vehiculo {
 	}
 	@Override
 	public void setCantPasajeros(int cantidad)throws IllegalArgumentException {
-		if(cantidad >= 0 && cantidad <= 10)
-			this.maxPasajeros = cantidad;
-		else
+		if(verifica_Cant_Pas(cantidad))
+			super.maxPasajeros = cantidad;
+		else {
+			super.maxPasajeros = 10;
 			throw new IllegalArgumentException("Cantidad invalida.Maximo 10");
+		}
 	}
 }
 

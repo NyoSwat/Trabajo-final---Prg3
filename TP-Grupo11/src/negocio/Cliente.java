@@ -19,7 +19,7 @@ public class Cliente extends Usuario {
     
     
     public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros) {
-    	
+    	sistema.validarPedido(new Pedido(cantPasajeros,zona,mascota,baul));
     }
 
     

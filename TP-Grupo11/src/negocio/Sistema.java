@@ -3,6 +3,7 @@ package negocio;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import Excepciones.ChoferExistenteException;
 import Excepciones.UsuarioExistenteException;
@@ -115,13 +116,13 @@ public class Sistema {
      * @param petFriendly : Si ser permite el acceso a animales.
      * @throws IllegalArgumentException En caso de que la patente ya exista o los argumentos sean invalidos
      */
-    public void agregarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly ) throws IllegalArgumentException,VehiculoExistenteException{
-    	if(!"moto automovil combi".contains(tipo.toLowerCase()) || cantPasajeros <= 0 || patente.equals("") || patente.equals(null)) {
+    public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly ) throws IllegalArgumentException,VehiculoExistenteException{
+    	if(!"moto automovil combi".contains(tipo.toLowerCase()) || patente.equals("") || patente.equals(null)) {
     		throw new IllegalArgumentException("Parametros invalidos");
     	}else if(this.consultarVehiculo(patente) != null) {
     		throw new VehiculoExistenteException("El vehiculo "+patente+" ya existe");
     	}else {
-    		this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente,cantPasajeros,baul,petFriendly));
+    		this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente,baul,petFriendly));
     	}
     }
     
@@ -263,17 +264,65 @@ public class Sistema {
     }
 
     public void validarPedido(Pedido pedido) {
-    	IViaje viaje;
+    	boolean hayVehiculo = false, hayChofer = false;
     	
-    	if(("sinasfaltar estandar peligrosa".contains(pedido.getZona().toLowerCase()))) {
-    		
+    	//Verifico si existe vehiculo que cumpla con los requerimientos
+    	for(int i = 0; i < vehiculos.size(); i++) {
+    		if(vehiculos.get(i).maxPasajeros >= pedido.getCantPasajeros() && !(pedido.isBaul()==true && vehiculos.get(i).isBaul()==false) &&
+    				!(pedido.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) {
+    			hayVehiculo = true;
+    		}
+    		else
+    			hayVehiculo = false;
     	}
-    	else {
-    		
+    	
+    	if(hayVehiculo && "peligrosa sinasfaltar estandar".contains(pedido.getZona().toLowerCase())) {
+    		generarViaje(pedido);
+    	}   	
+    	
+    	//Verificar que hay chofer disponible   ¿¿¿???
+    }
+
+    
+    private void generarViaje(Pedido pedido) {
+    	IViaje viaje = null;
+    	Vehiculo vehiculoAsignado = null;
+    	int prioridad = 0;
+    	Chofer choferAsignado = null;
+    	Random ran = new Random();
+    	
+    	for(int i=0; i < vehiculos.size(); i++) {
+    		if(vehiculos.get(i).maxPasajeros >= pedido.getCantPasajeros() && !(pedido.isBaul()==true && vehiculos.get(i).isBaul()==false) &&
+    				!(pedido.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) {
+    			if(vehiculos.get(i).getPrioridad(pedido) >= prioridad ) {
+    				vehiculoAsignado = vehiculos.get(i);
+    				prioridad = vehiculoAsignado.getPrioridad(pedido);
+    			}
+    		}
     	}
-    		
+    	
+    	choferAsignado = choferes.get(ran.nextInt(choferes.size()));
+    	
+    	if(pedido.getZona().equalsIgnoreCase("sinasfaltar"))
+    		viaje = new SinAsfaltar(null, pedido, choferAsignado, vehiculoAsignado,ran.nextInt(100));
+    	else if(pedido.getZona().equalsIgnoreCase("peligrosa"))
+    		viaje = new Peligrosa(null, pedido, choferAsignado, vehiculoAsignado,ran.nextInt(100));    		
+    	else if(pedido.getZona().equalsIgnoreCase("estandar"))
+    		viaje = new Estandar(null, pedido, choferAsignado, vehiculoAsignado,ran.nextInt(100));    		
+    	
+    	if(pedido.isBaul())
+    		viaje = new Baul(viaje);
+    	
+    	if(pedido.isPetFriendly())
+    		viaje = new PetFriendly(viaje);
+    	
+    	if(choferAsignado.getCategoria().getNombreCategoria().equalsIgnoreCase("contratado")) {
+    		Contratado contratado = (Contratado) choferAsignado.getCategoria();
+    		contratado.realizaViaje();
+    	}
     	
     	
+    	viajes.add(viaje);
     }
     
 }

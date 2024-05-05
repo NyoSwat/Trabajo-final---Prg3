@@ -38,13 +38,16 @@ public class Contratado extends Categoria {
     @Override
     public double getSueldo() {
     	return gananciaViaje*cantidadViajes;
-
     }
     /**
      * Devuelve una representación en forma de cadena de Contratado.
      *
      * @return String que representa Contratado, incluyendo la cantidad de viajes.
      */
+    
+    public void realizaViaje() {
+    	this.cantidadViajes +=1;
+    }
     
     @Override
     public String toString() {

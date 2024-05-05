@@ -128,4 +128,18 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
     	else
     		return 0;
     }
+    
+    
+    @Override
+    public String toString() {
+    	return "\n*************"+
+    			"\nCliente: "+this.cliente+
+    			"\nChofer: "+this.chofer.getNombre()+
+    			"\nVehiculo: "+this.vehiculo.getPatente()+
+    			"\nDistancia: "+this.distanciaRecorrida+" km"+
+    			"\nZona: "+this.pedido.getZona()+
+    			"\nCantidad Pasajeros: "+this.pedido.getCantPasajeros()+
+    			"\nValor: $"+this.getCosto()+
+    			"\n";
+    }
 }

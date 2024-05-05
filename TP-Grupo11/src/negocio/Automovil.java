@@ -12,8 +12,8 @@ public class Automovil extends Vehiculo {
      *
      * @param patente:parámetro de tipo String que representa la patente del automóvil.
      */
-    public Automovil(String patente,int cantPasajeros,boolean baul,boolean pet) {
-        super(patente, baul, pet, cantPasajeros);
+    public Automovil(String patente,boolean baul,boolean pet) {
+        super(patente, baul, pet, 4);
     }
 
 
@@ -21,7 +21,7 @@ public class Automovil extends Vehiculo {
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
 
-	protected boolean VerificaBaul(boolean deseaBaul) {
+	protected boolean verificaBaul(boolean deseaBaul) {
 		return true;
 	}
 
@@ -29,7 +29,7 @@ public class Automovil extends Vehiculo {
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
 
-	protected boolean VerificaPetFriendly(boolean deseaPetFrienly) {
+	protected boolean verificaPetFriendly(boolean deseaPetFrienly) {
 		return true;
 	}
 
@@ -40,7 +40,7 @@ public class Automovil extends Vehiculo {
      */
 
 	
-	protected int CalculaPrioridad(Pedido pedido) {
+	protected int calculaPrioridad(Pedido pedido) {
 		final int ptosBaul=40;
         final int ptosSinBaul=30;
         if(pedido.isBaul())
@@ -62,10 +62,12 @@ public class Automovil extends Vehiculo {
 
 	@Override
 	public void setCantPasajeros(int cantidad)throws IllegalArgumentException {
-		if(cantidad>= 0 && cantidad <=4) {
+		if(super.verifica_Cant_Pas(cantidad)) {
 			super.maxPasajeros = cantidad;
 		}
-		else
+		else {
+			super.maxPasajeros = 4;
 			throw new IllegalArgumentException("cantidad invalida.Maximo 4.");
+		}
 	}
 }
