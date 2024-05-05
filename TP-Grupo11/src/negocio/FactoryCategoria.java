@@ -5,13 +5,14 @@ package negocio;
  */
 public class FactoryCategoria {
 
-    /**
+	/**
      * Obtiene un objeto de tipo Categoria según el tipo especificado.
      *
-     * @param categoria Tipo de categoría ("permanente", "temporario" o "contratado").
+     * @param categoria:String, tipo de categoría ("permanente", "temporario" o "contratado").
      * @return Objeto de tipo Categoria creado.
      * @throws IllegalArgumentException Si el tipo de categoría no es válido.
      */
+
     public Categoria getCategoria(String categoria) {
         if (categoria == null)
             throw new IllegalArgumentException("El tipo de categoria no puede ser null.");

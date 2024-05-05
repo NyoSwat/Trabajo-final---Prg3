@@ -2,15 +2,17 @@ package negocio;
 
 /**
  * La clase Automovil representa un vehículo tipo automóvil.
- * Hereda de la clase Vehículo y establece que tiene espacio para pasajeros adicionales y espacio en el baúl.
+ * Hereda de la clase Vehiculo y establece que tiene espacio para pasajeros adicionales y espacio en el baúl.
  */
+
 public class Automovil extends Vehiculo {
 
-    /**
+	/**
      * Constructor para crear un objeto Automovil.
      *
      * @param patente:parámetro de tipo String que representa la patente del automóvil.
      */
+
     public Automovil(String patente) {
         super(patente, true, true, 4);
     }
@@ -19,6 +21,7 @@ public class Automovil extends Vehiculo {
     /**Verifica si se puede acceder al servicio de baúl deseado.
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
+
 	protected boolean VerificaBaul(boolean deseaBaul) {
 		return true;
 	}
@@ -26,6 +29,7 @@ public class Automovil extends Vehiculo {
 	/**Verificar si se puede acceder al servicio PetFriendly deseado
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
+
 	protected boolean VerificaPetFriendly(boolean deseaPetFrienly) {
 		return true;
 	}
@@ -35,6 +39,7 @@ public class Automovil extends Vehiculo {
      * @param pedido:parámetro de tipo Pedido, datos del pedido en cuestión
      * @return int con valor de prioridad asignado
      */
+
 	
 	protected int CalculaPrioridad(Pedido pedido) {
 		final int ptosBaul=40;
@@ -45,8 +50,11 @@ public class Automovil extends Vehiculo {
            return pedido.getCantPasajeros()*ptosSinBaul;
 	}
 	
-	
-	@Override
+	/**
+	*Devuelve una representación en forma de cadena de Automovil.
+	*@return String que representa a Automovil.
+	*/
+
 	public String toString() {
 		return "\n*********"+
 				"\nAutomovil"+super.toString();

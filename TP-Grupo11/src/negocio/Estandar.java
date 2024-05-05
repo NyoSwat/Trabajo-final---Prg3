@@ -6,16 +6,19 @@ import datos.Viaje;
  * La clase Estandar representa un tipo de viaje estándar.
  * Hereda de la clase Viaje y agrega un cálculo específico para el costo del viaje.
  */
+
 public class Estandar extends Viaje {
 
-    /**
-     * Constructor para crear un objeto Estandar.
-     *
-     * @param pedido    El pedido asociado al viaje.
-     * @param chofer    El chofer asignado al viaje.
-     * @param vehiculo  El vehículo utilizado en el viaje.
-     * @param distancia La distancia del viaje en kilómetros.
-     */
+	/**
+	 * Constructor para crear un nuevo objeto de tipo Estandar.
+	 *
+	 * @param cliente: de tipo Usuario, usuario que realizó el pedido.
+	 * @param pedido:de tipo Pedido, pedido asociado al viaje.
+	 * @param chofer: de tipo Chofer, chofer asignado asignado al viaje.
+	 * @param vehiculo: de tipo Vehicilo, vehículo utilizado en el viaje.
+	 * @param distancia: de tipo double, distancia del viaje en kilómetros.
+	 */
+
     public Estandar(Usuario cliente,Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
         super(cliente,pedido, chofer, vehiculo, distancia);
     }
@@ -24,8 +27,9 @@ public class Estandar extends Viaje {
      * Calcula el costo del viaje estándar.
      * El costo se compone del valor base más un adicional basado en la distancia y la cantidad de pasajeros.
      *
-     * @return Costo total del viaje estándar.
+     * @return double con costo total del viaje estándar.
      */
+
     @Override
     public double getCosto() {
         double valorBase = getValorBase();

@@ -4,7 +4,7 @@ import java.util.GregorianCalendar;
 
 /**
  * La clase Permanente representa a un empleado permanente en la empresa.
- * Hereda de la clase Empleado y agrega atributos relacionados con la antigüedad y beneficios.
+ * Hereda de la clase Empleado y agrega atributos relacionados con la antiguedad y beneficios.
  */
 
 
@@ -17,8 +17,9 @@ public class Permanente extends Empleado {
 	/**
      * Constructor para crear un objeto Permanente.<br>
      * Inicializa el nombre de la categoría como "Permanente". El valor inicial de plusHijos sera 0.01
-     * y el de plusAntiguedad 0.02
+     * y el de plusAntiguedad 0.02 .
      */
+
     public Permanente() {
         super("Permanente");
         plusHijos=0.01;
@@ -26,17 +27,21 @@ public class Permanente extends Empleado {
     }
     
  
-    /**Metodo que le asigna otro valor al aributo plusAntiguedad
+    /**Método que le asigna otro valor al atributo plusAntiguedad.
+     *@param plusAntiguedad:de tipo double con nuevo valor de plusAntiguedad.
      */
     public static void setPlusAntiguedad(double plusAntiguedad) {
 		Permanente.plusAntiguedad = plusAntiguedad;
 	}
-    /**Metodo que le asigna otro valor al aributo FechaIngreso
+    /**Método que le asigna otro valor al atributo FechaIngreso.
+     * @param fechaIngreso: de tipo GregorianCalendar, nuevo valor de fechaIngreso.
      */
+
     public void setFechaIngreso(GregorianCalendar fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
-    /**Metodo que le asigna otro valor al aributo CantHijos
+    /**Método que le asigna otro valor al aributo CantHijos.
+     * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
      */
     public void setCantHijos(int cantHijos) {
 		this.cantidadHijos = cantHijos;
@@ -45,11 +50,12 @@ public class Permanente extends Empleado {
 
     /**
      * Calcula el sueldo del empleado permanente.
-     * Se calcula el sueldo del empleado permanente en base a un valor básico y un plus por antigüedad.
-     * También tiene un aumento por cantidad de hijos y un descuento por aportes jubilatorios
+     * Se calcula el sueldo del empleado permanente en base a un valor básico y un plus por antiguedad.
+     * También tiene un aumento por cantidad de hijos y un descuento por aportes jubilatorios.
      *
      * @return double con sueldo del empleado permanente.
      */
+
     @Override
     public double getSueldo() {
     	 int antiguedad;
@@ -58,13 +64,15 @@ public class Permanente extends Empleado {
         
      	 
        }
-    /**Calcula, en años, la antiguedad del empleado en la empresa, teniendo en cuenta su fecha de ingreso
-     * a la misma 
-     * <b> Pre:</b> la fecha de ingeso debe ser mas antigua que la del dia en que se invoca este metodo<br>
-     * <b> Post:</b> calcular la diferncia de años entra cada fecha <br>
-     * @param fechaIngreso: de tipo GregorianCalendar,fecha de ingreso a la institución
-     * @return int con la diferencia en años entra las fechas
+    /**Calcula, en anos, la antiguedad del empleado en la empresa, teniendo en cuenta su fecha de ingreso
+     * a la misma <br>
+     * <b> Pre:</b> la fecha de ingreso debe ser más antigua que la del día en que se invoca este método<br>
+     * <b> Post:</b> calcular la diferencia de anos entra cada fecha <br>
+     * @param fechaIngreso: de tipo GregorianCalendar, fecha de ingreso a la institución.
+     * @return int con la diferencia, en anos, entre las fechas.
+
      */
+
     public int calcAntiguedad(GregorianCalendar fechaIngreso)
     {    GregorianCalendar hoy = new GregorianCalendar();
     
@@ -80,7 +88,11 @@ public class Permanente extends Empleado {
     }
     
     
-    @Override
+    /**Devuelve una representación en forma de cadena de la clase Permanente.
+     *@return String que representa a Permanente.
+     *
+     */
+
     public String toString() {
     	return "\nCant. hijos: "+this.cantidadHijos;
     }

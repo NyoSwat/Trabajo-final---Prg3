@@ -6,13 +6,14 @@ public abstract class Usuario {
     private String nombre;
     
     /**
-     * precondicion:  Usuario, password, nombre validado de que no sea null
-     * no sea vacio y que no tenga caracteres espereciales
+     * <b>pre:</b>  Usuario, password, nombre validado de que no sea null,
+     * no sea vacio, y que no tenga caracteres espereciales.
      * 
-     * @param usuario
-     * @param password
-     * @param nombre
+     * @param usuario: de tipo String, nombre de usuario.
+     * @param password: de tipo String, contraseña.
+     * @param nombre: de tipo String, nombre real del usuario.
      */
+
     
     public Usuario(String usuario,String password,String nombre) {
     	this.usuario = usuario;
@@ -21,40 +22,49 @@ public abstract class Usuario {
     }
     
     /**
-     * Informa el nombre del titular de la cuenta
-     * @return retorna el nombre del usuario
+     * Informa el nombre del titular de la cuenta.
+     * @return String con nombre real del usuario.
      */
+
 	public String getUsuario() {
 		return this.nombre+"\n";
 	}
 	
 	
 	/**
-	 * Modificar el usuario despues de creado.
-	 * 
-	 * @param usuario
+	 * Establece el nombre de usuario.
+	 *
+	 * @param usuario: String, nuevo nombre de usuario a establecer.
 	 */
+
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
 	/**
-	 * Modificar la contraseña despues de creada.
+	 * Modifica la contraseña despues de creada.
 	 * 
-	 * @param password
+	 * @param password: de tipo String, nueva contraseña.
 	 */
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	/**
-	 * Modificar el nombre despues de creado.
+	 * Modifica el nombre despues de creado.
 	 * 
-	 * @param nombre
+	 * @param nombre: de tipo String, nuevo nombre real del usuario.
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	/**
+	 * Devuelve una representación en forma de cadena de Usuario.
+	 * La cadena resultante contiene el nombre real del usuario.
+	 *
+	 * @return String que representa el nombre del usuario.
+	 */
 
 	@Override
 	public String toString() {

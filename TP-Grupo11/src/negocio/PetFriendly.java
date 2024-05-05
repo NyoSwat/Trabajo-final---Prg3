@@ -6,10 +6,11 @@ package negocio;
  */
 public class PetFriendly extends ViajeDecorador {
 
+
     /**
      * Constructor para crear un objeto PetFriendly.
      *
-     * @param viaje El viaje original al que se le añadirá la opción de llevar mascotas.
+     * @param viaje: de tipo Iviaje, viaje original al que se le añadirá la opción de llevar mascotas.
      */
     public PetFriendly(IViaje viaje) {
         super(viaje);
@@ -20,7 +21,7 @@ public class PetFriendly extends ViajeDecorador {
      * El costo se compone del costo original más un adicional basado en la cantidad de pasajeros y la distancia.
      * Además, se agrega un valor extra por llevar mascotas.
      *
-     * @return Costo total del viaje PetFriendly.
+     * @return double con costo total del viaje PetFriendly.
      */
     @Override
     public double getCosto() {

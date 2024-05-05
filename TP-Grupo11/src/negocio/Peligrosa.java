@@ -8,14 +8,16 @@ import datos.Viaje;
  */
 public class Peligrosa extends Viaje {
 
-    /**
-     * Constructor para crear un objeto Peligrosa.
-     *
-     * @param pedido    El pedido asociado al viaje.
-     * @param chofer    El chofer asignado al viaje.
-     * @param vehiculo  El vehículo utilizado en el viaje.
-     * @param distancia La distancia del viaje en kilómetros.
-     */
+	/**
+	 * Constructor para crear objeto de tipo Peligrosa.
+	 *
+	 * @param cliente: de tipo Usuario, usuario que realizó el pedido.
+	 * @param pedido: de tipo Pedido, pedido asociado al viaje.
+	 * @param chofer: de tipo Chofer, chofer asignado al viaje.
+	 * @param vehiculo: de tipo Vehiculo,vehículo utilizado en el viaje.
+	 * @param distancia: de tipo double, distancia del viaje en kilómetros.
+	 */
+
     public Peligrosa(Usuario cliente,Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
         super(cliente,pedido, chofer, vehiculo, distancia);
     }
@@ -24,8 +26,9 @@ public class Peligrosa extends Viaje {
      * Calcula el costo del viaje en zona peligrosa.
      * El costo se compone del valor base más un adicional basado en la distancia y la cantidad de pasajeros.
      *
-     * @return Costo total del viaje en zona peligrosa.
+     * @return double con costo total del viaje en zona peligrosa.
      */
+
     @Override
     public double getCosto() {
         double valorBase = getValorBase();

@@ -15,23 +15,31 @@ import negocio.Vehiculo;
  */
 public class Administrador extends Usuario {
 	private Sistema sistema;
-    /**
-     * Constructor para crear un objeto Administrador.
-     *
-     * @param usuario  Nombre de usuario del administrador.
-     * @param password Contraseña del administrador.
-     * @param nombre   Nombre completo del administrador.
-     */
+	/**
+	 * Crea un nuevo objeto Administrador con los datos proporcionados.
+	 *
+	 * @param sistema: de tipo Sistema, sistema al que estará asociado el administrador.
+	 * @param usuario: de tipo String, nombre de usuario del administrador.
+	 * @param password: de tipo String, contraseña del administrador.
+	 * @param nombre: de tipo String, nombre del administrador.
+	 */
+
     public Administrador(Sistema sistema, String usuario, String password, String nombre) {
         super(usuario, password, nombre);
         this.sistema = sistema;
     }
 
 	
-	/**
-	 * Agregar un vehiculo nuevo en el sistema.
-	 * @param nuevoVehiculo
-	 */
+    /**
+     * Agrega un nuevo vehículo al sistema con los datos proporcionados.
+     *
+     * @param tipo: String, tipo de vehículo a agregar.
+     * @param patente: de tipo String, patente del nuevo vehículo.
+     * @param cantPasajeros: de tipo int, cantidad de pasajeros que puede transportar el vehículo.
+     * @param baul: de tipo boolean, indica si el vehículo tiene capacidad de almacenamiento en el baúl.
+     * @param petFriendly: de tipo boolean, indica si el vehículo transporta mascotas.
+     */
+
 	public void agregarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly) {
 		try {
 			sistema.agregarVehiculo(tipo, patente, cantPasajeros, baul, petFriendly);
@@ -41,9 +49,13 @@ public class Administrador extends Usuario {
 	}
 	
 	/**
-	 * Agrega un nuevo chofer en el sistema. 
-	 * @param nuevoChofer
+	 * Agrega un nuevo chofer al sistema con los datos proporcionados.
+	 *
+	 * @param dni: de tipo String, número de DNI del nuevo chofer.
+	 * @param nombre: de tipo String,nombre del nuevo chofer.
+	 * @param categoria: de tipo String, categoría del nuevo chofer.
 	 */
+
 	public void agregarChofer(String dni, String nombre, String categoria) {
 		try {
 			sistema.agregarChofer(dni, nombre, categoria);
@@ -55,12 +67,13 @@ public class Administrador extends Usuario {
 	/**
      * Modifica los atributos de un vehiculo existente.
      * 
-     * @param tipo : Nuevo tipo del vehiculo.
-     * @param patente : Nueva patente del vehiculo.
-     * @param cantPasajeros : Nueva cantidad de pasajeros del vehiculo.
-     * @param baul : Nuevo valor para el baul de vehiculo.
-     * @param petFriendly : Nuevo valor para PetFriendly.
+     * @param tipo: de tipo String, nuevo tipo del vehiculo.
+     * @param patente : de tipo String, nueva patente del vehiculo.
+     * @param cantPasajeros : de tipo Int, nueva cantidad de pasajeros.
+     * @param baul : de tipo boolean,nuevo valor para indicar disponibilidad baul.
+     * @param petFriendly : de tipo boolean, nuevo valor para indicar disponibilidad de servicio PetFriendly.
      */
+
 	public void modificarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly) {
 		try {
 			sistema.modificarVehiculo(tipo, patente, cantPasajeros, baul, petFriendly);
@@ -70,11 +83,13 @@ public class Administrador extends Usuario {
 	}
 	
 	/**
-     * Modifica los atributos de un chofer existente.
-     * @param dni : Nuevo dni del chofer.
-     * @param nombre : Nuevo nombre del chofer.
-     * @param categoria : Nueva categoria del chofer.
-     */
+	 * Modifica los datos de un chofer existente.
+	 *
+	 * @param dni: de tipo String,nuevo número de DNI del chofer .
+	 * @param nombre: de tipo String, nuevo nombre del chofer.
+	 * @param categoria:: de tipo String, nueva categoría del chofer.
+	 */
+
     public void modificarChofer(String dni, String nombre, String categoria) {
     	try {
 			sistema.modificarChofer(dni, nombre, categoria);
@@ -83,12 +98,13 @@ public class Administrador extends Usuario {
 		}
     }
 	
+    
     /**
-     * Modifica los atributos de un usuario existente.
-     * 
-     * @param usuario : Nuevo usuario.
-     * @param password : Nueva password.
-     * @param nombre : Nuevo nombre del usuario
+     * Modifica los datos de un usuario existente.
+     *
+     * @param usuario: de tipo String,nuevo nombre del usuario.
+     * @param password: de tipo String,nueva contraseña del usuario.
+     * @param nombre:de tipo String, nuevo nombre del usuario.
      */
     public void modificarUsuario(String usuario,String password,String nombre) {
     	try {
@@ -98,49 +114,63 @@ public class Administrador extends Usuario {
 		}
     }
     
-	/**
-	 * Devuelve el chofer buscado.
-	 * @param dni :Es el parametro necesario para consultar un chofer especifico.
-	 * @return
-	 */
+    /**
+     * Consulta y devuelve un objeto Chofer correspondiente al dni proporcionado.
+     * @param dni: de tipo String, número de DNI del chofer que se desea consultar.
+     * @return Chofer correspondiente al DNI proporcionado, o null si no se encuentra.
+     */
 	public Chofer consultarChofer(String dni) {	
 		return sistema.consultarChofer(dni);
 	}
 	
 	
 	/**
-	 * Devuelve el vehiculo buscado. 
-	 * @param patente: Es el paramentro necesario para consultar un vehiculo especifico.
-	 * @return
+	 * Consulta y devuelve un objeto Vehiculo correspondiente a la patente proporcionada.
+	 *
+	 * @param patente: de tipo String,patente del vehículo que se desea consultar.
+	 * @return Vehiculo correspondiente a la patente proporcionada, o null si no se encuentra.
 	 */
+
 	public Vehiculo consultarVehiculo(String patente) {
 		return sistema.consultarVehiculo(patente);
 	}
-	
 	/**
-	 * Devuelve el usuario buscado.
-	 * @param usuario: Es el parametro necesario para consultar un vehiculo especifico. 
-	 * @return
+	* Consulta y devuelve un objeto Usuario correspondiente al nombre de usuario proporcionado.
+	 *
+	 * @param usuario: de tipo String, nombre del usuario que se desea consultar.
+	 * @return Usuario con el nombre del parametro proporcionado, o null si no se encuentra.
 	 */
+
 	public Usuario consultarUsuario(String usuario) {
 		return sistema.consultarUsuario(usuario);
 	}
-	
+	/**
+	 * Devuelve la lista de choferes registrados en el sistema.
+	 * @return La lista de choferes registrados en el sistema.
+	 */
 	public ArrayList<Chofer> getListaChoferes(){
 		return sistema.listaChoferes();
 	}
-	
+	/**
+	 * Devuelve la lista de vehículos almacenados en el sistema.
+	 * @return La lista de vehículos almacenados en el sistema.
+	 */
+
 	public ArrayList<Vehiculo> getListaVehiculos(){
 		return sistema.listaVehiculos();
 	}
-	
+	/**
+	 * Devuelve la lista de usuarios registrados en el sistema.
+	 * 
+	 * @return la lista de usuarios registrados en el sistema.
+	 */
 	public ArrayList<Usuario> getListaUsuarios(){
 		return sistema.listaUsuarios();
 	}
 	
 	/**
 	 * Devuelve la lista de viajes ordenada por costos de mayor a menor.
-	 * @return
+	 * @return ArrayList de Viaje.
 	 */
 	public ArrayList<Viaje> getListaViajes(){
 		return sistema.listaViajes();
@@ -149,9 +179,10 @@ public class Administrador extends Usuario {
 	
 	/**
 	 * Calcula el salario mensual de un chofer.
-	 * @param chofer
-	 * @return
+	 * @param dni: de tipo String, dni de chofer.
+	 * @return double con salario de chofer.
 	 */
+
 	public double calcularSalario(String dni) {	
 		return sistema.consultarChofer(dni).getSueldo();
 	}
@@ -159,7 +190,7 @@ public class Administrador extends Usuario {
 	
 	/**
 	 * Calcula el dinero total necesario para pagar todos los sueldos. 
-	 * @return
+	 * @return double con valor total necesario para pagar todos los sueldos.
 	 */
 	public double totalDineroNecesario() {
 		ArrayList<Chofer> listaChoferes = new ArrayList<Chofer>();
@@ -175,10 +206,11 @@ public class Administrador extends Usuario {
 	/**
 	 * Muestra un reporte con todos los viajes hechos por un chofer
 	 * 
-	 * @param chofer : Chofer que realizo los viajes.
-	 * @param fechaInicial : Fecha a partir de la que se realiza la busqueda.
-	 * @param fechaFinal : Fecha hasta la cual se realiza la busqueda.
+	 * @param chofer: de tipo Chofer,chofer que realizó los viajes.
+	 * @param fechaInicial :de tipo date, fecha a partir de la que se realiza la busqueda.
+	 * @param fechaFinal :de tipo date, fecha hasta la cual se realiza la busqueda.
 	 */
+
 	public void reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal) {
 		ArrayList<Viaje> viajes = this.getListaViajes();
 		
@@ -193,10 +225,11 @@ public class Administrador extends Usuario {
 	/**
 	 * Muestra un reporte con todos los viajes hechos por un usuario en un periodo determinado
 	 * 
-	 * @param usuario : Usuario que realizo los viajes. 
-	 * @param fechaInicial : Fecha a partir de la que se realiza la busqueda.
-	 * @param fechaFinal : Fecha hasta la cual se realiza la busqueda.
+	 * @param usuario : de tipo Usuario,persona que realizó los viajes. 
+	 * @param fechaInicial :de tipo date, fecha a partir de la que se realiza la busqueda.
+	 * @param fechaFinal :de tipo date, fecha hasta la cual se realiza la busqueda.
 	 */
+
 	public void reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) {
 		ArrayList<Viaje> viajes = this.getListaViajes();
 		

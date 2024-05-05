@@ -16,11 +16,12 @@ public class Pedido {
     /**
      * Constructor para crear un objeto Pedido.
      *
-     * @param cantPasajeros Cantidad de pasajeros en el pedido.
-     * @param zona          Zona del viaje (por ejemplo, "Centro", "Suburbio", etc.).
-     * @param petFriendly   Indica si se permite llevar mascotas en el viaje.
-     * @param baul          Indica si se requiere espacio en el baúl del vehículo.
+     * @param cantPasajeros:de tipo int, cantidad de pasajeros en el pedido.
+     * @param zona: de tipo String,zona del viaje (por ejemplo, "Centro", "Suburbio", etc.).
+     * @param petFriendly:de tipo boolean, indica si se permite llevar mascotas en el viaje.
+     * @param baul:de tipo boolean, indica si se requiere espacio en el baúl del vehículo.
      */
+
     public Pedido(int cantPasajeros, String zona, boolean petFriendly, boolean baul) {
         this.cantPasajeros = cantPasajeros;
         this.zona = zona;
@@ -31,8 +32,9 @@ public class Pedido {
     /**
      * Obtiene la cantidad de pasajeros en el pedido.
      *
-     * @return Cantidad de pasajeros.
+     * @return int con cantidad de pasajeros.
      */
+
     public int getCantPasajeros() {
         return cantPasajeros;
     }
@@ -40,8 +42,9 @@ public class Pedido {
     /**
      * Obtiene la zona del viaje.
      *
-     * @return Zona del viaje.
+     * @return String con zona del viaje.
      */
+
     public String getZona() {
         return zona;
     }
@@ -49,8 +52,9 @@ public class Pedido {
     /**
      * Verifica si el viaje es pet-friendly.
      *
-     * @return true si se permite llevar mascotas, false en caso contrario.
+     * @return true si se desea llevar mascotas, false en caso contrario.
      */
+
     public boolean isPetFriendly() {
         return petFriendly;
     }
@@ -60,6 +64,7 @@ public class Pedido {
      *
      * @return true si se necesita espacio en el baúl, false en caso contrario.
      */
+
     public boolean isBaul() {
         return baul;
     }
@@ -67,8 +72,9 @@ public class Pedido {
     /**
      * Obtiene la fecha del pedido.
      *
-     * @return Fecha del pedido.
+     * @return Date con Fecha del pedido.
      */
+
     public Date getFecha() {
         return fecha;
     }

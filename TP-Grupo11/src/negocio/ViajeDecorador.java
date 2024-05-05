@@ -58,7 +58,7 @@ public abstract class ViajeDecorador implements IViaje {
     }
 
     /**
-     * 
+     * Obtiene el valor de ValorBase
      * @return viaje.valorBase : double positivo establecido en la clase viaje
      */
     public double getValorBase() {

@@ -6,11 +6,12 @@ package negocio;
  */
 public class Moto extends Vehiculo {
 
-    /**
+	/**
      * Constructor para crear un objeto Moto.
      *
-     * @param patente La patente de la motocicleta.
+     * @param patente: de tipo String, patente de la motocicleta.
      */
+
     public Moto(String patente) {
         super(patente, false, false, 1);
     }
@@ -18,6 +19,7 @@ public class Moto extends Vehiculo {
     /**Verificar si se puede acceder al servicio de baúl deseado
      * @return boolean que indica si se puede brindar el servicio necesario de baúl
      */
+
 	protected boolean VerificaBaul(boolean deseaBaul) {
 		if( deseaBaul)
 			return false;
@@ -25,9 +27,10 @@ public class Moto extends Vehiculo {
 	    	return true;
 	}
 
-	/**Verificar si se puede acceder al servicio PetFrienly deseado
-     * @return boolean que indica si se puede brindar el servicio necesario de traslado de mascotas
+	/**Verificar si se puede acceder al servicio PetFrienly deseado.
+     * @return boolean que indica si se puede brindar el servicio necesario de traslado de mascotas.
      */
+
 	protected boolean VerificaPetFriendly(boolean deseaPetFrienly) {
 		if( deseaPetFrienly)
 			return false;
@@ -38,16 +41,22 @@ public class Moto extends Vehiculo {
 	 /** Calcula el valor de la prioridad de una moto de acuerdo a un pedido.
      * <b> Pre:</b> pedido.isBaul()=false, pedido.isPetFriendly()=false,
 		pedido.getCantPasajeros()=1<br>
-     * <b> Post:se asigna el valor de prioridad correspondiente</b> 
-     * @param pedido:de tipo Pedido, datos de un pedido en particular
-     * @return int con valor de prioridad 1000 
+     * <b> Post:</b> se asigna el valor de prioridad correspondiente.
+     * @param pedido:de tipo Pedido, datos de un pedido en particular.
+     * @return int con valor de prioridad 1000.
      */
+
 	protected int CalculaPrioridad(Pedido pedido) {
 		return 1000;
 		
 	}
 	
-	@Override
+	/**
+	 * Devuelve una representación en forma de cadena del objeto Moto.
+	 *
+	 * @return String que representa a Moto, incluyendo la cadena devuelta por el método toString de la clase Vehiculo, con una etiqueta adicional indicando que se trata de una moto.
+	 */
+
 	public String toString() {
 		return "\n********"+
 				"\nMoto"+super.toString();

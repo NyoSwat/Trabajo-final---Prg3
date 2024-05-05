@@ -6,10 +6,10 @@ package negocio;
  */
 public class Baul extends ViajeDecorador {
 
-    /**
+	/**
      * Constructor para crear un objeto Baul.
      *
-     * @param viaje El viaje original al que se le añadirá la opción de usar el baúl.
+     * @param viaje: de tipo IViaje,viaje original al que se le añadirá la opción de usar el baúl.
      */
     public Baul(IViaje viaje) {
         super(viaje);
@@ -20,8 +20,9 @@ public class Baul extends ViajeDecorador {
      * El costo se compone del costo original más un adicional basado en la cantidad de pasajeros y la distancia.
      * Además, se agrega un valor extra por usar el baúl.
      *
-     * @return Costo total del viaje con uso del baúl.
+     * @return double con costo total del viaje con uso del baúl.
      */
+
     @Override
     public double getCosto() {
         double costoOriginal = getViaje().getCosto();
