@@ -9,9 +9,9 @@ public class Cliente extends Usuario {
     /**
      * Constructor para crear un objeto Cliente.
      *
-     * @param usuario  Nombre de usuario del cliente.
-     * @param password Contraseña del cliente.
-     * @param nombre   Nombre completo del cliente.
+     * @param usuario: de tipo String, nombre de usuario del cliente.
+     * @param password: de tipo String, contraseña del cliente.
+     * @param nombre: de tipo String, nombre completo del cliente.
      */
     public Cliente(String usuario, String password, String nombre) {
         super(usuario, password, nombre);
@@ -23,7 +23,10 @@ public class Cliente extends Usuario {
     }
 
     
-   @Override
+    /**
+     *Devuelve una representación en forma de cadena de Cliente.
+	*@return String que representa a Cliente
+	*/
    public String toString() {
 	   return "\nCliente: "+super.toString();
    }

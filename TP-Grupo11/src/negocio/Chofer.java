@@ -3,6 +3,7 @@ package negocio;
 /**
  * La clase Chofer representa a un conductor con su información personal y categoría.
  */
+
 public class Chofer {
     private String dni; // Documento de identidad del chofer
     private String nombre; // Nombre completo del chofer
@@ -12,11 +13,13 @@ public class Chofer {
     /**
      * Constructor para crear un objeto Chofer.
      *
-     * @param dni      Documento de identidad del chofer.
-     * @param nombre   Nombre completo del chofer.
-     * @param categoria Categoría del chofer (por ejemplo, "A", "B", "C").
+     * @param dni:de tipo String, documento de identidad del chofer.
+     * @param nombre: de tipo String, nombre completo del chofer.
+     * @param categoria: de tipo Categoria, categoría del chofer (por ejemplo, "A", "B", "C").
      * @throws IllegalArgumentException Si la categoría no es válida.
+
      */
+
     public Chofer(String dni, String nombre, String categoria) {
         super();
         this.dni = dni;
@@ -27,11 +30,17 @@ public class Chofer {
     /**
      * Obtiene el sueldo del chofer según su categoría.
      *
-     * @return Sueldo del chofer.
+     * @return double con sueldo del chofer.
      */
+
     public double getSueldo() {
         return categoria.getSueldo();
     }
+    /**
+     * Devuelve el valor actual de dni.
+     * 
+     * @return String con el valor actual de dni.
+     */
 
 	public String getDni() {
 		return this.dni;
@@ -46,15 +55,20 @@ public class Chofer {
 	}
 
 	/**
-	 * Modificar la categoria despues de creado.
-	 * @param categoria
+	 * Establece el valor de categoria.
+	 * 
+	 * @param categoria: de tipo String, nuevo valor de categoria a establecer.
 	 */
 	public void setCategoria(String categoria) {
 		this.categoria = factoryCategoria.getCategoria(categoria);
 	}
 	
 
-	@Override
+	/**
+     *Devuelve una representación en forma de cadena de Chofer.
+	*@return String que representa a Chofer.
+	*/
+
 	public String toString() {
 		return "\n********"+
 				"\nNombre: "+this.nombre+
