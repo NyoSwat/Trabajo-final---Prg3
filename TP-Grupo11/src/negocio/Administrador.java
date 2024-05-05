@@ -3,6 +3,7 @@ package negocio;
 import java.util.ArrayList;
 import java.util.Date;
 
+import Excepciones.UsuarioExistenteException;
 import datos.Viaje;
 import negocio.Chofer;
 import negocio.Sistema;
@@ -21,6 +22,8 @@ public class Administrador extends Usuario {
      * @param usuario  Nombre de usuario del administrador.
      * @param password Contraseña del administrador.
      * @param nombre   Nombre completo del administrador.
+     * @throws UsuarioExistenteException 
+     * @throws IllegalArgumentException 
      */
     public Administrador(Sistema sistema, String usuario, String password, String nombre) {
         super(usuario, password, nombre);
@@ -162,11 +165,10 @@ public class Administrador extends Usuario {
 	 * @return
 	 */
 	public double totalDineroNecesario() {
-		ArrayList<Chofer> listaChoferes = new ArrayList<Chofer>();
 		double sueldo = 0;
 		
-		for(int i=0; i<listaChoferes.size(); i++) {
-			sueldo += listaChoferes.get(i).getSueldo();
+		for(int i=0; i<sistema.listaChoferes().size(); i++) {
+			sueldo += sistema.listaChoferes().get(i).getSueldo();
 		}
 		
 		return sueldo;
@@ -182,7 +184,7 @@ public class Administrador extends Usuario {
 	public void reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal) {
 		ArrayList<Viaje> viajes = this.getListaViajes();
 		
-		System.out.println("Viajes realizados por el chofer: " + chofer.getDni());
+		System.out.println("Viajes realizados por el chofer: " +chofer.getNombre()+", dni: "+ chofer.getDni());
 		for(int i=0; i<viajes.size(); i++) {
 			if(viajes.get(i).getChofer().equals(chofer) && viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
 				System.out.println(viajes.get(i).getPedido());

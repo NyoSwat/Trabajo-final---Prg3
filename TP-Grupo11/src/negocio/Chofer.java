@@ -37,22 +37,12 @@ public class Chofer {
 		return this.dni;
 	}
 	
-	
-	
-	/**
-	 * Modificar el DNI despues de creado.
-	 * @param dni
-	 */
-	public void setDni(String dni) {
-		this.dni = dni;
+	public String getNombre() {
+		return this.nombre;
 	}
-
-	/**
-	 * Modificar el nombre despues de creado.
-	 * @param nombre
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	
+	public Categoria getCategoria() {
+		return this.categoria;
 	}
 
 	/**

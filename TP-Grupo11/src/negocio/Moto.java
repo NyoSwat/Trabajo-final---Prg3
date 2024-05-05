@@ -11,8 +11,8 @@ public class Moto extends Vehiculo {
      *
      * @param patente La patente de la motocicleta.
      */
-    public Moto(String patente) {
-        super(patente, false, false, 1);
+    public Moto(String patente,int cantPasajeros,boolean baul,boolean pet) {
+        super(patente, baul, pet, cantPasajeros);
     }
 
     /**Verificar si se puede acceder al servicio de baúl deseado
@@ -51,5 +51,22 @@ public class Moto extends Vehiculo {
 	public String toString() {
 		return "\n********"+
 				"\nMoto"+super.toString();
+	}
+
+	@Override
+	public void setCantPasajeros(int cantidad) throws IllegalArgumentException {
+		if(cantidad != 1)
+		throw new IllegalArgumentException("La moto no puede modificar su capacidad. Maximo 1 pasajero.");
+	}
+	
+	@Override
+	public void setBaul(boolean condicion) {
+		if(condicion)
+		throw new IllegalArgumentException("La moto no puede tener baul");
+	}
+	@Override
+	public void setPetFriendly(boolean condicion) {
+		if(condicion)
+		throw new IllegalArgumentException("La moto no puede llevar mascota");
 	}
 }

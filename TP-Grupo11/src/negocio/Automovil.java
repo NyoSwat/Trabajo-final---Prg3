@@ -11,8 +11,8 @@ public class Automovil extends Vehiculo {
      *
      * @param patente:parámetro de tipo String que representa la patente del automóvil.
      */
-    public Automovil(String patente) {
-        super(patente, true, true, 4);
+    public Automovil(String patente,int cantPasajeros,boolean baul,boolean pet) {
+        super(patente, baul, pet, cantPasajeros);
     }
 
 
@@ -50,5 +50,15 @@ public class Automovil extends Vehiculo {
 	public String toString() {
 		return "\n*********"+
 				"\nAutomovil"+super.toString();
+	}
+
+
+	@Override
+	public void setCantPasajeros(int cantidad)throws IllegalArgumentException {
+		if(cantidad>= 0 && cantidad <=4) {
+			super.maxPasajeros = cantidad;
+		}
+		else
+			throw new IllegalArgumentException("cantidad invalida.Maximo 4.");
 	}
 }

@@ -11,8 +11,8 @@ public class Combi extends Vehiculo {
      *
      * @param patente : de tipo String con la patente de la combi.
      */
-    public Combi(String patente) {
-        super(patente, true, false, 10);
+    public Combi(String patente,int cantPasajeros,boolean baul,boolean pet) {
+        super(patente, baul, pet, cantPasajeros);
     }
     /**Verifica si se puede acceder al servicio de baul deseado.
      * @return boolean true ya que este servicio esta disponible se solicite o no.
@@ -58,6 +58,13 @@ public class Combi extends Vehiculo {
 	public String toString() {
 		return "\n**********"+
 				"\nCombi"+super.toString();
+	}
+	@Override
+	public void setCantPasajeros(int cantidad)throws IllegalArgumentException {
+		if(cantidad >= 0 && cantidad <= 10)
+			this.maxPasajeros = cantidad;
+		else
+			throw new IllegalArgumentException("Cantidad invalida.Maximo 10");
 	}
 }
 

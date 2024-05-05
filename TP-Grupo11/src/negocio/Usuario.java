@@ -21,11 +21,19 @@ public abstract class Usuario {
     }
     
     /**
-     * Informa el nombre del titular de la cuenta
-     * @return retorna el nombre del usuario
+     * Informa el nombre de usuario
+     * @return retorna el nombre de usuario
      */
 	public String getUsuario() {
-		return this.nombre+"\n";
+		return this.usuario;
+	}
+	
+	/**
+	 * Informa el nombre del titular de la cuenta
+	 * @return retorna un String con el nombre del titular
+	 */
+	public String getNombre() {
+		return this.nombre;
 	}
 	
 	

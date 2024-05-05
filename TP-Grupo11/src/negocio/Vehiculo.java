@@ -7,9 +7,9 @@ package negocio;
  */
 public abstract class Vehiculo {
     private String patente; // La patente del vehículo
-    private boolean baul; // Indica si el vehiculo tiene espacio de carga (baul)
-    private boolean petFriendly; // Indica si el vehiculo es apto para mascotas
-    private int maxPasajeros; // El numero maximo de pasajeros que puede transportar el vehiculo
+    protected boolean baul; // Indica si el vehiculo tiene espacio de carga (baul)
+    protected boolean petFriendly; // Indica si el vehiculo es apto para mascotas
+    protected int maxPasajeros; // El numero maximo de pasajeros que puede transportar el vehiculo
 
     /**
      * Crea un nuevo objeto Vehiculo con los parametros especificados.
@@ -21,9 +21,9 @@ public abstract class Vehiculo {
      */
     protected Vehiculo(String patente, boolean baul, boolean petFriendly, int maxPasajeros) {
         this.patente = patente;
-        this.baul = baul;
-        this.petFriendly = petFriendly;
-        this.maxPasajeros = maxPasajeros;
+        this.setBaul(baul);
+        this.setPetFriendly(petFriendly);
+        this.setCantPasajeros(maxPasajeros);
     }
 
   
@@ -92,6 +92,16 @@ public abstract class Vehiculo {
 	public boolean isPetFriendly() {
 			return petFriendly;
 		}
+	
+	public void setBaul(boolean condicion) {
+		this.baul = condicion;
+	}
+	
+	public void setPetFriendly(boolean condicion) {
+		this.petFriendly = condicion;
+	}
+	
+	abstract public void setCantPasajeros(int cantidad)throws IllegalArgumentException;
 	
 	@Override
 	public String toString() {

@@ -5,7 +5,7 @@ package negocio;
  * Hereda de la clase Usuario y agrega información específica para clientes.
  */
 public class Cliente extends Usuario {
-
+	Sistema sistema;
     /**
      * Constructor para crear un objeto Cliente.
      *
@@ -15,6 +15,11 @@ public class Cliente extends Usuario {
      */
     public Cliente(String usuario, String password, String nombre) {
         super(usuario, password, nombre);
+    }
+    
+    
+    public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros) {
+    	
     }
 
     

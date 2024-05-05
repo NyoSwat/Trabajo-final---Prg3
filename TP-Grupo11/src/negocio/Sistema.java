@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Excepciones.ChoferExistenteException;
+import Excepciones.UsuarioExistenteException;
+import Excepciones.VehiculoExistenteException;
 import datos.Viaje;
 import negocio.Chofer;
 import negocio.IViaje;
@@ -112,14 +115,13 @@ public class Sistema {
      * @param petFriendly : Si ser permite el acceso a animales.
      * @throws IllegalArgumentException En caso de que la patente ya exista o los argumentos sean invalidos
      */
-    public void agregarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly ) throws IllegalArgumentException{
-    	if((!tipo.equalsIgnoreCase("combi") && !tipo.equalsIgnoreCase("moto") && !tipo.equalsIgnoreCase("automovil")) ||
-    			cantPasajeros <= 0 || patente.equals("") || patente.equals(null)) {
+    public void agregarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly ) throws IllegalArgumentException,VehiculoExistenteException{
+    	if(!"moto automovil combi".contains(tipo.toLowerCase()) || cantPasajeros <= 0 || patente.equals("") || patente.equals(null)) {
     		throw new IllegalArgumentException("Parametros invalidos");
     	}else if(this.consultarVehiculo(patente) != null) {
-    		throw new IllegalArgumentException("El vehiculo ya existe");
+    		throw new VehiculoExistenteException("El vehiculo "+patente+" ya existe");
     	}else {
-    		this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente));
+    		this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente,cantPasajeros,baul,petFriendly));
     	}
     }
     
@@ -131,12 +133,12 @@ public class Sistema {
      * @param categoria : Categoria del nuevo chofer (Permanente, Contratado o Temporario).
      * @throws IllegalArgumentException en caso de que dni y nombre sean vacios o null o que la categoria no sea correcta.
      */
-    public void agregarChofer(String dni, String nombre, String categoria)throws IllegalArgumentException{
+    public void agregarChofer(String dni, String nombre, String categoria)throws IllegalArgumentException, ChoferExistenteException{
     	if(dni.equals("") || dni.equals(null) || nombre.equals("") || nombre.equals(null) || 
     			(!categoria.equalsIgnoreCase("contratado") && !categoria.equalsIgnoreCase("temporario") && !categoria.equalsIgnoreCase("Permanente"))) {
     		throw new IllegalArgumentException("Parametros invalidos");
     	}else if(this.consultarChofer(dni) != null) {
-    		throw new IllegalArgumentException("El chofer ya existe");
+    		throw new ChoferExistenteException("El chofer: "+nombre+",dni: "+dni+" ya existe");
     	}else {
     		this.choferes.add(new Chofer(dni, nombre, categoria));
     	}
@@ -149,11 +151,14 @@ public class Sistema {
      * @Param nombre:		longitud minima de 8 caracteres y maxima de 20, acepta letras y caracter espacio
      * @throws  (Agregar excepcion de si ya existe usuario)
      */   
-    public void agregarCliente(String usuario,String password,String nombre)throws IllegalArgumentException {
-    		if(usuario != null && !usuario.isEmpty() && usuario.matches("^(?!.*[.-].*[.-])[a-zA-Z0-9.-]{6,}+$") && this.consultarUsuario(usuario) == null) 
+    public void agregarCliente(String usuario,String password,String nombre)throws IllegalArgumentException,UsuarioExistenteException {
+    		if(usuario != null && !usuario.isEmpty() && usuario.matches("^(?!.*[.-].*[.-])[a-zA-Z0-9.-]{6,}+$")) 
     			if(password != null && !password.isEmpty() && password.matches("^[a-zA-Z0-9.]{8,}+$"))
     				if(nombre != null && !nombre.isEmpty() && nombre.matches("^[a-zA-Z\\s]{8,20}$"))
-    					this.usuarios.add(new Cliente(usuario, password, nombre));
+    					if(this.consultarUsuario(usuario) == null)
+    						this.usuarios.add(new Cliente(usuario, password, nombre));
+    					else
+    						throw new UsuarioExistenteException("Usuario: "+usuario+" ya existe");
     				else
     					throw new IllegalArgumentException("Nombre Invalido");
     			else
@@ -171,16 +176,14 @@ public class Sistema {
      * @param petFriendly : Nuevo valor para PetFriendly.
      * @throws IllegalArgumentException en caso de que el vehiculo no exista
      */
-    public void modificarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly) throws IllegalArgumentException{
+    public void modificarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly) throws VehiculoExistenteException{
 		Vehiculo vehiculo = this.consultarVehiculo(patente);	
 		if(vehiculo != null) {
-			vehiculo.setTipo(tipo);
-			vehiculo.setPatente(patente);
 			vehiculo.setCantPasajeros(cantPasajeros);
 			vehiculo.setBaul(baul);
 			vehiculo.setPetFriendly(petFriendly);
 		}else {
-			throw new IllegalArgumentException("No existe el vehiculo");
+			throw new VehiculoExistenteException("No existe el vehiculo");
 		}
 		
 	}
@@ -192,15 +195,13 @@ public class Sistema {
      * @param categoria : Nueva categoria del chofer.
      * @throws IllegalArgumentException en caso de que el chofer no exista
      */
-    public void modificarChofer(String dni, String nombre, String categoria)throws IllegalArgumentException{
+    public void modificarChofer(String dni, String nombre, String categoria)throws ChoferExistenteException{
     	Chofer chofer = this.consultarChofer(dni);
     	
     	if(chofer != null) {
-    		chofer.setDni(dni);
-    		chofer.setNombre(nombre);
     		chofer.setCategoria(categoria);
     	}else {
-    		throw new IllegalArgumentException("El chofer no existe");
+    		throw new ChoferExistenteException("El chofer no existe");
     	}
     }
     
@@ -212,7 +213,7 @@ public class Sistema {
      * @param nombre : Nuevo nombre del usuario
      * @throws IllegalArgumentException en caso de que no exista el usuario a modificar.
      */
-    public void modificarUsuario(String usuario,String password,String nombre) throws IllegalArgumentException{
+    public void modificarUsuario(String usuario,String password,String nombre) throws UsuarioExistenteException{
     	Usuario cliente = this.consultarUsuario(usuario);
     	
     	if(cliente != null) {
@@ -220,7 +221,7 @@ public class Sistema {
     		cliente.setPassword(password);
     		cliente.setNombre(nombre);
     	}else {
-    		throw new IllegalArgumentException("Usuario no encontrado");
+    		throw new UsuarioExistenteException("Usuario no encontrado");
     	}
     }
     
