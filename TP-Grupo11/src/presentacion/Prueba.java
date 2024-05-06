@@ -22,6 +22,9 @@ public class Prueba{
     	admin.consultarChofer("1").getCategoria().setFechaIngreso(12,12,2004);
     	admin.agregarChofer("2", "chofer2", "Temporario");
     	admin.agregarChofer("3", "chofer3", "Contratado");
+    	admin.agregarChofer("4", "Chofer4", "permanente");
+    	admin.consultarChofer("4").getCategoria().setCantidadHijos(4);
+    	admin.consultarChofer("4").getCategoria().setFechaIngreso(2, 8, 2010);
     	admin.agregarChofer("2", "chofer2", "Temporario");//Prueba de cliente existente
 
     	//System.out.println(admin.getListaChoferes());//Listado de choferes en el sistema
@@ -54,32 +57,31 @@ public class Prueba{
     	
     	//System.out.println(admin.getListaUsuarios());
     	
-    	sistema.validarPedido(new Pedido(2,"PELIgrosa",false,false));
-    	sistema.validarPedido(new Pedido(1,"SinAsfaltar",false,false));
+    	sistema.validarPedido(new Pedido(2,"PELIgrosa",true,false));
+    	sistema.validarPedido(new Pedido(1,"SinAsfaltar",false,true));
     	sistema.validarPedido(new Pedido(6,"ESTANDAR",false,false));
-    	sistema.validarPedido(new Pedido(1,"peligrosa",false,false));
+    	sistema.validarPedido(new Pedido(1,"peligrosa",true,true));
     	sistema.validarPedido(new Pedido(6,"peligrosa",false,false));
-    	sistema.validarPedido(new Pedido(6,"sinasfaltar",false,false));
+    	sistema.validarPedido(new Pedido(6,"sinasfaltar",true,true));
     	
     	
     	System.out.println(admin.getListaViajes());
     	
-    	System.out.println(admin.totalDineroNecesario());
     	
     	System.out.println(admin.getListaChoferes());
-
-    	
-    	
     	
     	
     	try {
     	sistema.agregarCliente("Cliente1", "12345678", "Cliente uno");
+    	sistema.agregarCliente("Usuario2", "COntrasena2", "Cliente doss");
     	}
     	catch(Exception e) {
     		System.out.println(e.getMessage());
     	}
     	
+    	System.out.println(admin.getListaUsuarios());
     	
+    	System.out.println("dinero total "+admin.totalDineroNecesario());
     	
     }
 }

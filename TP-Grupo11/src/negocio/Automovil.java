@@ -22,7 +22,10 @@ public class Automovil extends Vehiculo {
      */
 
 	protected boolean verificaBaul(boolean deseaBaul) {
-		return true;
+		if( deseaBaul)
+			return isBaul();
+		else
+			return true;
 	}
 
 	/**Verificar si se puede acceder al servicio PetFriendly deseado
@@ -30,7 +33,10 @@ public class Automovil extends Vehiculo {
      */
 
 	protected boolean verificaPetFriendly(boolean deseaPetFrienly) {
-		return true;
+		if(deseaPetFrienly)
+			return isPetFriendly();
+		else
+			return true;
 	}
 
 	

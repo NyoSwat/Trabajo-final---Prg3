@@ -34,7 +34,7 @@ public abstract class Vehiculo {
 	 * @return int con el valor de prioridad que tiene un vehículo respecto a un pedido.
      */
 
-	public int getPrioridad(Pedido pedido)
+	public Integer getPrioridad(Pedido pedido)
     {   Integer prioridad = null;
         boolean condicion1=this.verifica_Cant_Pas(pedido.getCantPasajeros());
         boolean condicion2=this.verificaBaul(pedido.isBaul());

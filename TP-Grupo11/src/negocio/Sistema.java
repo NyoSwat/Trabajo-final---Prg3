@@ -153,8 +153,8 @@ public class Sistema {
      * @throws  (Agregar excepcion de si ya existe usuario)
      */   
     public void agregarCliente(String usuario,String password,String nombre)throws IllegalArgumentException,UsuarioExistenteException {
-    		if(usuario != null && !usuario.isEmpty() && usuario.matches("^(?!.*[.-].*[.-])[a-zA-Z0-9.-]{6,}+$")) 
-    			if(password != null && !password.isEmpty() && password.matches("^[a-zA-Z0-9.]{8,}+$"))
+    		if(usuario != null && !usuario.isEmpty() && usuario.matches("^(?!.*[.-].*[.-])[a-zA-Z0-9.-]{4,}+$")) 
+    			if(password != null && !password.isEmpty() && password.matches("^[a-zA-Z0-9.]{4,}+$"))
     				if(nombre != null && !nombre.isEmpty() && nombre.matches("^[a-zA-Z\\s]{8,20}$"))
     					if(this.consultarUsuario(usuario) == null)
     						this.usuarios.add(new Cliente(usuario, password, nombre));
@@ -256,11 +256,11 @@ public class Sistema {
     
     
     //Devuelve la lista de viajes ordenada por costos de menor a mayor
-    public ArrayList<Viaje> listaViajes(){
-    	ArrayList<Viaje> listaOrdenada = (ArrayList<Viaje>) viajes.clone();
-    	Collections.sort(listaOrdenada);
-    	
-    	return listaOrdenada;
+    public ArrayList<IViaje> listaViajes() {
+       		
+    	ArrayList<IViaje> clon = (ArrayList<IViaje>) viajes.clone();
+    	//Collections.sort(clon);
+    	return clon;
     }
 
     public void validarPedido(Pedido pedido) {
@@ -287,17 +287,15 @@ public class Sistema {
     private void generarViaje(Pedido pedido) {
     	IViaje viaje = null;
     	Vehiculo vehiculoAsignado = null;
-    	int prioridad = 0;
+    	Integer prioridad, prioriMax = 0;
     	Chofer choferAsignado = null;
     	Random ran = new Random();
     	
     	for(int i=0; i < vehiculos.size(); i++) {
-    		if(vehiculos.get(i).maxPasajeros >= pedido.getCantPasajeros() && !(pedido.isBaul()==true && vehiculos.get(i).isBaul()==false) &&
-    				!(pedido.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) {
-    			if(vehiculos.get(i).getPrioridad(pedido) >= prioridad ) {
+    		prioridad = vehiculos.get(i).getPrioridad(pedido);
+    			if(prioridad != null && prioridad >= prioriMax ) {
     				vehiculoAsignado = vehiculos.get(i);
-    				prioridad = vehiculoAsignado.getPrioridad(pedido);
-    			}
+    				prioriMax = prioridad;
     		}
     	}
     	
@@ -316,9 +314,9 @@ public class Sistema {
     	if(pedido.isPetFriendly())
     		viaje = new PetFriendly(viaje);
     	
-    	if(choferAsignado.getCategoria().getNombreCategoria().equalsIgnoreCase("contratado")) {
-    		Contratado contratado = (Contratado) choferAsignado.getCategoria();
-    		contratado.realizaViaje();
+    	if(choferAsignado.getCategoria().getNombreCategoria().equalsIgnoreCase("temporario")) {
+    		Temporario temp = (Temporario) choferAsignado.getCategoria();
+    		temp.realizaViaje();
     	}
     	
     	

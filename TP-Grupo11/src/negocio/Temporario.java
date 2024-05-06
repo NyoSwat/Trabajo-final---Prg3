@@ -45,6 +45,10 @@ public class Temporario extends Empleado {
     public String toString() {
     	return "\nCant. viajes: "+cantidadViajes;
     }
+    
+    public void realizaViaje() {
+    	this.cantidadViajes +=1;
+    }
 
 
 	@Override

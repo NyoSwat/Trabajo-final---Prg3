@@ -64,4 +64,18 @@ public abstract class ViajeDecorador implements IViaje {
     public double getValorBase() {
     	return viaje.getValorBase();
     }
+    
+    @Override
+    public String toString() {
+    	return "\n*************"+
+    			"\nChofer: "+getChofer().getNombre()+
+    			"\nVehiculo: "+getVehiculo().getPatente()+
+    			"\nDistancia: "+getDistancia()+" km"+
+    			"\nZona: "+getPedido().getZona()+
+    			"\nCantidad Pasajeros: "+getPedido().getCantPasajeros()+
+    			"\nMascota: "+getPedido().isPetFriendly()+
+    			"\nBaul: "+getPedido().isBaul()+
+    			"\nValor: $"+this.getCosto()+
+    			"\n";
+    }
 }

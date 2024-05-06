@@ -26,8 +26,14 @@ public class Administrador extends Usuario {
      * @throws IllegalArgumentException 
      */
     public Administrador(Sistema sistema, String usuario, String password, String nombre) {
-        super(usuario, password, nombre);
-        this.sistema = sistema;
+    	super(usuario, password, nombre);
+        try {
+        	this.sistema = sistema;
+        	sistema.agregarCliente(usuario, password, nombre);
+        }
+        catch(Exception e) {
+        	System.out.println(e.getMessage());
+        }
     }
 
 	
@@ -172,8 +178,9 @@ public class Administrador extends Usuario {
 	/**
 	 * Devuelve la lista de viajes ordenada por costos de mayor a menor.
 	 * @return ArrayList de Viaje.
+	 * @throws CloneNotSupportedException 
 	 */
-	public ArrayList<Viaje> getListaViajes(){
+	public ArrayList<IViaje> getListaViajes(){
 		return sistema.listaViajes();
 	}
 	
@@ -183,7 +190,6 @@ public class Administrador extends Usuario {
 	 * @param dni: de tipo String, dni de chofer.
 	 * @return double con salario de chofer.
 	 */
-
 	public double calcularSalario(String dni) {	
 		return sistema.consultarChofer(dni).getSueldo();
 	}
@@ -212,12 +218,14 @@ public class Administrador extends Usuario {
 	 */
 
 	public void reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal) {
-		ArrayList<Viaje> viajes = this.getListaViajes();
+		ArrayList<IViaje> iviajes = this.getListaViajes();
+		Viaje viajes;
 		
 		System.out.println("Viajes realizados por el chofer: " +chofer.getNombre()+", dni: "+ chofer.getDni());
-		for(int i=0; i<viajes.size(); i++) {
-			if(viajes.get(i).getChofer().equals(chofer) && viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
-				System.out.println(viajes.get(i).getPedido());
+		for(int i=0; i<iviajes.size(); i++) {
+			viajes = (Viaje) iviajes.get(i);
+			if(viajes.getChofer().equals(chofer) && viajes.getPedido().getFecha().after(fechaInicial) && viajes.getPedido().getFecha().before(fechaFinal)) {
+				System.out.println(viajes.getPedido());
 			}
 		}
 	}
@@ -231,12 +239,13 @@ public class Administrador extends Usuario {
 	 */
 
 	public void reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) {
-		ArrayList<Viaje> viajes = this.getListaViajes();
-		
+		ArrayList<IViaje> iviajes = this.getListaViajes();
+		Viaje viajes;
 		System.out.println("Viajes realizados por el usuario: " + usuario.getUsuario());
-		for(int i=0; i<viajes.size(); i++) {
-			if(viajes.get(i).getCliente().equals(usuario) && viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
-				System.out.println(viajes.get(i).getPedido());
+		for(int i=0; i<iviajes.size(); i++) {
+			viajes = (Viaje) iviajes.get(i);
+			if(viajes.getCliente().equals(usuario) && viajes.getPedido().getFecha().after(fechaInicial) && viajes.getPedido().getFecha().before(fechaFinal)) {
+				System.out.println(viajes.getPedido());
 			}
 		}
 	}

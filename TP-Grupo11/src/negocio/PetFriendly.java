@@ -30,4 +30,6 @@ public class PetFriendly extends ViajeDecorador {
         double pasajerosAdicional = 0.1 * getViaje().getPedido().getCantPasajeros();
         return costoOriginal + getViaje().getValorBase() * (distanciaAdicional + pasajerosAdicional);
     }
+    
+    
 }

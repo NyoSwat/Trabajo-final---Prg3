@@ -11,7 +11,7 @@ import negocio.Vehiculo;
  * el chofer, el vehículo y la distancia recorrida. Las clases concretas que heredan de esta
  * deben implementar los detalles específicos del viaje.
  */
-public abstract class Viaje implements IViaje, Comparable<Viaje> {
+public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 	private Usuario cliente;
 	/**
 	 * referencia al pedido que origino el viaje
@@ -20,7 +20,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
 
     /**
      * El chofer asignado al viaje.
-     * @aggregation shared
      */
     private Chofer chofer;
     /**
@@ -30,7 +29,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
 
     /**
      * El vehículo utilizado en el viaje.
-     * @aggregation shared
      */
     private Vehiculo vehiculo;
     
@@ -107,7 +105,7 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
      * @return El costo base del viaje (un valor positivo establecido para todos los viajes).
      */
     public double getValorBase() {
-        return this.valorBase;
+        return Viaje.valorBase;
     }
 
     /**
@@ -116,7 +114,7 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
      * @param valorBase El nuevo valor base a asignar.
      */
     public void setValorBase(double valorBase) {
-        this.valorBase = valorBase;
+        Viaje.valorBase = valorBase;
     }
     
     @Override
@@ -129,16 +127,23 @@ public abstract class Viaje implements IViaje, Comparable<Viaje> {
     		return 0;
     }
     
+    @Override
+    public Object clone() throws CloneNotSupportedException{ 
+    	Viaje clon = (Viaje) super.clone();
+    	return clon;
+    }
+    
     
     @Override
     public String toString() {
     	return "\n*************"+
-    			"\nCliente: "+this.cliente+
     			"\nChofer: "+this.chofer.getNombre()+
     			"\nVehiculo: "+this.vehiculo.getPatente()+
     			"\nDistancia: "+this.distanciaRecorrida+" km"+
     			"\nZona: "+this.pedido.getZona()+
     			"\nCantidad Pasajeros: "+this.pedido.getCantPasajeros()+
+    			"\nMascota: "+this.pedido.isPetFriendly()+
+    			"\nBaul: "+this.pedido.isBaul()+
     			"\nValor: $"+this.getCosto()+
     			"\n";
     }

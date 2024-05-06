@@ -33,7 +33,16 @@ public abstract class Categoria {
     public String getNombreCategoria() {
     	return this.nombre;
     }
-    
+    /**
+     * Establece la cantidad de hijo que tiene el chofer
+     * @param cantHijos cantidad entera de hijos
+     */
     abstract public void setCantidadHijos(int cantHijos);
+    /**
+     * Fecha que ingreso el chofer como empleado en el sistema
+     * @param dia entero, dia de ingreso
+     * @param mes entero, mes de ingreso
+     * @param ano entero, ano de ingreso
+     */
     abstract public void setFechaIngreso(int dia, int mes, int ano);
 }

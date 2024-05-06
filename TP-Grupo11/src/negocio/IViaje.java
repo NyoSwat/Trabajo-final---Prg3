@@ -52,4 +52,6 @@ public interface IViaje {
      * @return double con valor base del viaje.
      */
     double getValorBase();
+
+
 }

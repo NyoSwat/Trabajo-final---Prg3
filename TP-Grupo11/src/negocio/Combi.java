@@ -21,7 +21,10 @@ public class Combi extends Vehiculo {
      */
 
 	protected boolean verificaBaul(boolean deseaBaul) {
-		return true;
+		if(deseaBaul)
+			return isBaul();
+		else
+			return true;
 	}
 
 	/**Verifica si se puede acceder al servicio PetFrienly deseado
@@ -30,7 +33,7 @@ public class Combi extends Vehiculo {
 
 	protected boolean verificaPetFriendly(boolean deseaPetFrienly) {
 		if( deseaPetFrienly)
-			return false;
+			return isPetFriendly();
 	    else
 	    	return true;
 	}
