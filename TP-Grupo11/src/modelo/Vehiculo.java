@@ -1,4 +1,4 @@
-package negocio;
+package modelo;
 /**
  * Esta clase abstracta representa un vehículo genérico utilizado en viajes.
  * Proporciona información sobre la patente, capacidad de carga, amigabilidad con mascotas y capacidad de pasajeros.

@@ -1,6 +1,6 @@
-package negocio;
+package modelo;
 
-public abstract class ViajeDecorador implements IViaje {
+public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     private IViaje viaje;
     
     /**
@@ -12,13 +12,9 @@ public abstract class ViajeDecorador implements IViaje {
         return this.viaje;
     }
     
-    /**
-     * Crea un nuevo decorador para el viaje dado.
-     *
-     * @param viaje El viaje base al que se le aplicará el decorador.
-     */
-    public ViajeDecorador(IViaje viaje){
-        this.viaje = viaje;
+    
+    public void setIViaje(IViaje viaje) {
+    	this.viaje = viaje;
     }
     
     /**

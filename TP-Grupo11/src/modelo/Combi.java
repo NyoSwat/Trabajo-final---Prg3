@@ -1,4 +1,4 @@
-package negocio;
+package modelo;
 
 /**
  * La clase Combi representa un vehículo tipo combi.
@@ -10,16 +10,16 @@ public class Combi extends Vehiculo {
 
     /**
      * Constructor para crear un objeto Combi.
-     *
      * @param patente: de tipo String, con la patente de la combi.
      */
-    public Combi(String patente,boolean baul,boolean pet) {
+    public Combi(String patente,boolean baul,boolean pet,int maxPasajeros) {
         super(patente, baul, pet,10);
+        setCantPasajeros(maxPasajeros);
     }
+
     /**Verifica si se puede acceder al servicio de baul deseado.
      * @return boolean true ya que este servicio esta disponible se solicite o no.
      */
-
 	protected boolean verificaBaul(boolean deseaBaul) {
 		if(deseaBaul)
 			return isBaul();
@@ -30,7 +30,6 @@ public class Combi extends Vehiculo {
 	/**Verifica si se puede acceder al servicio PetFrienly deseado
      * @return boolean que indica si se puede brindar el servicio necesario de traslado de mascotas
      */
-
 	protected boolean verificaPetFriendly(boolean deseaPetFrienly) {
 		if( deseaPetFrienly)
 			return isPetFriendly();
@@ -47,8 +46,6 @@ public class Combi extends Vehiculo {
      * @param pedido:de tipo Pedido, datos de un pedido en particular.
      * @return int con valor de prioridad asignado.
      */
-
-	
 	protected int calculaPrioridad(Pedido pedido) {
 		 final int ptosBaul=100;
 	     final int ptosPas=10;

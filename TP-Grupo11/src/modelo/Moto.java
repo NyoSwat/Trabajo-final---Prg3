@@ -1,4 +1,4 @@
-package negocio;
+package modelo;
 
 /**
  * La clase Moto representa un vehículo tipo motocicleta.
@@ -11,8 +11,9 @@ public class Moto extends Vehiculo {
      *
      * @param patente: de tipo String, patente de la motocicleta.
      */
-    public Moto(String patente,boolean baul,boolean pet) {
+    public Moto(String patente,boolean baul,boolean pet,int maxPasajeros) {
         super(patente, baul, pet, 1);
+        setCantPasajeros(maxPasajeros);
     }
 
     /**Verificar si se puede acceder al servicio de baúl deseado

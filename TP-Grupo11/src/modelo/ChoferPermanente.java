@@ -1,4 +1,4 @@
-package negocio;
+package modelo;
 
 import java.util.GregorianCalendar;
 
@@ -6,61 +6,48 @@ import java.util.GregorianCalendar;
  * La clase Permanente representa a un empleado permanente en la empresa.
  * Hereda de la clase Empleado y agrega atributos relacionados con la antiguedad y beneficios.
  */
-
-
-public class Permanente extends Empleado {
-	private static double plusAntiguedad; //Porcentaje de aumento que se aplica al sueldo basico por antiguedad
-	private static double plusHijos; //Porcentaje de aumento que se aplica al sueldo basico por cantidad de hijos
-	private GregorianCalendar fechaIngreso = new GregorianCalendar(); // Fecha de ingreso del empleado a la empresa
+public class ChoferPermanente extends ChoferEmpleado {
+	private static double plusAntiguedad = 0.01; //Porcentaje de aumento que se aplica al sueldo basico por antiguedad
+	private static double plusHijos = 0.02; //Porcentaje de aumento que se aplica al sueldo basico por cantidad de hijos
 	private int cantidadHijos;//Numero de hijos del empleado
+	private GregorianCalendar fechaIngreso = new GregorianCalendar(); // Fecha de ingreso del empleado a la empresa
     
 	/**
      * Constructor para crear un objeto Permanente.<br>
-     * Inicializa el nombre de la categoría como "Permanente". El valor inicial de plusHijos sera 0.01
-     * y el de plusAntiguedad 0.02 .
+     * <b>pre:</b> dni distinto de null, no vacio y valido.
+     * 			nombre distinto de null, no vacio y valido.
      */
-
-    public Permanente() {
-        super("Permanente");
-        plusHijos=0.01;
-        plusAntiguedad=0.02;
+    public ChoferPermanente(String nombre,String dni) {
+    	super(dni, nombre);
     }
     
- 
     /**Método que le asigna otro valor al atributo plusAntiguedad.
      *@param plusAntiguedad:de tipo double con nuevo valor de plusAntiguedad.
      */
     public static void setPlusAntiguedad(double plusAntiguedad) {
-		Permanente.plusAntiguedad = plusAntiguedad;
+		ChoferPermanente.plusAntiguedad = plusAntiguedad;
 	}
-  
-
 
     /**
      * Calcula el sueldo del empleado permanente.
      * Se calcula el sueldo del empleado permanente en base a un valor básico y un plus por antiguedad.
      * También tiene un aumento por cantidad de hijos y un descuento por aportes jubilatorios.
-     *
      * @return double con sueldo del empleado permanente.
      */
-
     @Override
     public double getSueldo() {
     	 int antiguedad;
       	 antiguedad=calcAntiguedad(this.fechaIngreso);
-   	     return Empleado.sueldoBasico*(1+plusAntiguedad*antiguedad+plusHijos*cantidadHijos-Empleado.aportes);
-        
-     	 
+   	     return ChoferEmpleado.sueldoBasico*(1+plusAntiguedad*antiguedad+plusHijos*cantidadHijos-ChoferEmpleado.aportes);
        }
+
     /**Calcula, en anos, la antiguedad del empleado en la empresa, teniendo en cuenta su fecha de ingreso
      * a la misma <br>
      * <b> Pre:</b> la fecha de ingreso debe ser más antigua que la del día en que se invoca este método<br>
      * <b> Post:</b> calcular la diferencia de anos entra cada fecha <br>
      * @param fechaIngreso: de tipo GregorianCalendar, fecha de ingreso a la institución.
      * @return int con la diferencia, en anos, entre las fechas.
-
      */
-
     public int calcAntiguedad(GregorianCalendar fechaIngreso)
     {    GregorianCalendar hoy = new GregorianCalendar();
     
@@ -76,31 +63,32 @@ public class Permanente extends Empleado {
     }
     
     
-    /**Devuelve una representación en forma de cadena de la clase Permanente.
+    /**
+     * Devuelve una representación en forma de cadena de la clase Permanente.
      *@return String que representa a Permanente.
-     *
      */
-
     public String toString() {
     	return "\nCant. hijos: "+this.cantidadHijos;
     }
 
-
-    /**Método que le asigna otro valor al aributo CantHijos.
+    /**
+     * Método que le asigna otro valor al aributo CantHijos.
      * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
      */
 	public void setCantidadHijos(int cantHijos) {
 		this.cantidadHijos=cantHijos;
 		
 	}
-
+	
+	public int getCantHijos() {
+		return this.cantidadHijos;
+	}
 
 	/**Método que le asigna otro valor al atributo FechaIngreso.
      * @param dia: int, dia.
      * @param mes: int, mes.
      * @param ano: int, ano.
      */
-	
 	public void setFechaIngreso(int dia, int mes, int ano) {
 		// GregorianCalendar toma el mes empezando desde 0
 		GregorianCalendar fecha = new GregorianCalendar(ano, mes - 1, dia);

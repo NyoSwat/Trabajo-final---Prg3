@@ -1,4 +1,4 @@
-package negocio;
+package modelo;
 
 /**
  * La clase FactoryVehiculo es una fábrica que crea objetos de tipo Vehiculo según el tipo especificado.
@@ -14,15 +14,15 @@ public class FactoryVehiculo {
      * @return Objeto Vehiculo creado.
      * @throws IllegalArgumentException Si el tipo de vehículo no es válido.
      */
-    public Vehiculo getVehiculo(String vehiculoType, String patente,boolean baul,boolean pet) {
+    public Vehiculo getVehiculo(String vehiculoType, String patente,boolean baul,boolean pet,int maxPasajeros) {
         if (vehiculoType == null)
             throw new IllegalArgumentException("El tipo de vehiculo no puede ser vacio.");
         else if (vehiculoType.equalsIgnoreCase("moto"))
-            return new Moto(patente,baul,pet);
+            return new Moto(patente,baul,pet,maxPasajeros);
         else if (vehiculoType.equalsIgnoreCase("automovil"))
-            return new Automovil(patente,baul,pet);
+            return new Automovil(patente,baul,pet,maxPasajeros);
         else if (vehiculoType.equalsIgnoreCase("combi"))
-            return new Combi(patente,baul,pet);
+            return new Combi(patente,baul,pet,maxPasajeros);
         else
             throw new IllegalArgumentException("Tipo de vehiculo no valido.");
     }

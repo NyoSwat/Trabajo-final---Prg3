@@ -1,14 +1,13 @@
-package negocio;
+package modelo;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import Excepciones.UsuarioExistenteException;
-import datos.Viaje;
-import negocio.Chofer;
+import modelo.Chofer;
+import modelo.Usuario;
+import modelo.Vehiculo;
 import negocio.Sistema;
-import negocio.Usuario;
-import negocio.Vehiculo;
 
 /**
  * La clase Administrador representa a un usuario con rol de administrador en el sistema.
@@ -47,9 +46,9 @@ public class Administrador extends Usuario {
      * @param petFriendly: de tipo boolean, indica si el vehículo transporta mascotas.
      */
 
-	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly) {
+	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly,int maxPasajeros) {
 		try {
-			sistema.agregarVehiculo(tipo, patente, baul, petFriendly);
+			sistema.agregarVehiculo(tipo, patente, baul, petFriendly,maxPasajeros);
 		} catch (Exception e) {
 			System.out.println("Error al agregar vehiculo: " + e.getMessage());
 		}		
@@ -126,9 +125,9 @@ public class Administrador extends Usuario {
      * @param dni: de tipo String, número de DNI del chofer que se desea consultar.
      * @return Chofer correspondiente al DNI proporcionado, o null si no se encuentra.
      */
-	public Chofer consultarChofer(String dni) {	
-		return sistema.consultarChofer(dni);
-	}
+//	public Chofer consultarChofer(String dni) {	
+//		return sistema.consultarChofer(dni);
+//	}
 	
 	
 	/**
@@ -138,9 +137,9 @@ public class Administrador extends Usuario {
 	 * @return Vehiculo correspondiente a la patente proporcionada, o null si no se encuentra.
 	 */
 
-	public Vehiculo consultarVehiculo(String patente) {
-		return sistema.consultarVehiculo(patente);
-	}
+//	public Vehiculo consultarVehiculo(String patente) {
+//		return sistema.consultarVehiculo(patente);
+//	}
 	/**
 	* Consulta y devuelve un objeto Usuario correspondiente al nombre de usuario proporcionado.
 	 *
@@ -148,9 +147,9 @@ public class Administrador extends Usuario {
 	 * @return Usuario con el nombre del parametro proporcionado, o null si no se encuentra.
 	 */
 
-	public Usuario consultarUsuario(String usuario) {
-		return sistema.consultarUsuario(usuario);
-	}
+//	public Usuario consultarUsuario(String usuario) {
+//		return sistema.consultarUsuario(usuario);
+//	}
 	/**
 	 * Devuelve la lista de choferes registrados en el sistema.
 	 * @return La lista de choferes registrados en el sistema.
@@ -190,9 +189,9 @@ public class Administrador extends Usuario {
 	 * @param dni: de tipo String, dni de chofer.
 	 * @return double con salario de chofer.
 	 */
-	public double calcularSalario(String dni) {	
-		return sistema.consultarChofer(dni).getSueldo();
-	}
+//	public double calcularSalario(String dni) {	
+//		return sistema.consultarChofer(dni).getSueldo();
+//	}
 	
 	
 	/**

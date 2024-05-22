@@ -1,4 +1,8 @@
-package negocio;
+package modelo;
+
+import java.util.GregorianCalendar;
+
+import negocio.Sistema;
 
 /**
  * La clase Cliente representa a un usuario cliente en el sistema.
@@ -15,11 +19,12 @@ public class Cliente extends Usuario {
      */
     public Cliente(String usuario, String password, String nombre) {
         super(usuario, password, nombre);
+        this.sistema = Sistema.getInstance();
     }
     
     
-    public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros) {
-    	sistema.validarPedido(new Pedido(cantPasajeros,zona,mascota,baul));
+    public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros,int distancia) {
+    	sistema.generarPedido(this,cantPasajeros,distancia,zona,mascota,baul,new GregorianCalendar());
     }
 
     

@@ -1,19 +1,17 @@
-package negocio;
+package modelo;
 
 /**
  * La clase PetFriendly representa un tipo de viaje que permite llevar mascotas.
  * Es un decorador que extiende la funcionalidad de otro viaje.
  */
-public class PetFriendly extends ViajeDecorador {
-
+public class ConMascota extends ViajeDecorador {
 
     /**
      * Constructor para crear un objeto PetFriendly.
-     *
      * @param viaje: de tipo Iviaje, viaje original al que se le añadirá la opción de llevar mascotas.
      */
-    public PetFriendly(IViaje viaje) {
-        super(viaje);
+    public ConMascota(IViaje viaje) {
+        super.setIViaje(viaje);
     }
 
     /**
@@ -30,6 +28,16 @@ public class PetFriendly extends ViajeDecorador {
         double pasajerosAdicional = 0.1 * getViaje().getPedido().getCantPasajeros();
         return costoOriginal + getViaje().getValorBase() * (distanciaAdicional + pasajerosAdicional);
     }
+
+	@Override
+	public int compareTo(IViaje o) {
+		if(this.getViaje().getCosto() < o.getCosto())
+			return -1;
+		else if(this.getViaje().getCosto() > o.getCosto())
+			return 1;
+		else
+			return 0;
+	}
     
     
 }

@@ -1,23 +1,16 @@
-package datos;
-
-import negocio.Chofer;
-import negocio.IViaje;
-import negocio.Pedido;
-import negocio.Usuario;
-import negocio.Vehiculo;
+package modelo;
 
 /**
  * Esta clase abstracta representa un viaje genérico y proporciona información sobre el pedido,
  * el chofer, el vehículo y la distancia recorrida. Las clases concretas que heredan de esta
  * deben implementar los detalles específicos del viaje.
  */
-public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
+public  class Viaje implements IViaje {
 	private Usuario cliente;
 	/**
 	 * referencia al pedido que origino el viaje
 	 */
     private Pedido pedido; 
-
     /**
      * El chofer asignado al viaje.
      */
@@ -26,37 +19,34 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
      * distancia total recorrida en el viaje
      */
     private double distanciaRecorrida; 
-
     /**
      * El vehículo utilizado en el viaje.
      */
     private Vehiculo vehiculo;
-    
     /**
      * Valor base comun para todos los viajes 
      */
     public static double valorBase = 1000.0; 
 
     /**
-     * Crea un nuevo objeto Viaje con los parámetros especificados.
-     *
+     * Constructor Viaje<br>
+     * <b>pre:</b>La distancia debe ser positiva y el pedido distinto de null y valido.
+     * <b>post:</b>Crea una instancia de Viaje.
      * @param pedido     El pedido asociado al viaje.
      * @param chofer     El chofer asignado al viaje.
      * @param vehiculo   El vehículo utilizado en el viaje.
      * @param distancia  La distancia total recorrida en el viaje (en kilómetros).
      */
-    protected Viaje(Usuario cliente,Pedido pedido, Chofer chofer, Vehiculo vehiculo, double distancia) {
-    	this.cliente = cliente;
+    protected Viaje(Pedido pedido,double distancia) {
+    	assert distancia >-1 : "La distancia debe ser positiva";
+    	assert pedido != null : "El pedido debe ser distinto de null";
         this.pedido = pedido;
-        this.chofer = chofer;
-        this.vehiculo = vehiculo;
         this.distanciaRecorrida = distancia;
     }
 
     
     /**
      * Obtiene el cliente vinculado al viaje.
-     * 
      * @param cliente
      */
     public Usuario getCliente() {
@@ -65,7 +55,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 
 	/**
      * Obtiene el vehículo utilizado en el viaje.
-     *
      * @return El vehículo asociado al viaje.
      */
     public Vehiculo getVehiculo() {
@@ -74,7 +63,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 
     /**
      * Obtiene el chofer asignado al viaje.
-     *
      * @return El chofer responsable del viaje.
      */
     public Chofer getChofer() {
@@ -83,7 +71,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 
     /**
      * Obtiene el pedido relacionado con el viaje.
-     *
      * @return El pedido asociado al viaje.
      */
     public Pedido getPedido() {
@@ -92,7 +79,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 
     /**
      * Obtiene la distancia total recorrida en el viaje.
-     *
      * @return La distancia en kilómetros del viaje.
      */
     public double getDistancia() {
@@ -101,7 +87,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 
     /**
      * Obtiene el valor base del viaje.
-     *
      * @return El costo base del viaje (un valor positivo establecido para todos los viajes).
      */
     public double getValorBase() {
@@ -110,7 +95,6 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
 
     /**
      * Establece un nuevo valor base para los viajes.
-     *
      * @param valorBase El nuevo valor base a asignar.
      */
     public void setValorBase(double valorBase) {
@@ -118,7 +102,7 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
     }
     
     @Override
-    public int compareTo(Viaje o) {
+    public int compareTo(IViaje o) {
     	if(this.getCosto() > o.getCosto())
     		return -1;
     	else if(this.getCosto() < o.getCosto())
@@ -129,8 +113,9 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
     
     @Override
     public Object clone() throws CloneNotSupportedException{ 
-    	Viaje clon = (Viaje) super.clone();
-    	return clon;
+    	IViaje viajeClonado = null;
+    	viajeClonado = (IViaje) super.clone();
+    	return viajeClonado;
     }
     
     
@@ -147,4 +132,10 @@ public abstract class Viaje implements IViaje, Comparable<Viaje>,Cloneable {
     			"\nValor: $"+this.getCosto()+
     			"\n";
     }
+
+
+	@Override
+	public double getCosto() {
+		return this.getValorBase();
+	}
 }

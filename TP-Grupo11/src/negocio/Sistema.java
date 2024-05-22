@@ -2,18 +2,28 @@ package negocio;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
 import Excepciones.ChoferExistenteException;
 import Excepciones.UsuarioExistenteException;
 import Excepciones.VehiculoExistenteException;
-import datos.Viaje;
-import negocio.Chofer;
-import negocio.IViaje;
-import negocio.Usuario;
-import negocio.Vehiculo;
-import negocio.Cliente;
+import modelo.Baul;
+import modelo.Chofer;
+import modelo.Cliente;
+import modelo.ZonaEstandar;
+import modelo.FactoryVehiculo;
+import modelo.FactoryViaje;
+import modelo.IViaje;
+import modelo.Pedido;
+import modelo.ZonaPeligrosa;
+import modelo.ConMascota;
+import modelo.FactoryChofer;
+import modelo.ZonaSinAsfaltar;
+import modelo.ChoferTemporario;
+import modelo.Usuario;
+import modelo.Vehiculo;
 
 /**
  * La clase Sistema representa la gestion de peticiones del usuario, informes, viajes, etc.
@@ -42,73 +52,74 @@ public class Sistema {
     
 	/**
 	 * Consulta un vehiculo existente
-	 * 
+	 * <b>pre:</b>patente no debe ser null ni vacio
 	 * @param patente: Patente del auto a consultar
-	 * @throws IllegalArgumentException en caso de que la patente no exista 
+	 * @throws IllegalArgumentException en caso de que la patente no exista
+	 * @throws VehiculoExistenteException 
+	 * @return Retorna el vehiculo consultado si existe o null en caso contrario 
 	 */
-	public Vehiculo consultarVehiculo(String patente) throws IllegalArgumentException {
-
+	public Vehiculo consultarVehiculo(String patente) throws IllegalArgumentException, VehiculoExistenteException {
+		int i = 0;
 		if (patente.equals("") || patente.equals(null)) {
 			throw new IllegalArgumentException("Parametros invalidos");
 		} else {
-
-			for (int i = 0; i < this.vehiculos.size(); i++) {
-				if (this.vehiculos.get(i).getPatente().equals(patente))
-					return this.vehiculos.get(i);
-			}
-
+			while (i<vehiculos.size() && !this.vehiculos.get(i).getPatente().equals(patente))
+				i++;
+			
+			if(i<vehiculos.size())
+				return this.vehiculos.get(i);
 		}
-
-		return null;
+		throw new VehiculoExistenteException("Vehiculo ingresado no existe");
 	}
     
 	/**
      * Consulta un chofer existente 
-     * 
+     * <b>pre:</b>el chofer no debe ser null ni vacio
      * @param dni: dni del chofer a consultar
      * @throws IllegalArgumentException en caso de que el chofer no exista
+     * @throws ChoferExistenteException 
+     * @return Retorna el chofer consultado si existe o null en caso de que no exista
      */
-    public Chofer consultarChofer(String dni)throws IllegalArgumentException{
-    	
+    public Chofer consultarChofer(String dni)throws IllegalArgumentException, ChoferExistenteException{
+    	int i = 0;
     	if(dni.equals("") || dni.equals(null)){
     		throw new IllegalArgumentException("Parametro invalido");
     	}else {
+    		while (i<choferes.size() && !this.choferes.get(i).getDni().equals(dni))
+    			i++;
     		
-    		for(int i=0;i<this.choferes.size();i++) {
-    			if(this.choferes.get(i).getDni().equals(dni))
-    				return this.choferes.get(i);
-    		}
-    		
+    		if( i < choferes.size())
+    			return this.choferes.get(i);    		
     	}
-    	
-    	return null;
+    	throw new ChoferExistenteException("Chofer ingresado no existe");
     }
 
     /**
      * Consulta un usuario existente 
-     * 
+     * <b>pre:</b>cliente no debe ser null ni vacio
      * @param cliente: Usuario del chofer a consultar
      * @throws IllegalArgumentException en caso de que el usuario no exista
+     * @throws UsuarioExistenteException 
+     * @return Retorna el cliente consultado si existe o null en caso de que no exista
      */
-    public Usuario consultarUsuario(String cliente)throws IllegalArgumentException {
-    	 	
+    public Usuario consultarUsuario(String cliente)throws IllegalArgumentException, UsuarioExistenteException {
+    	 int i = 0;
     	if(cliente.equals("") || cliente.equals(null)){
     		throw new IllegalArgumentException("Parametro invalido");
     	}else {
-    		for(int i=0;i<this.usuarios.size();i++) {
-    			if(this.usuarios.get(i).getUsuario().equals(cliente))
-    				return this.usuarios.get(i);
-    		}	
+    		while( i < usuarios.size() && !this.usuarios.get(i).getUsuario().equals(cliente))
+    			i++;
+    		
+    		if( i < usuarios.size())
+    			return usuarios.get(i);
     	}
-    	return null;
+    	throw new UsuarioExistenteException("Usuario ingresado no existe");
     }
 
     /**
      * Agrega un vehiculo nuevo al sistema.
-     * precondiciones : la patente no puede estar vacia y la cantidad de pasajeros 
+     * <b>pre</b> : la patente no puede estar vacia y la cantidad de pasajeros 
      * no puede ser menor a 0.
-     *
-     * 
      * @param tipo : Tipo de vehiculo (Automovil, Moto o Combi)
      * @param patente : Patente del vehiculo a agregar.
      * @param cantPasajeros : Cantidad de pasajeros que puede tener el vehiculo.
@@ -116,19 +127,18 @@ public class Sistema {
      * @param petFriendly : Si ser permite el acceso a animales.
      * @throws IllegalArgumentException En caso de que la patente ya exista o los argumentos sean invalidos
      */
-    public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly ) throws IllegalArgumentException,VehiculoExistenteException{
+    public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly,int maxPasajeros ) throws IllegalArgumentException,VehiculoExistenteException{
     	if(!"moto automovil combi".contains(tipo.toLowerCase()) || patente.equals("") || patente.equals(null)) {
     		throw new IllegalArgumentException("Parametros invalidos");
     	}else if(this.consultarVehiculo(patente) != null) {
     		throw new VehiculoExistenteException("El vehiculo "+patente+" ya existe");
     	}else {
-    		this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente,baul,petFriendly));
+    		this.vehiculos.add(factoryVehiculo.getVehiculo(tipo, patente,baul,petFriendly,maxPasajeros));
     	}
     }
     
     /**
      * Agrega un nuevo chofer al sistema
-     * 
      * @param dni : DNI correspondiente al nuevo chofer.
      * @param nombre : Nombre del nuevo chofer.
      * @param categoria : Categoria del nuevo chofer (Permanente, Contratado o Temporario).
@@ -141,7 +151,7 @@ public class Sistema {
     	}else if(this.consultarChofer(dni) != null) {
     		throw new ChoferExistenteException("El chofer: "+nombre+",dni: "+dni+" ya existe");
     	}else {
-    		this.choferes.add(new Chofer(dni, nombre, categoria));
+    		this.choferes.add(FactoryChofer.crearChofer(nombre, dni, categoria));
     	}
     }
      
@@ -200,7 +210,8 @@ public class Sistema {
     	Chofer chofer = this.consultarChofer(dni);
     	
     	if(chofer != null) {
-    		chofer.setCategoria(categoria);
+    		choferes.remove(chofer);
+    		choferes.add(FactoryChofer.crearChofer(nombre, dni, categoria));
     	}else {
     		throw new ChoferExistenteException("El chofer no existe");
     	}
@@ -208,7 +219,6 @@ public class Sistema {
     
     /**
      * Modifica los atributos de un usuario existente.
-     * 
      * @param usuario : Nuevo usuario.
      * @param password : Nueva password.
      * @param nombre : Nuevo nombre del usuario
@@ -255,30 +265,45 @@ public class Sistema {
     }
     
     
-    //Devuelve la lista de viajes ordenada por costos de menor a mayor
+    /**
+     * Devuelve la lista de viajes ordenada por costos de menor a mayor
+     * @return
+     */
     public ArrayList<IViaje> listaViajes() {
-       		
-    	ArrayList<IViaje> clon = (ArrayList<IViaje>) viajes.clone();
+    	ArrayList<IViaje> viajesClone = null; 
+
+    	viajesClone = (ArrayList<IViaje>) viajes.clone();
     	//Collections.sort(clon);
-    	return clon;
+    	return viajesClone;
     }
 
-    public void validarPedido(Pedido pedido) {
+    public void generarPedido(Cliente cliente,int cantPasajeros,int distancia,String zona,boolean baul,boolean mascota,GregorianCalendar fechaHora) {
     	boolean hayVehiculo = false, hayChofer = false;
+    	Pedido pedido;
     	
-    	//Verifico si existe vehiculo que cumpla con los requerimientos
-    	for(int i = 0; i < vehiculos.size(); i++) {
-    		if(vehiculos.get(i).maxPasajeros >= pedido.getCantPasajeros() && !(pedido.isBaul()==true && vehiculos.get(i).isBaul()==false) &&
-    				!(pedido.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) {
-    			hayVehiculo = true;
-    		}
-    		else
-    			hayVehiculo = false;
+    	try {
+    		pedido = new Pedido(cantPasajeros,zona,mascota,baul,fechaHora);
+    		
+    		
+    		//Verifico si existe vehiculo que cumpla con los requerimientos
+        	for(int i = 0; i < vehiculos.size(); i++) {
+        		if(vehiculos.get(i).getCantMaxPasajeros() >= pedido.getCantPasajeros() && !(pedido.isBaul()==true && vehiculos.get(i).isBaul()==false) &&
+        				!(pedido.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) {
+        			hayVehiculo = true;
+        		}
+        		else
+        			hayVehiculo = false;
+        	}
+        	
+        	if(hayVehiculo && "peligrosa sinasfaltar estandar".contains(pedido.getZona().toLowerCase())) {
+        		generarViaje(pedido);
+        	}   	
+        	
+        	
     	}
-    	
-    	if(hayVehiculo && "peligrosa sinasfaltar estandar".contains(pedido.getZona().toLowerCase())) {
-    		generarViaje(pedido);
-    	}   	
+    	catch(Exception e) {
+    		
+    	}
     	
     	//Verificar que hay chofer disponible   ¿¿¿???
     }
@@ -301,23 +326,7 @@ public class Sistema {
     	
     	choferAsignado = choferes.get(ran.nextInt(choferes.size()));
     	
-    	if(pedido.getZona().equalsIgnoreCase("sinasfaltar"))
-    		viaje = new SinAsfaltar(null, pedido, choferAsignado, vehiculoAsignado,ran.nextInt(100));
-    	else if(pedido.getZona().equalsIgnoreCase("peligrosa"))
-    		viaje = new Peligrosa(null, pedido, choferAsignado, vehiculoAsignado,ran.nextInt(100));    		
-    	else if(pedido.getZona().equalsIgnoreCase("estandar"))
-    		viaje = new Estandar(null, pedido, choferAsignado, vehiculoAsignado,ran.nextInt(100));    		
-    	
-    	if(pedido.isBaul())
-    		viaje = new Baul(viaje);
-    	
-    	if(pedido.isPetFriendly())
-    		viaje = new PetFriendly(viaje);
-    	
-    	if(choferAsignado.getCategoria().getNombreCategoria().equalsIgnoreCase("temporario")) {
-    		Temporario temp = (Temporario) choferAsignado.getCategoria();
-    		temp.realizaViaje();
-    	}
+    	viaje = FactoryViaje.armarViaje(pedido,pedido.getCantPasajeros()); 
     	
     	
     	viajes.add(viaje);
