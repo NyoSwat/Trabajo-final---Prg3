@@ -6,6 +6,9 @@ import Excepciones.ChoferExistenteException;
 import Excepciones.UsuarioExistenteException;
 import Excepciones.VehiculoExistenteException;
 import modelo.Administrador;
+import modelo.ChoferContratado;
+import modelo.ChoferPermanente;
+import modelo.ChoferTemporario;
 import modelo.Cliente;
 import modelo.Pedido;
 import negocio.Sistema;
@@ -19,18 +22,26 @@ public class Prueba{
     	/**
     	 * En el TP dice que hay un administrador y varios clientes ¿Deberia usar singleton para el administrador tambien?
     	 */
-    	Administrador admin = new Administrador(sistema,"Admin", "1234", "Admin Admin");
+//    	Administrador admin = new Administrador(sistema,"Admin", "1234", "Admin Admin");
     	
     	//agregar de usuarios repetidos
     	try {
-    		sistema.agregarCliente("Usuario1", "Contra", "Usuario uno");
-    		sistema.agregarCliente("Usuario1", "Contra", "Usuario uno");
+    		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
+    		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
     	}
     	catch(UsuarioExistenteException e) {
-    		System.out.println(e.getMessage());
+    		System.out.println("Prueba de usuario repetido:"+e.getMessage());
     	}
     	catch(IllegalArgumentException e) {
     		System.out.println(e.getMessage());
+    	}
+    	
+    	//Consultar usuario inexistente
+    	try {
+    		sistema.consultarUsuario("100");
+    	}
+    	catch(UsuarioExistenteException e) {
+    		System.out.println("Prueba de consulta usuario inexistente: "+e.getMessage());
     	}
     	
     	//agregar chofer existente
@@ -44,8 +55,8 @@ public class Prueba{
     	catch(IllegalArgumentException e) {
     		System.out.println(e.getMessage());
     	}
-    	
-    	//agregar Vehiculo existente
+//    	
+//    	//agregar Vehiculo existente
     	try {
     		sistema.agregarVehiculo("Auto", "123", true, true,4);
     		sistema.agregarVehiculo("Auto", "123", true, true,4);
@@ -56,48 +67,64 @@ public class Prueba{
     	catch(IllegalArgumentException e) {
     		System.out.println(e.getMessage());
     	}
-    	
-    	//consultar por cliente inexistente
+       	
     	try {
-    		sistema.consultarUsuario("Usuario100"); // nombre usuario cliente
-    	}
-    	catch(UsuarioExistenteException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	
-    	//consultar por chofer inexistente
-    	try {
-    		sistema.consultarChofer("10");
-    	}
-    	catch(ChoferExistenteException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	
-    	//consultar por vehiculo inexistente
-    	try {
-    		sistema.consultarVehiculo("125125"); // patente vehiculo
-    	}
-    	catch(VehiculoExistenteException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	
-    	try {
-    		sistema.agregarChofer("1", "Chofer1", "Contratado");
-    		sistema.agregarChofer("2", "Chofer2", "Temporario");
-    		sistema.agregarChofer("3", "Chofer3", "Permanente");
-    		sistema.agregarChofer("4", "Chofer4", "Temporario");
-    		sistema.agregarChofer("5", "Chofer5", "Permanente");
-    		sistema.agregarChofer("6", "Chofer6", "Contratado");
-    		sistema.agregarChofer("7", "Chofer7", "Contratado");
-    		sistema.agregarChofer("8", "Chofer8", "Temporario");
-    		sistema.agregarChofer("9", "Chofer9", "Contratado");
+//    		sistema.agregarChofer("1", "Chofer1", "Contratado");
+//    		sistema.agregarChofer("2", "Chofer2", "Temporario");
+//    		sistema.agregarChofer("3", "Chofer3", "Permanente");
+//    		sistema.agregarChofer("4", "Chofer4", "Temporario");
+//    		sistema.agregarChofer("5", "Chofer5", "Permanente");
+//    		sistema.agregarChofer("6", "Chofer6", "Contratado");
+//    		sistema.agregarChofer("7", "Chofer7", "Contratado");
+//    		sistema.agregarChofer("8", "Chofer8", "Temporario");
+//    		sistema.agregarChofer("9", "Chofer9", "Contratado");
+    		
+    		sistema.agregarChofer(new ChoferContratado("1", "Chofer1"));
+    		sistema.agregarChofer(new ChoferPermanente("2", "Chofer2",2));
+    		sistema.agregarChofer(new ChoferTemporario("3", "Chofer3"));
+    		sistema.agregarChofer(new ChoferContratado("4", "Chofer4"));
+    		sistema.agregarChofer(new ChoferContratado("5", "Chofer5"));
+    		
+    		sistema.agregarCliente(new Cliente("Usuario2","sdasda", "Usuario dos"));
+    		sistema.agregarCliente(new Cliente("Usuario3","sdasda", "Usuario tres"));
+    		sistema.agregarCliente(new Cliente("Usuario4","sdasda", "Usuario cuatro"));
+    		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
+    		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
+    		
+    		
+    		sistema.agregarVehiculo("Auto", "49d", true, true, 4);
+    		sistema.agregarVehiculo("moto", "h23", false, false, 1);
+    		sistema.agregarVehiculo("combi", "asd", true, true, 4);
+    		sistema.agregarVehiculo("moto", "rwa", false, false, 1);
+    		
+    		
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
     	}
     	catch(Exception e) {
     		System.out.println(e.getMessage());
     	}
     	
-    	
-    	
+    	System.out.println("\n*****USUARIOS*****\n");
+    	System.out.println(sistema.listaUsuarios());
+    	System.out.println("\n*****CHOFERES*****\n");
+    	System.out.println(sistema.listaChoferes());
+    	System.out.println("\n*****VEHICULOS*****\n");
+    	System.out.println(sistema.listaVehiculos());
     	
     	
     	

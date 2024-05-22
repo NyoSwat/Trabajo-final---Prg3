@@ -28,7 +28,7 @@ public class Administrador extends Usuario {
     	super(usuario, password, nombre);
         try {
         	this.sistema = sistema;
-        	sistema.agregarCliente(usuario, password, nombre);
+//        	sistema.agregarCliente(usuario, password, nombre);
         }
         catch(Exception e) {
         	System.out.println(e.getMessage());

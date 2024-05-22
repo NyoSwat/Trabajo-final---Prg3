@@ -12,7 +12,7 @@ public class FactoryViaje {
 		IViaje viaje = new Viaje(pedido,distancia);
 		
 		if(pedido.isBaul())
-			viaje = new Baul(viaje);
+			viaje = new ConBaul(viaje);
 		else
 			viaje = new SinBaul(viaje);
 		if(pedido.isPetFriendly())

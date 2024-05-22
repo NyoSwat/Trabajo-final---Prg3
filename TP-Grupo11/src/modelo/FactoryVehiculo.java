@@ -14,12 +14,12 @@ public class FactoryVehiculo {
      * @return Objeto Vehiculo creado.
      * @throws IllegalArgumentException Si el tipo de vehículo no es válido.
      */
-    public Vehiculo getVehiculo(String vehiculoType, String patente,boolean baul,boolean pet,int maxPasajeros) {
+    public static Vehiculo getVehiculo(String vehiculoType, String patente,boolean baul,boolean pet,int maxPasajeros) {
         if (vehiculoType == null)
             throw new IllegalArgumentException("El tipo de vehiculo no puede ser vacio.");
         else if (vehiculoType.equalsIgnoreCase("moto"))
             return new Moto(patente,baul,pet,maxPasajeros);
-        else if (vehiculoType.equalsIgnoreCase("automovil"))
+        else if (vehiculoType.equalsIgnoreCase("auto"))
             return new Automovil(patente,baul,pet,maxPasajeros);
         else if (vehiculoType.equalsIgnoreCase("combi"))
             return new Combi(patente,baul,pet,maxPasajeros);

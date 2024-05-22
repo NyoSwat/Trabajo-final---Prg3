@@ -17,8 +17,9 @@ public class ChoferPermanente extends ChoferEmpleado {
      * <b>pre:</b> dni distinto de null, no vacio y valido.
      * 			nombre distinto de null, no vacio y valido.
      */
-    public ChoferPermanente(String nombre,String dni) {
+    public ChoferPermanente(String dni,String nombre,int cantidadHijos) {
     	super(dni, nombre);
+    	setCantidadHijos(cantidadHijos);
     }
     
     /**Método que le asigna otro valor al atributo plusAntiguedad.
@@ -63,19 +64,14 @@ public class ChoferPermanente extends ChoferEmpleado {
     }
     
     
-    /**
-     * Devuelve una representación en forma de cadena de la clase Permanente.
-     *@return String que representa a Permanente.
-     */
-    public String toString() {
-    	return "\nCant. hijos: "+this.cantidadHijos;
-    }
 
     /**
      * Método que le asigna otro valor al aributo CantHijos.
      * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
      */
 	public void setCantidadHijos(int cantHijos) {
+		if(cantidadHijos<0)
+			throw new IllegalArgumentException("La cantidad de hijos debe ser positiva");
 		this.cantidadHijos=cantHijos;
 		
 	}
@@ -96,10 +92,12 @@ public class ChoferPermanente extends ChoferEmpleado {
 		
 	}
 
-
-	
-
-
-
+	/**
+	 * Devuelve una representación en forma de cadena de la clase Permanente.
+	 *@return String que representa a Permanente.
+	 */
+	public String toString() {
+		return super.toString()+"\nCantidad de hijos: "+this.cantidadHijos;
+	}
 	
 }

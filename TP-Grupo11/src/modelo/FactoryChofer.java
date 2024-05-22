@@ -13,7 +13,7 @@ public class FactoryChofer {
 	 */
 	public static Chofer crearChofer(String nombre,String dni,String categoria) {
 		if(categoria.equalsIgnoreCase("permanente"))
-			return new ChoferPermanente(nombre, dni);
+			return new ChoferPermanente(nombre, dni,1);
 		else if(categoria.equalsIgnoreCase("temporario"))
 			return new ChoferTemporario(nombre, dni);
 		else if(categoria.equalsIgnoreCase("contratado"))

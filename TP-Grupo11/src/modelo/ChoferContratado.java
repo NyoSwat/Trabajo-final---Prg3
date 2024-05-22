@@ -41,7 +41,7 @@ public class ChoferContratado extends Chofer {
     
     @Override
     public String toString() {
-    	return super.toString()+"\nCant. viajes: "+this.getViajes().size();
+    	return super.toString()+"\nCantidad de viajes: "+this.getViajes().size();
     }
 
 

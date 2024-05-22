@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.GregorianCalendar;
 
+import Excepciones.UsuarioExistenteException;
 import negocio.Sistema;
 
 /**
@@ -23,7 +24,7 @@ public class Cliente extends Usuario {
     }
     
     
-    public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros,int distancia) {
+    public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros,int distancia) throws IllegalArgumentException, UsuarioExistenteException {
     	sistema.generarPedido(this,cantPasajeros,distancia,zona,mascota,baul,new GregorianCalendar());
     }
 
@@ -35,5 +36,7 @@ public class Cliente extends Usuario {
    public String toString() {
 	   return "\nCliente: "+super.toString();
    }
+
+
 }
 

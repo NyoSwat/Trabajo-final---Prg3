@@ -4,13 +4,13 @@ package modelo;
  * La clase Baul representa un tipo de viaje que requiere espacio en el baúl del vehículo.
  * Es un decorador que extiende la funcionalidad de otro viaje.
  */
-public class Baul extends ViajeDecorador {
+public class ConBaul extends ViajeDecorador {
 
 	/**
      * Constructor para crear un objeto Baul.
      * @param viaje: de tipo IViaje,viaje original al que se le añadirá la opción de usar el baúl.
      */
-    public Baul(IViaje viaje) {
+    public ConBaul(IViaje viaje) {
     	super.setIViaje(viaje);
     }
 

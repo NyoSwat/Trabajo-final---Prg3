@@ -41,6 +41,10 @@ public abstract class Chofer {
 	public ArrayList<IViaje> getViajes(){
 		return viajes;
 	}
+	
+	public void setViaje(IViaje viaje) {
+		this.viajes.add(viaje);
+	}
 	/**
      *Devuelve una representación en forma de cadena de Chofer.
 	*@return String que representa a Chofer.
@@ -49,8 +53,7 @@ public abstract class Chofer {
 		return "\n********"+
 				"\nNombre: "+this.nombre+
 				"\nDNI: "+this.dni+
-				"\nSueldo: $"+getSueldo()+
-				"\n";
+				"\nSueldo: $"+getSueldo();
 	}
     
 }

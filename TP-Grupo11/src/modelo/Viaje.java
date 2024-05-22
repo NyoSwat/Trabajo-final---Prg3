@@ -7,25 +7,10 @@ package modelo;
  */
 public  class Viaje implements IViaje {
 	private Usuario cliente;
-	/**
-	 * referencia al pedido que origino el viaje
-	 */
     private Pedido pedido; 
-    /**
-     * El chofer asignado al viaje.
-     */
     private Chofer chofer;
-    /**
-     * distancia total recorrida en el viaje
-     */
     private double distanciaRecorrida; 
-    /**
-     * El vehículo utilizado en el viaje.
-     */
     private Vehiculo vehiculo;
-    /**
-     * Valor base comun para todos los viajes 
-     */
     public static double valorBase = 1000.0; 
 
     /**
@@ -118,6 +103,10 @@ public  class Viaje implements IViaje {
     	return viajeClonado;
     }
     
+    @Override
+    public double getCosto() {
+    	return this.getValorBase();
+    }
     
     @Override
     public String toString() {
@@ -134,8 +123,4 @@ public  class Viaje implements IViaje {
     }
 
 
-	@Override
-	public double getCosto() {
-		return this.getValorBase();
-	}
 }

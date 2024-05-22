@@ -38,6 +38,10 @@ public abstract class Usuario {
 		return this.nombre;
 	}
 	
+	public String getPassword() {
+		return this.password;
+	}
+	
 	
 	/**
 	 * Establece el nombre de usuario.

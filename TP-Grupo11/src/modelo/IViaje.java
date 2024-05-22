@@ -43,6 +43,7 @@ public interface IViaje extends Cloneable,Comparable<IViaje>{
      * @return double con valor base del viaje.
      */
     double getValorBase();
+    
 
 
 
