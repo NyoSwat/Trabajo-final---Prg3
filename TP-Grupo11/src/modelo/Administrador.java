@@ -3,7 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Excepciones.UsuarioExistenteException;
+import Excepciones.ExistenteUsuarioException;
 import modelo.Chofer;
 import modelo.Usuario;
 import modelo.Vehiculo;
@@ -21,7 +21,7 @@ public class Administrador extends Usuario {
      * @param usuario  Nombre de usuario del administrador.
      * @param password Contraseña del administrador.
      * @param nombre   Nombre completo del administrador.
-     * @throws UsuarioExistenteException 
+     * @throws ExistenteUsuarioException 
      * @throws IllegalArgumentException 
      */
     public Administrador(Sistema sistema, String usuario, String password, String nombre) {
@@ -179,7 +179,7 @@ public class Administrador extends Usuario {
 	 * @return ArrayList de Viaje.
 	 * @throws CloneNotSupportedException 
 	 */
-	public ArrayList<IViaje> getListaViajes(){
+	public ArrayList<IViaje> getListaViajes() throws CloneNotSupportedException{
 		return sistema.listaViajes();
 	}
 	
@@ -214,9 +214,10 @@ public class Administrador extends Usuario {
 	 * @param chofer: de tipo Chofer,chofer que realizó los viajes.
 	 * @param fechaInicial :de tipo date, fecha a partir de la que se realiza la busqueda.
 	 * @param fechaFinal :de tipo date, fecha hasta la cual se realiza la busqueda.
+	 * @throws CloneNotSupportedException 
 	 */
 
-	public void reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal) {
+	public void reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal) throws CloneNotSupportedException {
 		ArrayList<IViaje> iviajes = this.getListaViajes();
 		Viaje viajes;
 		
@@ -235,9 +236,10 @@ public class Administrador extends Usuario {
 	 * @param usuario : de tipo Usuario,persona que realizó los viajes. 
 	 * @param fechaInicial :de tipo date, fecha a partir de la que se realiza la busqueda.
 	 * @param fechaFinal :de tipo date, fecha hasta la cual se realiza la busqueda.
+	 * @throws CloneNotSupportedException 
 	 */
 
-	public void reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) {
+	public void reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) throws CloneNotSupportedException {
 		ArrayList<IViaje> iviajes = this.getListaViajes();
 		Viaje viajes;
 		System.out.println("Viajes realizados por el usuario: " + usuario.getUsuario());

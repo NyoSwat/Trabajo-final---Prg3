@@ -83,9 +83,20 @@ public  class Viaje implements IViaje {
      * @param valorBase El nuevo valor base a asignar.
      */
     public void setValorBase(double valorBase) {
+    	if(valorBase<0 || valorBase>1)
+    		throw new IllegalArgumentException("El valor basico del viaje debe ser positivo.");
         Viaje.valorBase = valorBase;
     }
     
+    /**
+     * Valor del Costo del viaje, puede estar Decorado.
+     * @return double con el valor total del viaje.
+     */
+    @Override
+    public double getCosto() {
+    	return this.getValorBase();
+    }
+
     @Override
     public int compareTo(IViaje o) {
     	if(this.getCosto() > o.getCosto())
@@ -100,12 +111,8 @@ public  class Viaje implements IViaje {
     public Object clone() throws CloneNotSupportedException{ 
     	IViaje viajeClonado = null;
     	viajeClonado = (IViaje) super.clone();
+//    	viajeClonado. = (Pedido) this.pedido;
     	return viajeClonado;
-    }
-    
-    @Override
-    public double getCosto() {
-    	return this.getValorBase();
     }
     
     @Override

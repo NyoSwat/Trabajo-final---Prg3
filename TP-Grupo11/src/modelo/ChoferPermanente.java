@@ -26,7 +26,38 @@ public class ChoferPermanente extends ChoferEmpleado {
      *@param plusAntiguedad:de tipo double con nuevo valor de plusAntiguedad.
      */
     public static void setPlusAntiguedad(double plusAntiguedad) {
+    	if(plusAntiguedad<0 || plusAntiguedad>1)
+    		throw new IllegalArgumentException("El plus por antiguedad debe estar entre 0 y 1.");
 		ChoferPermanente.plusAntiguedad = plusAntiguedad;
+	}
+    
+    /**
+     * Asigna el porcentaje de plus para la cantidad de hijos que tiene el chofer
+     * @param plusHijos valor entero que determina la cantidad de hijos que tiene el chofer
+     */
+    public static void setPlusHijos(double plusHijos) {
+    	if(plusHijos<0 || plusHijos>1)
+    		throw new IllegalArgumentException("El plus por cantidad de hijos debe estar entre 0 y 1");
+    	ChoferPermanente.plusHijos = plusHijos;
+    }
+    
+    /**
+     * Método que le asigna otro valor al aributo CantHijos.
+     * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
+     */
+	public void setCantidadHijos(int cantHijos) {
+		if(cantidadHijos<0)
+			throw new IllegalArgumentException("La cantidad de hijos debe ser positiva");
+		this.cantidadHijos=cantHijos;
+		
+	}
+    
+    /**
+	 * Metodo que devuelve la cantidad de hijos que tiene el chofer
+	 * @return entero con la cantidad de hijos del chofer
+	 */
+	public int getCantHijos() {
+		return this.cantidadHijos;
 	}
 
     /**
@@ -62,23 +93,6 @@ public class ChoferPermanente extends ChoferEmpleado {
 	     long diferenciaAnios = diferenciaMilisegundos / (1000L * 60L * 60L * 24L * 365L);
 	     return (int) diferenciaAnios;
     }
-    
-    
-
-    /**
-     * Método que le asigna otro valor al aributo CantHijos.
-     * @param cantHijos: de tipo int, nuevo valor de cantidad de hijos.
-     */
-	public void setCantidadHijos(int cantHijos) {
-		if(cantidadHijos<0)
-			throw new IllegalArgumentException("La cantidad de hijos debe ser positiva");
-		this.cantidadHijos=cantHijos;
-		
-	}
-	
-	public int getCantHijos() {
-		return this.cantidadHijos;
-	}
 
 	/**Método que le asigna otro valor al atributo FechaIngreso.
      * @param dia: int, dia.

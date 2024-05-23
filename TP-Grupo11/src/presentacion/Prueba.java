@@ -2,9 +2,9 @@ package presentacion;
 
 import java.util.GregorianCalendar;
 
-import Excepciones.ChoferExistenteException;
-import Excepciones.UsuarioExistenteException;
-import Excepciones.VehiculoExistenteException;
+import Excepciones.ExistenteChoferException;
+import Excepciones.ExistenteUsuarioException;
+import Excepciones.ExistenteVehiculoException;
 import modelo.Administrador;
 import modelo.ChoferContratado;
 import modelo.ChoferPermanente;
@@ -29,7 +29,7 @@ public class Prueba{
     		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
     		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
     	}
-    	catch(UsuarioExistenteException e) {
+    	catch(ExistenteUsuarioException e) {
     		System.out.println("Prueba de usuario repetido:"+e.getMessage());
     	}
     	catch(IllegalArgumentException e) {
@@ -40,7 +40,7 @@ public class Prueba{
     	try {
     		sistema.consultarUsuario("100");
     	}
-    	catch(UsuarioExistenteException e) {
+    	catch(ExistenteUsuarioException e) {
     		System.out.println("Prueba de consulta usuario inexistente: "+e.getMessage());
     	}
     	
@@ -49,7 +49,7 @@ public class Prueba{
     		sistema.agregarChofer("123", "Chofer1", "Permanente");
     		sistema.agregarChofer("123", "Chofer1", "Permanente");
     	}
-    	catch(ChoferExistenteException e) {
+    	catch(ExistenteChoferException e) {
     		System.out.println(e.getMessage());
     	}
     	catch(IllegalArgumentException e) {
@@ -61,7 +61,7 @@ public class Prueba{
     		sistema.agregarVehiculo("Auto", "123", true, true,4);
     		sistema.agregarVehiculo("Auto", "123", true, true,4);
     	}
-    	catch(VehiculoExistenteException e) {
+    	catch(ExistenteVehiculoException e) {
     		System.out.println(e.getMessage());
     	}
     	catch(IllegalArgumentException e) {

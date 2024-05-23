@@ -45,7 +45,4 @@ public interface IViaje extends Cloneable,Comparable<IViaje>{
     double getValorBase();
     
 
-
-
-
 }

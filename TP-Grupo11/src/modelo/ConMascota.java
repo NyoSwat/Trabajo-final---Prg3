@@ -18,15 +18,13 @@ public class ConMascota extends ViajeDecorador {
      * Calcula el costo del viaje PetFriendly.
      * El costo se compone del costo original más un adicional basado en la cantidad de pasajeros y la distancia.
      * Además, se agrega un valor extra por llevar mascotas.
-     *
      * @return double con costo total del viaje PetFriendly.
      */
     @Override
     public double getCosto() {
-        double costoOriginal = getViaje().getCosto();
         double distanciaAdicional = 0.2 * getViaje().getDistancia();
         double pasajerosAdicional = 0.1 * getViaje().getPedido().getCantPasajeros();
-        return costoOriginal + getViaje().getValorBase() * (distanciaAdicional + pasajerosAdicional);
+        return  getViaje().getValorBase() * (1 + distanciaAdicional + pasajerosAdicional);
     }
 
 	@Override

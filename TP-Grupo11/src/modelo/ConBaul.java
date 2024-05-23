@@ -22,10 +22,9 @@ public class ConBaul extends ViajeDecorador {
      */
     @Override
     public double getCosto() {
-        double costoOriginal = getViaje().getCosto();
         double distanciaAdicional = 0.05 * getViaje().getDistancia();
         double pasajerosAdicional = 0.1 * getViaje().getPedido().getCantPasajeros();
-        return costoOriginal + getViaje().getValorBase() * (distanciaAdicional + pasajerosAdicional);
+        return getViaje().getValorBase() * (1 + distanciaAdicional + pasajerosAdicional);
     }
 
 	@Override

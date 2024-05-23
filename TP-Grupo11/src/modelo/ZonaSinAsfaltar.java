@@ -20,10 +20,9 @@ public class ZonaSinAsfaltar extends ViajeDecorador {
      */
     @Override
     public double getCosto() {
-        double valorBase = getValorBase();
         double distanciaAdicional = 0.15 * getDistancia();
         double pasajerosAdicional = 0.2 * getPedido().getCantPasajeros();
-        return valorBase + valorBase * (distanciaAdicional + pasajerosAdicional);
+        return getViaje().getValorBase() * (1 + distanciaAdicional + pasajerosAdicional);
     }
 
 	@Override

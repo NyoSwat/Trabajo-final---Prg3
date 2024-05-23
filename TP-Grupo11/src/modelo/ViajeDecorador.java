@@ -61,6 +61,7 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     	return viaje.getValorBase();
     }
     
+    
     @Override
     public String toString() {
     	return "\n*************"+

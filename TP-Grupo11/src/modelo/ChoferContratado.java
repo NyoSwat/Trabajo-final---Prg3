@@ -18,12 +18,15 @@ public class ChoferContratado extends Chofer {
     public ChoferContratado(String dni, String nombre) {
 		super(dni, nombre);
 	}
+    
 	/**
      * Establece valor de gananciaViaje.
-     * @param ganancia: de tipo double, nuevo valor de gananciaViaje.
+     * @param ganancia: de tipo double, nuevo valor para la ganancia de cada viaje,esta entre 0 y 1.
      */
     public void setGananciaViaje(double ganancia) {
-    	gananciaViaje = ganancia;
+    	if(ganancia<0 || ganancia>1)
+    		throw new IllegalArgumentException("Plus de ganancia por viaje debe estar entre 0 y 1.");
+    	ChoferContratado.gananciaViaje = ganancia;
     }
     
     /**

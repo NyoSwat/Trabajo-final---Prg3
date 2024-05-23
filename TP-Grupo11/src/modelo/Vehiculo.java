@@ -39,9 +39,9 @@ public abstract class Vehiculo {
         boolean condicion1=this.verifica_Cant_Pas(pedido.getCantPasajeros());
         boolean condicion2=this.verificaBaul(pedido.isBaul());
         boolean condicion3=this.verificaPetFriendly(pedido.isPetFriendly());
-        if(condicion1 && condicion2)
-    	   if(condicion3)
-    			prioridad=this.calculaPrioridad(pedido);
+        if(condicion1 && condicion2 && condicion3)
+    		prioridad=this.calculaPrioridad(pedido);
+        
     	return prioridad;
     }
 	/** Verifica si se pueden transportar cierta cantidad de pasajeros

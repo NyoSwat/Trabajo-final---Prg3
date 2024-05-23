@@ -9,12 +9,21 @@ public class ChoferTemporario extends ChoferEmpleado {
 
     /**
      * Constructor para crear un objeto Temporario.
-     * sera 0  y el de plusCantViajes 0.2 .
      */
     public ChoferTemporario(String nombre,String dni) {
     	super(nombre,dni);
     }
 
+    /**
+     * Asigna el plus por la cantidad de viajes realizados
+     * @param plusCantViajes double entre 0 y 1
+     */
+    public void setPlusCantViajes(double plusCantViajes) {
+    	if(plusCantViajes<0 || plusCantViajes>1)
+    		throw new IllegalArgumentException("El plus por cantidad de viajes debe estar entre 0 y 1.");
+    	ChoferTemporario.plusCantViajes = plusCantViajes;
+    }
+    
     /**
      * Calcula el sueldo del empleado temporal.
      * Se calcula salario mensual en base a un sueldo básico, un plus por cantidad de viajes y 

@@ -7,7 +7,7 @@ package modelo;
  */
 
 public abstract class ChoferEmpleado extends Chofer {
-    public static double sueldoBasico = 1000; 
+    public static double sueldoBasico = 1000.0; 
 	public static double aportes=0.2;
 
 	/**Constructor para crear un chofer de tipo Empleado.
@@ -21,7 +21,19 @@ public abstract class ChoferEmpleado extends Chofer {
      * @param sueldo: double, sueldo básico del empleado
      */
     public void setSueldoBasico(double sueldo){
-        sueldoBasico = sueldo;
+    	if(sueldo<0)
+    		throw new IllegalArgumentException("El salario basico debe ser positivo.");
+        ChoferEmpleado.sueldoBasico = sueldo;
+    }
+    
+    /**
+     * Asigna el porcentaje del aporte
+     * @param double aporte : porcentaje que le retira el estado.
+     */
+    public void setAportes(double aportes) {
+    	if(aportes<0 || aportes>1)
+    		throw new IllegalArgumentException("El aporte para la jubilacion debe estar entre 0 y 1.");
+    	ChoferEmpleado.aportes = aportes;
     }
     
    
