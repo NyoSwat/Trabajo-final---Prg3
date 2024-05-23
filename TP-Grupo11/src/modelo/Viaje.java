@@ -130,9 +130,12 @@ public  class Viaje implements IViaje {
     
     @Override
     public Object clone() throws CloneNotSupportedException{ 
-    	IViaje viajeClonado = null;
-    	viajeClonado = (IViaje) super.clone();
-//    	viajeClonado. = (Pedido) this.pedido;
+    	Viaje viajeClonado = null;
+    	viajeClonado.chofer = (Chofer) this.chofer;
+    	viajeClonado.cliente = (Cliente) this.cliente;
+    	viajeClonado.vehiculo = (Vehiculo) this.vehiculo;
+    	viajeClonado.pedido = (Pedido) this.pedido;
+    	viajeClonado.distanciaRecorrida = this.distanciaRecorrida;
     	return viajeClonado;
     }
     

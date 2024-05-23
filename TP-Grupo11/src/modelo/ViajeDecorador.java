@@ -85,6 +85,10 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     	this.viaje.setChofer(chofer);
     }
     
+    public Object clone() throws CloneNotSupportedException{
+		return super.clone();
+    	
+    }
     
     @Override
     public String toString() {

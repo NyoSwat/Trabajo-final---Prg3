@@ -30,7 +30,8 @@ public class Cliente extends Usuario {
     		throws IllegalArgumentException, 
     		ExistenteUsuarioException, 
     		FaltaVehiculoException, 
-    		FaltaChoferException 
+    		FaltaChoferException, 
+    		InterruptedException 
     {
     	sistema.generarPedido(this,cantPasajeros,distancia,zona,mascota,baul,new GregorianCalendar());
     }

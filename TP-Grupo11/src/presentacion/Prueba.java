@@ -126,6 +126,15 @@ public class Prueba{
     	
     	try {
     		sistema.reporteViajesCliente((Cliente)sistema.listaUsuarios().get(0), null, null);
+    		System.out.println(sistema.getSueldoChofer(sistema.listaChoferes().get(4)));
+    		System.out.println(sistema.totalSueldoChoferes());
+    		sistema.reporteViajesChofer(sistema.listaChoferes().get(4), null, null);
+    		
+    		
+    		System.out.println("\n\n****Lista de Viajes Ordenada*****\n"+sistema.listaViajesOrdenada());
+    		System.out.println("\nListado de viajes original\n"+sistema.listaViajes());
+    		
+    		System.out.println(sistema.listaViajesOrdenada().get(0) == sistema.listaViajes().get(2));
     	}
     	catch(Exception e) {
     		System.out.println(e.getMessage());

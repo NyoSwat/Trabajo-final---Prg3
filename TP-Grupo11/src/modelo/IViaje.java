@@ -54,4 +54,6 @@ public interface IViaje extends Cloneable,Comparable<IViaje>{
     
     void setVehiculo(Vehiculo vehiculo);
 
+	Object clone() throws CloneNotSupportedException;
+
 }

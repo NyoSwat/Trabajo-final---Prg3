@@ -10,8 +10,8 @@ public class ChoferTemporario extends ChoferEmpleado {
     /**
      * Constructor para crear un objeto Temporario.
      */
-    public ChoferTemporario(String nombre,String dni) {
-    	super(nombre,dni);
+    public ChoferTemporario(String dni,String nombre) {
+    	super(dni,nombre);
     }
 
     /**

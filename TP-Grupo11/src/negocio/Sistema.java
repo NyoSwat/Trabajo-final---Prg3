@@ -2,6 +2,7 @@ package negocio;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -296,13 +297,10 @@ public class Sistema {
     	
     	ArrayList<IViaje> viajesClone = null; 
     	viajesClone = (ArrayList<IViaje>) viajes.clone();
-    	
     	for (int i = 0; i < viajes.size(); i++) {
-			//viajesClone.add((IViaje) this.viajes.get(i).clone());
-    		//falta hacer cloneable los decorados
+			viajesClone.add((IViaje) this.viajes.get(i).clone());
 		}
-    	
-    	Collections.sort(viajesClone);
+    	Collections.sort(viajesClone, Comparator.reverseOrder());
     	return viajesClone;
     }
 
@@ -319,8 +317,8 @@ public class Sistema {
     	if(!usuarios.contains(usuario))
     		throw new ExistenteUsuarioException("Error, cliente ingresado para el reporte de viaje incorrecto.");
 		System.out.println("Viajes realizados por el usuario: " + usuario.getUsuario());
-		for(int i=0; i< viajes.size(); i++) {
-			if(viajes.get(i).getCliente().equals(usuario)) {// viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
+		for(int i=0; i< viajes.size(); i++) {				//Lo anule para probar
+			if(viajes.get(i).getCliente().equals(usuario)) {//&& viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
 				System.out.println(viajes.get(i).toString());
 			}
 		}
@@ -340,7 +338,7 @@ public class Sistema {
 		if(!choferes.contains(chofer))
 			throw new ExistenteChoferException("Error, chofer ingresado para el reporte de viajes incorrecto");
 		System.out.println("Viajes realizados por el chofer: " +chofer.getNombre()+", dni: "+ chofer.getDni());
-		for(int i=0; i<this.viajes.size(); i++) {
+		for(int i=0; i<this.viajes.size(); i++) {			//lo anule para probar
 			if(viajes.get(i).getChofer().equals(chofer) ){//&& viaje.getPedido().getFecha().after(fechaInicial) && viaje.getPedido().getFecha().before(fechaFinal)) {
 				System.out.println(viajes.get(i).toString());
 			}
@@ -360,11 +358,13 @@ public class Sistema {
      * @throws IllegalArgumentException  en caso de que algun parametro de Pedido sea incorrecto
      * @throws FaltaVehiculoException  se lanza cuando no hay vehiculo que satisfaga las necesidades del pedido
      * @throws FaltaChoferException se lanza cuando no hay chofer disponible
+     * @throws InterruptedException 
      */
     public void generarPedido(Cliente cliente,int cantPasajeros,int distancia,String zona,boolean baul,boolean mascota,GregorianCalendar fechaHora) 
     		throws IllegalArgumentException, 
     			ExistenteUsuarioException, 
-    			FaltaVehiculoException, FaltaChoferException 
+    			FaltaVehiculoException, FaltaChoferException, 
+    			InterruptedException 
     {
     	boolean hayVehiculo = false;
     	boolean hayChofer = choferes.size()>0;
@@ -404,8 +404,9 @@ public class Sistema {
      * 			Cliente distinto de null
      * 			distancia positiva
      * @param pedido Pedido que realizo algun cliente
+     * @throws InterruptedException 
      */
-    private void generarViaje(Cliente cliente,Pedido pedido,int distancia) {
+    private void generarViaje(Cliente cliente,Pedido pedido,int distancia) throws InterruptedException {
     	assert pedido==null:"No se pudo generar el viaje, pedido null.";
     	assert cliente == null: "No se pudo generar el viaje, cliente null.";
     	assert distancia<0:"No se pudo generar el viaje, distancia no puede ser negativa.";
@@ -425,6 +426,7 @@ public class Sistema {
     	
     	//para ver que anda
     	System.out.println("viaje realizado"+"-> lo realiza "+viaje.getChofer().getNombre()+" en vehiculo "+viaje.getVehiculo().getPatente());
+    	finalizarViaje(viaje);
     }
     
     /**Asigna el vehiculo correspondiente al pedido realizado
@@ -464,7 +466,21 @@ public class Sistema {
     		choferAsignado = choferes.get(0);
     		viaje.setChofer(choferAsignado);
     		choferes.remove(choferes.indexOf(choferAsignado));
+    		choferAsignado.setViaje(viaje);
     	}
+    }
+    
+    /**
+     * Finaliza el viaje
+     * <b>pre:</b> el viaje tiene que estar iniciado, distinto de null
+     * @param viaje
+     * @throws InterruptedException 
+     */
+    public void finalizarViaje(IViaje viaje) throws InterruptedException {
+    	assert viaje == null : "El viaje a finalizar no fue iniciado.";
+    	
+    	vehiculos.add(viaje.getVehiculo());
+    	choferes.add(viaje.getChofer());
     }
     
     /**
