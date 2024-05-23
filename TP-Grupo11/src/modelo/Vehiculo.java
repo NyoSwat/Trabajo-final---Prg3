@@ -30,12 +30,14 @@ public abstract class Vehiculo {
 
   
     /**Calcula valor de prioridad de un vehículo para un pedido en cuestión.
+     * <b>pre:</b> el pedido no debe ser null
 	 * @param pedido: de tipo Pedido, datos de un pedido en particular.
 	 * @return int con el valor de prioridad que tiene un vehículo respecto a un pedido.
      */
 
-	public Integer getPrioridad(Pedido pedido)
-    {   Integer prioridad = null;
+	public Integer getPrioridad(Pedido pedido){   
+		assert pedido == null: "No se puede obtener prioridad del vehiculo, pedido es nulo.";
+		Integer prioridad = null;
         boolean condicion1=this.verifica_Cant_Pas(pedido.getCantPasajeros());
         boolean condicion2=this.verificaBaul(pedido.isBaul());
         boolean condicion3=this.verificaPetFriendly(pedido.isPetFriendly());

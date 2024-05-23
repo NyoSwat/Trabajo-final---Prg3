@@ -8,8 +8,8 @@ public class FactoryViaje {
 	 * @param pedido pedido realizado por el cliente
 	 * @return instancia del viaje del cliente
 	 */
-	public static IViaje armarViaje(Pedido pedido,double distancia) {
-		IViaje viaje = new Viaje(pedido,distancia);
+	public static IViaje armarViaje(Cliente cliente,Pedido pedido,double distancia) {
+		IViaje viaje = new Viaje(cliente,pedido,distancia);
 		
 		if(pedido.isBaul())
 			viaje = new ConBaul(viaje);

@@ -13,8 +13,14 @@ public interface IViaje extends Cloneable,Comparable<IViaje>{
      * @return double costo total del viaje.
      */
     double getCosto();
-
+    
     /**
+     * Obtiene el cliente asociado al viaje
+     * @return objeto cliente, quien genero el pedido.
+     */
+    Usuario getCliente();
+
+    	/**
      * Obtiene el vehículo asociado al viaje.
      * @return objeto Vehiculo, vehículo utilizado en el viaje.
      */
@@ -44,5 +50,8 @@ public interface IViaje extends Cloneable,Comparable<IViaje>{
      */
     double getValorBase();
     
+    void setChofer(Chofer chofer);
+    
+    void setVehiculo(Vehiculo vehiculo);
 
 }

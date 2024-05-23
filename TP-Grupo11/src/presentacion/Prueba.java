@@ -25,95 +25,69 @@ public class Prueba{
 //    	Administrador admin = new Administrador(sistema,"Admin", "1234", "Admin Admin");
     	
     	//agregar de usuarios repetidos
-    	try {
-    		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
-    		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
-    	}
-    	catch(ExistenteUsuarioException e) {
-    		System.out.println("Prueba de usuario repetido:"+e.getMessage());
-    	}
-    	catch(IllegalArgumentException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	
-    	//Consultar usuario inexistente
-    	try {
-    		sistema.consultarUsuario("100");
-    	}
-    	catch(ExistenteUsuarioException e) {
-    		System.out.println("Prueba de consulta usuario inexistente: "+e.getMessage());
-    	}
-    	
-    	//agregar chofer existente
-    	try {
-    		sistema.agregarChofer("123", "Chofer1", "Permanente");
-    		sistema.agregarChofer("123", "Chofer1", "Permanente");
-    	}
-    	catch(ExistenteChoferException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	catch(IllegalArgumentException e) {
-    		System.out.println(e.getMessage());
-    	}
+//    	try {
+//    		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
+//    		sistema.agregarCliente(new Cliente("Usuario1", "Contra", "Usuario uno"));
+//    	}
+//    	catch(ExistenteUsuarioException e) {
+//    		System.out.println("Prueba de usuario repetido:"+e.getMessage());
+//    	}
+//    	catch(IllegalArgumentException e) {
+//    		System.out.println(e.getMessage());
+//    	}
 //    	
-//    	//agregar Vehiculo existente
-    	try {
-    		sistema.agregarVehiculo("Auto", "123", true, true,4);
-    		sistema.agregarVehiculo("Auto", "123", true, true,4);
-    	}
-    	catch(ExistenteVehiculoException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	catch(IllegalArgumentException e) {
-    		System.out.println(e.getMessage());
-    	}
+//    	//Consultar usuario inexistente
+//    	try {
+//    		sistema.consultarUsuario("100");
+//    	}
+//    	catch(ExistenteUsuarioException e) {
+//    		System.out.println("Prueba de consulta usuario inexistente: "+e.getMessage());
+//    	}
+//    	
+//    	//agregar chofer existente
+//    	try {
+//    		sistema.agregarChofer("123", "Chofer1", "Permanente");
+//    		sistema.agregarChofer("123", "Chofer1", "Permanente");
+//    	}
+//    	catch(ExistenteChoferException e) {
+//    		System.out.println(e.getMessage());
+//    	}
+//    	catch(IllegalArgumentException e) {
+//    		System.out.println(e.getMessage());
+//    	}
+////    	
+////    	//agregar Vehiculo existente
+//    	try {
+//    		sistema.agregarVehiculo("Auto", "123", true, true,4);
+//    		sistema.agregarVehiculo("Auto", "123", true, true,4);
+//    	}
+//    	catch(ExistenteVehiculoException e) {
+//    		System.out.println(e.getMessage());
+//    	}
+//    	catch(IllegalArgumentException e) {
+//    		System.out.println(e.getMessage());
+//    	}
        	
     	try {
-//    		sistema.agregarChofer("1", "Chofer1", "Contratado");
-//    		sistema.agregarChofer("2", "Chofer2", "Temporario");
-//    		sistema.agregarChofer("3", "Chofer3", "Permanente");
-//    		sistema.agregarChofer("4", "Chofer4", "Temporario");
-//    		sistema.agregarChofer("5", "Chofer5", "Permanente");
-//    		sistema.agregarChofer("6", "Chofer6", "Contratado");
-//    		sistema.agregarChofer("7", "Chofer7", "Contratado");
-//    		sistema.agregarChofer("8", "Chofer8", "Temporario");
-//    		sistema.agregarChofer("9", "Chofer9", "Contratado");
-    		
+    		//Creacion de choferes validos
     		sistema.agregarChofer(new ChoferContratado("1", "Chofer1"));
     		sistema.agregarChofer(new ChoferPermanente("2", "Chofer2",2));
     		sistema.agregarChofer(new ChoferTemporario("3", "Chofer3"));
     		sistema.agregarChofer(new ChoferContratado("4", "Chofer4"));
     		sistema.agregarChofer(new ChoferContratado("5", "Chofer5"));
-    		
+    		//creacion de clientes validos
+    		sistema.agregarCliente(new Cliente("Usuario1","sdasda", "Usuario uno"));
     		sistema.agregarCliente(new Cliente("Usuario2","sdasda", "Usuario dos"));
     		sistema.agregarCliente(new Cliente("Usuario3","sdasda", "Usuario tres"));
     		sistema.agregarCliente(new Cliente("Usuario4","sdasda", "Usuario cuatro"));
     		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
     		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
-    		
-    		
+    		//creacion de vehiculos validos
     		sistema.agregarVehiculo("Auto", "49d", true, true, 4);
     		sistema.agregarVehiculo("moto", "h23", false, false, 1);
     		sistema.agregarVehiculo("combi", "asd", true, true, 4);
     		sistema.agregarVehiculo("moto", "rwa", false, false, 1);
     		
-    		
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 3, 10, "peligrosa", false, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 2, 20, "estandar", true, true,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
-    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(2), 4, 50, "peligrosa", true, false,new GregorianCalendar());
     	}
     	catch(Exception e) {
     		System.out.println(e.getMessage());
@@ -125,9 +99,37 @@ public class Prueba{
     	System.out.println(sistema.listaChoferes());
     	System.out.println("\n*****VEHICULOS*****\n");
     	System.out.println(sistema.listaVehiculos());
+    	System.out.println("\n*****VIAJES********\n"+sistema.listaViajes());
+    	
+    	
+    	try {
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 2, 10, "estandar", false, false, new GregorianCalendar());
+    		
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 4, 20, "peligrosa", true, true, new GregorianCalendar());
+    		
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 1, 30, "SinAsfaltar", false, false, new GregorianCalendar());
+    	}
+    	catch(Exception e) {
+    		System.out.println(e.getMessage());
+    	}
+    	
+    	
+    	System.out.println("\n*****USUARIOS*****\n");
+    	System.out.println(sistema.listaUsuarios());
+    	System.out.println("\n*****CHOFERES*****\n");
+    	System.out.println(sistema.listaChoferes());
+    	System.out.println("\n*****VEHICULOS*****\n");
+    	System.out.println(sistema.listaVehiculos());
+    	System.out.println("\n*****VIAJES********\n"+sistema.listaViajes());
     	
     	
     	
+    	try {
+    		sistema.reporteViajesCliente((Cliente)sistema.listaUsuarios().get(0), null, null);
+    	}
+    	catch(Exception e) {
+    		System.out.println(e.getMessage());
+    	}
 //    	
 //    	admin.agregarChofer("1", "chofer1", "Permanente");
 //    	admin.agregarChofer("2", "chofer2", "Temporario");

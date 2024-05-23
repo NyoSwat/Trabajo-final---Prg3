@@ -22,10 +22,12 @@ public  class Viaje implements IViaje {
      * @param vehiculo   El vehículo utilizado en el viaje.
      * @param distancia  La distancia total recorrida en el viaje (en kilómetros).
      */
-    protected Viaje(Pedido pedido,double distancia) {
+    protected Viaje(Cliente cliente,Pedido pedido,double distancia) {
     	assert distancia >-1 : "La distancia debe ser positiva";
     	assert pedido != null : "El pedido debe ser distinto de null";
-        this.pedido = pedido;
+    	assert cliente == null:"El cliente no puede ser null";
+    	this.cliente = cliente;
+    	this.pedido = pedido;
         this.distanciaRecorrida = distancia;
     }
 
@@ -77,6 +79,25 @@ public  class Viaje implements IViaje {
     public double getValorBase() {
         return Viaje.valorBase;
     }
+    
+    /**
+     * <b>pre:</b> El vehiculo debe ser distinto de null
+     * @param vehiculo asignado al viaje
+     */
+    public void setVehiculo(Vehiculo vehiculo){
+    	assert vehiculo == null : "Error, vehiculo no puede ser nulo.";
+    	this.vehiculo = vehiculo;
+    }
+    
+    /**
+     * Asigna el chofer disponible al viaje a realizar
+     * <b>pre:</b> el chofer debe ser distinto de null
+     * @param chofer asignado al viaje
+     */
+    public void setChofer(Chofer chofer) {
+    	assert chofer == null: "Error, el chofer no puede ser nulo.";
+    	this.chofer = chofer;
+    }
 
     /**
      * Establece un nuevo valor base para los viajes.
@@ -118,6 +139,7 @@ public  class Viaje implements IViaje {
     @Override
     public String toString() {
     	return "\n*************"+
+    			"\nCliente: "+this.cliente.getNombre()+
     			"\nChofer: "+this.chofer.getNombre()+
     			"\nVehiculo: "+this.vehiculo.getPatente()+
     			"\nDistancia: "+this.distanciaRecorrida+" km"+

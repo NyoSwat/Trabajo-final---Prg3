@@ -18,8 +18,15 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     }
     
     /**
+     * Obtiene el cliente asociado al viaje
+     * @return objeto cliente, quien genero el pedido
+     */
+    public Usuario getCliente() {
+    	return viaje.getCliente();
+    }
+    
+    /**
      * Obtiene el vehículo asociado al viaje.
-     *
      * @return El vehículo utilizado en el viaje.
      */
     public Vehiculo getVehiculo(){
@@ -28,7 +35,6 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     
     /**
      * Obtiene el chofer asignado al viaje.
-     *
      * @return El chofer responsable del viaje.
      */
     public Chofer getChofer(){
@@ -37,7 +43,6 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     
     /**
      * Obtiene el pedido relacionado con el viaje.
-     *
      * @return El pedido asociado al viaje.
      */
     public Pedido getPedido() {
@@ -61,10 +66,30 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     	return viaje.getValorBase();
     }
     
+    /**
+     * <b>pre:</b> El vehiculo debe ser distinto de null
+     * @param vehiculo asignado al viaje
+     */
+    public void setVehiculo(Vehiculo vehiculo){
+    	assert vehiculo == null : "Error, vehiculo no puede ser nulo.";
+    	this.viaje.setVehiculo(vehiculo);
+    }
+    
+    /**
+     * Asigna el chofer disponible al viaje a realizar
+     * <b>pre:</b> el chofer debe ser distinto de null
+     * @param chofer asignado al viaje
+     */
+    public void setChofer(Chofer chofer) {
+    	assert chofer == null: "Error, el chofer no puede ser nulo.";
+    	this.viaje.setChofer(chofer);
+    }
+    
     
     @Override
     public String toString() {
     	return "\n*************"+
+    			"\nCliente: "+getCliente().getNombre()+
     			"\nChofer: "+getChofer().getNombre()+
     			"\nVehiculo: "+getVehiculo().getPatente()+
     			"\nDistancia: "+getDistancia()+" km"+
@@ -72,7 +97,7 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     			"\nCantidad Pasajeros: "+getPedido().getCantPasajeros()+
     			"\nMascota: "+getPedido().isPetFriendly()+
     			"\nBaul: "+getPedido().isBaul()+
-    			"\nValor: $"+this.getCosto()+
+    			"\nValor viaje: $"+this.getCosto()+
     			"\n";
     }
 }

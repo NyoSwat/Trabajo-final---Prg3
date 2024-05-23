@@ -320,9 +320,8 @@ public class Sistema {
     		throw new ExistenteUsuarioException("Error, cliente ingresado para el reporte de viaje incorrecto.");
 		System.out.println("Viajes realizados por el usuario: " + usuario.getUsuario());
 		for(int i=0; i< viajes.size(); i++) {
-			Viaje viaje = (Viaje) viajes.get(i);
-			if(viaje.getCliente().equals(usuario) && viaje.getPedido().getFecha().after(fechaInicial) && viaje.getPedido().getFecha().before(fechaFinal)) {
-				System.out.println(viaje.toString());
+			if(viajes.get(i).getCliente().equals(usuario)) {// viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
+				System.out.println(viajes.get(i).toString());
 			}
 		}
 	}
@@ -342,9 +341,8 @@ public class Sistema {
 			throw new ExistenteChoferException("Error, chofer ingresado para el reporte de viajes incorrecto");
 		System.out.println("Viajes realizados por el chofer: " +chofer.getNombre()+", dni: "+ chofer.getDni());
 		for(int i=0; i<this.viajes.size(); i++) {
-			Viaje viaje = (Viaje) this.viajes.get(i);
-			if(viaje.getChofer().equals(chofer) && viaje.getPedido().getFecha().after(fechaInicial) && viaje.getPedido().getFecha().before(fechaFinal)) {
-				System.out.println(viaje.toString());
+			if(viajes.get(i).getChofer().equals(chofer) ){//&& viaje.getPedido().getFecha().after(fechaInicial) && viaje.getPedido().getFecha().before(fechaFinal)) {
+				System.out.println(viajes.get(i).toString());
 			}
 		}
 	}
@@ -368,8 +366,10 @@ public class Sistema {
     			ExistenteUsuarioException, 
     			FaltaVehiculoException, FaltaChoferException 
     {
-    	boolean hayVehiculo = false, hayChofer = true;
+    	boolean hayVehiculo = false;
+    	boolean hayChofer = choferes.size()>0;
     	Pedido pedido;
+    	int i = 0;
     	
     	if(consultarUsuario(cliente.getUsuario()) == null)
     		throw new ExistenteUsuarioException("Pedido Rechazado. Cliente del pedido incorrecto");
@@ -377,62 +377,94 @@ public class Sistema {
     	if(cantPasajeros<0 && distancia<0 && !"peligrosa sinasfaltar estandar".contains(zona))
     		throw new IllegalArgumentException("Pedido Rechazado. Parametros ingresados incorrecto");
     	
-    	pedido = new Pedido(cantPasajeros,zona,mascota,baul,fechaHora);
-    	
-		//Verifico si existe vehiculo que cumpla con los requerimientos
-    	for(int i = 0; i < vehiculos.size(); i++) {
-    		if(vehiculos.get(i).getCantMaxPasajeros() >= pedido.getCantPasajeros() && !(pedido.isBaul()==true && vehiculos.get(i).isBaul()==false) &&
-    				!(pedido.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) {
+		//Verifico si existe vehiculo que cumpla con los requisitos del pedido
+    	while( i < vehiculos.size() && !hayVehiculo) {
+    		if(vehiculos.get(i).getCantMaxPasajeros() >= cantPasajeros 
+    				&& !(baul==true && vehiculos.get(i).isBaul()==false) 
+    				&& !(mascota==true && vehiculos.get(i).isPetFriendly()==false) ) {
     			hayVehiculo = true;
     		}
     		else
     			hayVehiculo = false;
+    		i++;
     	}
     	
     	if(!hayVehiculo)
     		throw new FaltaVehiculoException("Pedido Rechazado. No hay vehiculo disponible que satisfaga su pedido.");
     	if(!hayChofer)
     		throw new FaltaChoferException("Pedido Rechazado. No hay chofer disponible");
-    	generarViaje(pedido);
+
+    	pedido = new Pedido(cantPasajeros,zona,mascota,baul,fechaHora);
+    	generarViaje(cliente,pedido,distancia);
     }
 
     /**
      * Metodo que crea el viaje y asigna vehiculo y chofer
      * <b>pre:</b>	Pedido validado y distinto de null
+     * 			Cliente distinto de null
+     * 			distancia positiva
      * @param pedido Pedido que realizo algun cliente
      */
-    private void generarViaje(Pedido pedido) {
-    	assert pedido==null:"Pedido no validado";
-    	
+    private void generarViaje(Cliente cliente,Pedido pedido,int distancia) {
+    	assert pedido==null:"No se pudo generar el viaje, pedido null.";
+    	assert cliente == null: "No se pudo generar el viaje, cliente null.";
+    	assert distancia<0:"No se pudo generar el viaje, distancia no puede ser negativa.";
     	IViaje viaje = null;
-    	Vehiculo vehiculoAsignado = null;
-    	Integer prioridad, prioriMax = 0;
-    	Chofer choferAsignado = null;
-    	Random ran = new Random();
     	
     	System.out.println("Pedido aceptado. Generando viaje...");
-    	//Asignar vehiculo por prioridad
-    	for(int i=0; i < vehiculos.size(); i++) {
-    		prioridad = vehiculos.get(i).getPrioridad(pedido);
-    			if(prioridad != null && prioridad >= prioriMax ) {
-    				vehiculoAsignado = vehiculos.get(i);
-    				prioriMax = prioridad;
-    		}
-    	}
-    	//Asigno chofer aleatoriamente
-    	choferAsignado = choferes.get(ran.nextInt(choferes.size()));
     	
-    	//Falta sacar de la lista al vehiculo y chofer asignado
-    	//Para luego agregarlo nuevamente una vez finalizado el viaje.
-    	//Falta asginar en viaje el chofer y vehiculo asignados.
+    	viaje = FactoryViaje.armarViaje(cliente,pedido,distancia); 
+
+    	asignarVehiculo(viaje);
+		System.out.println("vehiculo asignado");
+    	asignarChofer(viaje);
+    	System.out.println("chofer asignado");
     	
-    	viaje = FactoryViaje.armarViaje(pedido,pedido.getCantPasajeros()); 
-    	choferAsignado.setViaje(viaje);
     	
     	viajes.add(viaje);
     	
     	//para ver que anda
-    	System.out.println("viaje realizado"+"-> lo realiza "+choferAsignado.getNombre()+" en vehiculo "+vehiculoAsignado.getPatente());
+    	System.out.println("viaje realizado"+"-> lo realiza "+viaje.getChofer().getNombre()+" en vehiculo "+viaje.getVehiculo().getPatente());
+    }
+    
+    /**Asigna el vehiculo correspondiente al pedido realizado
+     * <b>pre:</b> viaje debe ser distinto de null
+     * @param viaje viaje que se esta preparando
+     */
+    private void asignarVehiculo(IViaje viaje) {
+    	assert viaje == null:"No se pudo asignar vehiculo, viaje es null.";
+    	Integer prioridad = null;
+    	Integer prioridadMax = null;
+    	Vehiculo vehiculoAsignado = null;
+    	
+    	for (int i = 0; i < vehiculos.size(); i++) {
+			prioridad = vehiculos.get(i).getPrioridad(viaje.getPedido());
+			if(prioridadMax == null ||(prioridad != null && prioridad > prioridadMax)) {
+				vehiculoAsignado = vehiculos.get(i);
+				prioridadMax = prioridad;
+			}
+    	}
+    	if( vehiculoAsignado != null) {
+    		viaje.setVehiculo(vehiculoAsignado);
+    		vehiculos.remove(vehiculos.indexOf(vehiculoAsignado));
+    	}
+    }
+    
+    /**
+     * Asigna el chofer correspondiente al pedido realizado
+     * <b>pre:</b> el viaje debe ser distinto de null
+     * @param viaje
+     * @return retorna el chofer asignado
+     */
+    private void asignarChofer(IViaje viaje) {
+    	assert viaje == null : "No se pudo asignar chofer,el viaje es null";
+    	Chofer choferAsignado = null;
+    	
+    	if(choferes.size()>0) {
+    		choferAsignado = choferes.get(0);
+    		viaje.setChofer(choferAsignado);
+    		choferes.remove(choferes.indexOf(choferAsignado));
+    	}
     }
     
     /**
