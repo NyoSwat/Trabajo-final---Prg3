@@ -297,6 +297,7 @@ public class Sistema {
     	
     	ArrayList<IViaje> viajesClone = null; 
     	viajesClone = (ArrayList<IViaje>) viajes.clone();
+    	viajesClone.clear();
     	for (int i = 0; i < viajes.size(); i++) {
 			viajesClone.add((IViaje) this.viajes.get(i).clone());
 		}
