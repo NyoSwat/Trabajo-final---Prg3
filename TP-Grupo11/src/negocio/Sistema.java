@@ -46,7 +46,20 @@ public class Sistema {
         return _instance;
     }
     
-	/**
+    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
+    	this.vehiculos = vehiculos;
+    }
+    
+    public void setChoferes(ArrayList<Chofer> choferes) {
+    	this.choferes = choferes;
+    }
+
+    public void setUsuarios(ArrayList<Usuario> usuarios) {
+    	this.usuarios = usuarios;
+    }
+
+    
+    /**
 	 * Consulta un vehiculo existente
 	 * <b>pre:</b>patente no debe ser null ni vacio
 	 * @param patente: Patente del auto a consultar
