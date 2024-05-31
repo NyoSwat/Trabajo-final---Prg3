@@ -46,9 +46,9 @@ public class Administrador extends Usuario {
      * @param petFriendly: de tipo boolean, indica si el vehículo transporta mascotas.
      */
 
-	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly,int maxPasajeros) {
+	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly) {
 		try {
-			sistema.agregarVehiculo(tipo, patente, baul, petFriendly,maxPasajeros);
+			sistema.agregarVehiculo(tipo, patente, baul, petFriendly);
 		} catch (Exception e) {
 			System.out.println("Error al agregar vehiculo: " + e.getMessage());
 		}		
@@ -198,15 +198,15 @@ public class Administrador extends Usuario {
 	 * Calcula el dinero total necesario para pagar todos los sueldos. 
 	 * @return double con valor total necesario para pagar todos los sueldos.
 	 */
-	public double totalDineroNecesario() {
-		double sueldo = 0;
-		
-		for(int i=0; i<sistema.listaChoferes().size(); i++) {
-			sueldo += sistema.listaChoferes().get(i).getSueldo();
-		}
-		
-		return sueldo;
-	}
+//	public double totalDineroNecesario() {
+//		double sueldo = 0;
+//		
+//		for(int i=0; i<sistema.listaChoferes().size(); i++) {
+//			sueldo += sistema.listaChoferes().get(i).getSueldo();
+//		}
+//		
+//		return sueldo;
+//	}
 	
 	/**
 	 * Muestra un reporte con todos los viajes hechos por un chofer

@@ -27,16 +27,4 @@ public class ConBaul extends ViajeDecorador {
         return getViaje().getValorBase() * (1 + distanciaAdicional + pasajerosAdicional);
     }
 
-	@Override
-	public int compareTo(IViaje o) {
-		if(this.getViaje().getCosto() < o.getCosto())
-			return -1;
-		else if(this.getViaje().getCosto() > o.getCosto())
-			return 1;
-		else
-			return 0;
-	}
-
-    
-   
 }

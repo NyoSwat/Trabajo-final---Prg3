@@ -5,15 +5,14 @@ package modelo;
  * Hereda de la clase Vehículo y establece que no tiene espacio para pasajeros adicionales.
  */
 public class Moto extends Vehiculo {
-
+	private static int maxPasajeros = 1;
 	/**
      * Constructor para crear un objeto Moto.
      *
      * @param patente: de tipo String, patente de la motocicleta.
      */
-    public Moto(String patente,boolean baul,boolean pet,int maxPasajeros) {
-        super(patente, baul, pet, 1);
-        setCantPasajeros(maxPasajeros);
+    public Moto(String patente,boolean baul,boolean pet) {
+        super(patente, baul, pet);
     }
 
     /**Verificar si se puede acceder al servicio de baúl deseado
@@ -48,7 +47,6 @@ public class Moto extends Vehiculo {
 
 	protected int calculaPrioridad(Pedido pedido) {
 		return 1000;
-		
 	}
 	
 	/**
@@ -59,13 +57,13 @@ public class Moto extends Vehiculo {
 
 	public String toString() {
 		return "\n********"+
-				"\nMoto"+super.toString();
+				"\nMoto"+super.toString()+"\nCantMaxPasajeros: "+Moto.maxPasajeros+"\n";
 	}
 
-	@Override
-	public void setCantPasajeros(int cantidad) throws IllegalArgumentException {
+	public static void setCantPasajeros(int cantidad) throws IllegalArgumentException {
 		if(cantidad != 1)
 		throw new IllegalArgumentException("La moto no puede modificar su capacidad. Maximo 1 pasajero.");
+		Moto.maxPasajeros = cantidad;
 	}
 	
 	@Override
@@ -77,5 +75,10 @@ public class Moto extends Vehiculo {
 	public void setPetFriendly(boolean condicion) {
 		if(condicion)
 		throw new IllegalArgumentException("La moto no puede llevar mascota");
+	}
+
+	@Override
+	public int getCantMaxPasajeros() {
+		return Moto.maxPasajeros;
 	}
 }

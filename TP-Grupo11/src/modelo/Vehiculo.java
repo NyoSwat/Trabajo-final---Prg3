@@ -1,16 +1,17 @@
 package modelo;
+
+import java.io.Serializable;
+
 /**
  * Esta clase abstracta representa un vehículo genérico utilizado en viajes.
  * Proporciona información sobre la patente, capacidad de carga, amigabilidad con mascotas y capacidad de pasajeros.
  * Las clases concretas que heredan de esta deben implementar los detalles específicos del vehículo.
-
  */
 
-public abstract class Vehiculo {
+public abstract class Vehiculo implements Serializable,Cloneable{
     private String patente; // La patente del vehículo
     private boolean baul; // Indica si el vehiculo tiene espacio de carga (baul)
     private boolean petFriendly; // Indica si el vehiculo es apto para mascotas
-    protected int maxPasajeros; // El numero maximo de pasajeros que puede transportar el vehiculo
 
     /**
      * Crea un nuevo objeto Vehiculo con los parametros especificados.
@@ -21,11 +22,10 @@ public abstract class Vehiculo {
      * @param maxPasajeros: de tipo int,numero máximo de pasajeros que puede transportar el vehículo.
      */
 
-    protected Vehiculo(String patente, boolean baul, boolean petFriendly, int maxPasajeros) {
+    protected Vehiculo(String patente, boolean baul, boolean petFriendly) {
         this.patente = patente;
         this.setBaul(baul);
         this.setPetFriendly(petFriendly);
-        this.maxPasajeros = maxPasajeros;
     }
 
   
@@ -55,7 +55,7 @@ public abstract class Vehiculo {
 	 */
 
 	protected boolean verifica_Cant_Pas(int cantidadPasajeros){
-		return (cantidadPasajeros>= 0 && cantidadPasajeros<=this.maxPasajeros);
+		return (cantidadPasajeros>= 0 && cantidadPasajeros<=this.getCantMaxPasajeros());
 	}
 	    
 	 /** Método abstracto que se implementara según sea necesario, debe verificar si se puede acceder 
@@ -90,9 +90,7 @@ public abstract class Vehiculo {
 	 * Informa la cantidad maxima que puede llevar el vehiculo.
 	 * @return entero , cantidad de pasajeros permitidos por el vehiculo.
 	 */
-	public int getCantMaxPasajeros() {
-		return this.maxPasajeros;
-	}
+	public abstract int getCantMaxPasajeros();
 
 	/**Informa si el vehículo tiene espacio de carga (baúl)
 	 * @return boolean que indica si se cuenta con espacio de carga.
@@ -126,13 +124,10 @@ public abstract class Vehiculo {
 		this.petFriendly = condicion;
 	}
 	
-	/**
-	 * Permine moficiar la cantidad de maximos pasajeros, dependiendo de cada vehiculo.
-	 * Auto: max 4. Combi max 10. Moto Max 1.
-	 * @param cantidad: entero que determina la cantidad maxima de pasajeros.
-	 * @throws IllegalArgumentException Si la cantidad ingresada es invalida. Si es negativo o excede la maxima cantidad.
-	 */
-	abstract public void setCantPasajeros(int cantidad) throws IllegalArgumentException;
+	@Override
+	public Object clone()throws CloneNotSupportedException{
+		return super.clone();
+	}
 	
 	/**
 	 * Devuelve una representación en forma de cadena de Vehiculo.
@@ -146,9 +141,7 @@ public abstract class Vehiculo {
 	public String toString() {
 		return "\nPatente: "+this.patente+
 				"\nBaul: "+this.baul+
-				"\nPetFriendly: "+this.petFriendly+
-				"\nCant. Max. Pasajeros: "+this.maxPasajeros+
-				"\n";
+				"\nPetFriendly: "+this.petFriendly;
 	}
 
 }

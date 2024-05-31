@@ -1,5 +1,8 @@
 package modelo;
 
+import java.util.ArrayList;
+
+import Excepciones.ExistenteChoferException;
 
 /**
  * La clase Contratado representa una categoría de empleados contratados en la empresa.
@@ -32,19 +35,21 @@ public class ChoferContratado extends Chofer {
     /**
      * Calcula el sueldo del empleado contratado.
      * @return double con sueldo del empleado contratado.
+     * @throws ExistenteChoferException 
      */
     @Override
     public double getSueldo() {
     	double sueldo = 0;
-    	for (int i = 0; i < this.getViajes().size(); i++) {
-			sueldo += this.getViajes().get(i).getCosto()*ChoferContratado.gananciaViaje;
+    	ArrayList<IViaje> viajes = super.getViajes();
+    	for (int i = 0; i < viajes.size(); i++) {
+			sueldo += viajes.get(i).getCosto()*ChoferContratado.gananciaViaje;
 		}
     	return sueldo;
     }
     
     @Override
     public String toString() {
-    	return super.toString()+"\nCantidad de viajes: "+this.getViajes().size();
+    	return super.toString()+"\nCantidad de viajes: "+super.getViajes().size();
     }
 
 

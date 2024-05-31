@@ -15,6 +15,7 @@ public class FactoryViaje {
 			viaje = new ConBaul(viaje);
 		else
 			viaje = new SinBaul(viaje);
+		
 		if(pedido.isPetFriendly())
 			viaje = new ConMascota(viaje);
 		else

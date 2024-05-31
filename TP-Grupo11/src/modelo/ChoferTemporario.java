@@ -1,5 +1,7 @@
 package modelo;
 
+import Excepciones.ExistenteChoferException;
+
 /**
  * La clase Temporario representa a un empleado temporal en la empresa.
  * Hereda de la clase Empleado y agrega un atributo adicional para el plus por cantidad de viajes.
@@ -29,10 +31,11 @@ public class ChoferTemporario extends ChoferEmpleado {
      * Se calcula salario mensual en base a un sueldo básico, un plus por cantidad de viajes y 
      * y un descuento por aportes jubilatorios
      * @return double con sueldo del empleado temporal.
+     * @throws ExistenteChoferException 
      */
     @Override
     public double getSueldo() {    	
-    	double sueldo = ChoferEmpleado.sueldoBasico*(1+plusCantViajes*this.getViajes().size());
+    	double sueldo = ChoferEmpleado.sueldoBasico*(1+plusCantViajes*super.getViajes().size());
     	sueldo = sueldo*(1 - ChoferEmpleado.aportes);
     	return sueldo;
     }
@@ -41,10 +44,11 @@ public class ChoferTemporario extends ChoferEmpleado {
      * Devuelve una representación en forma de cadena de Temporario.
      * La cadena resultante contiene la cantidad de viajes realizados en el mes.
      * @return String que representa la cantidad de viajes realizados por Empleado Temporario.
+     * @throws ExistenteChoferException 
      */
     @Override
-    public String toString() {
-    	return super.toString()+"\nCantidad de viajes: "+this.getViajes().size();
+    public String toString(){
+    	return super.toString()+"\nCantidad de viajes: "+super.getViajes().size();
     }
 
 

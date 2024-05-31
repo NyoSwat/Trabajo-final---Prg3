@@ -6,14 +6,15 @@ package modelo;
  */
 
 public class Automovil extends Vehiculo {
-
+	
+	private static int maxPasajeros = 4;
+	
 	/**
      * Constructor para crear un objeto Automovil.
      * @param patente:parámetro de tipo String que representa la patente del automóvil.
      */
-    public Automovil(String patente,boolean baul,boolean pet,int maxPasajeros) {
-        super(patente, baul, pet, 4);
-        setCantPasajeros(maxPasajeros);
+    public Automovil(String patente,boolean baul,boolean pet) {
+        super(patente, baul, pet);
     }
 
     /**Verifica si se puede acceder al servicio de baúl deseado.
@@ -55,18 +56,20 @@ public class Automovil extends Vehiculo {
 	*/
 	public String toString() {
 		return "\n*********"+
-				"\nAutomovil"+super.toString();
+				"\nAutomovil"+super.toString()+"\nCantMaxPasajeros: "+Automovil.maxPasajeros+"\n";
 	}
 
+
+	public static void setCantPasajeros(int cantidad)throws IllegalArgumentException {
+		if(cantidad > 4)
+			throw new IllegalArgumentException("cantidad invalida.Maximo 4.");
+		Automovil.maxPasajeros = cantidad;
+	}
 
 	@Override
-	public void setCantPasajeros(int cantidad)throws IllegalArgumentException {
-		if(super.verifica_Cant_Pas(cantidad)) {
-			super.maxPasajeros = cantidad;
-		}
-		else {
-			super.maxPasajeros = 4;
-			throw new IllegalArgumentException("cantidad invalida.Maximo 4.");
-		}
+	public int getCantMaxPasajeros() {
+		return Automovil.maxPasajeros;
 	}
 }
+	
+	

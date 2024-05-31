@@ -1,15 +1,20 @@
 package prueba;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import Excepciones.ExistenteChoferException;
 import Excepciones.ExistenteUsuarioException;
 import Excepciones.ExistenteVehiculoException;
 import modelo.Administrador;
+import modelo.Automovil;
 import modelo.ChoferContratado;
 import modelo.ChoferPermanente;
 import modelo.ChoferTemporario;
 import modelo.Cliente;
+import modelo.Combi;
+import modelo.IViaje;
+import modelo.Moto;
 import modelo.Pedido;
 import negocio.Sistema;
 
@@ -17,7 +22,7 @@ import negocio.Sistema;
 public class Prueba{
     public static void main (String argv[]){
     	
-    	Sistema sistema = new Sistema();
+    	Sistema sistema = Sistema.getInstance();
     	
     	/**
     	 * En el TP dice que hay un administrador y varios clientes ¿Deberia usar singleton para el administrador tambien?
@@ -83,10 +88,11 @@ public class Prueba{
     		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
     		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
     		//creacion de vehiculos validos
-    		sistema.agregarVehiculo("Auto", "49d", true, true, 4);
-    		sistema.agregarVehiculo("moto", "h23", false, false, 1);
-    		sistema.agregarVehiculo("combi", "asd", true, true, 4);
-    		sistema.agregarVehiculo("moto", "rwa", false, false, 1);
+    		sistema.agregarVehiculo("Auto", "49d", true, true);
+    		sistema.agregarVehiculo("moto", "h23", false, false);
+    		sistema.agregarVehiculo("combi", "asd", true, true);
+    		sistema.agregarVehiculo("combi", "zxc", true, true);
+    		sistema.agregarVehiculo("moto", "rwa", false, false);
     		
     	}
     	catch(Exception e) {
@@ -108,6 +114,10 @@ public class Prueba{
     		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(1), 4, 20, "peligrosa", true, true, new GregorianCalendar());
     		
     		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 1, 30, "SinAsfaltar", false, false, new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 1, 30, "SinAsfaltar", false, false, new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 1, 30, "SinAsfaltar", false, false, new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 1, 30, "SinAsfaltar", false, false, new GregorianCalendar());
+    		sistema.generarPedido((Cliente)sistema.listaUsuarios().get(0), 1, 30, "SinAsfaltar", false, false, new GregorianCalendar());
     	}
     	catch(Exception e) {
     		System.out.println(e.getMessage());
@@ -125,16 +135,25 @@ public class Prueba{
     	
     	
     	try {
-    		sistema.reporteViajesCliente((Cliente)sistema.listaUsuarios().get(0), null, null);
-    		System.out.println(sistema.getSueldoChofer(sistema.listaChoferes().get(4)));
+    		System.out.println("VIAJES REALIZADOS POR "+sistema.listaUsuarios().get(0).getNombre()+"\n"+sistema.reporteViajesCliente((Cliente)sistema.listaUsuarios().get(0), null, null));
+    		System.out.println("SUELDO DE "+sistema.listaChoferes().get(4).getNombre()+"\n"+sistema.getSueldoChofer(sistema.listaChoferes().get(0)));
     		System.out.println(sistema.totalSueldoChoferes());
     		sistema.reporteViajesChofer(sistema.listaChoferes().get(4), null, null);
     		
-    		
-    		System.out.println("\n\n****Lista de Viajes Ordenada*****\n"+sistema.listaViajesOrdenada());
+    		ArrayList<IViaje> clonado = sistema.listaViajesOrdenada();
+    		clonado.get(0).getCliente().setNombre("NombreCambiado");;
+    		System.out.println("\n\n****Lista de Viajes Ordenada*****\n"+clonado);
     		System.out.println("\nListado de viajes original\n"+sistema.listaViajes());
     		
-    		System.out.println(sistema.listaViajesOrdenada().get(0) == sistema.listaViajes().get(2));
+    		System.out.println(sistema.listaViajesOrdenada().get(0).getChofer() == sistema.listaViajes().get(2).getChofer());
+    		
+    		System.out.println(sistema == Sistema.getInstance());
+    		
+    		Automovil.setCantPasajeros(2);
+//    		Moto.setCantPasajeros(2);
+    		Combi.setCantPasajeros(4);
+    		System.out.println(sistema.listaVehiculos().get(1).getPatente()+" "+sistema.listaVehiculos().get(1).getCantMaxPasajeros());
+    		System.out.println(sistema.listaVehiculos().get(0).getPatente()+" "+sistema.listaVehiculos().get(0).getCantMaxPasajeros());
     	}
     	catch(Exception e) {
     		System.out.println(e.getMessage());

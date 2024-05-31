@@ -1,6 +1,8 @@
 package modelo;
 
-public abstract class Usuario {
+import java.io.Serializable;
+
+public abstract class Usuario implements Serializable,Cloneable{
     private String usuario;
     private String password;
     private String nombre;
@@ -78,6 +80,11 @@ public abstract class Usuario {
 	 * @return String que representa el nombre del usuario.
 	 */
 
+	@Override
+	public Object clone()throws CloneNotSupportedException {
+		return super.clone();
+	}
+	
 	@Override
 	public String toString() {
 		return this.nombre;

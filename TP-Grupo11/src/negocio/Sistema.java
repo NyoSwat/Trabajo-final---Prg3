@@ -93,13 +93,13 @@ public class Sistema {
 	 * @param petFriendly : Si ser permite el acceso a animales.
 	 * @throws IllegalArgumentException En caso de que la patente ya exista o los argumentos sean invalidos
 	 */
-	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly,int maxPasajeros ) throws IllegalArgumentException,ExistenteVehiculoException{
+	public void agregarVehiculo(String tipo,String patente, boolean baul, boolean petFriendly) throws IllegalArgumentException,ExistenteVehiculoException{
 		if(!"moto automovil combi".contains(tipo.toLowerCase()) || patente.equals("") || patente.equals(null)) {
 			throw new IllegalArgumentException("Parametros invalidos");
 		}else if(this.consultarVehiculo(patente) != null) {
 			throw new ExistenteVehiculoException("El vehiculo "+patente+" ya existe");
 		}else {
-			this.vehiculos.add(FactoryVehiculo.getVehiculo(tipo, patente,baul,petFriendly,maxPasajeros));
+			this.vehiculos.add(FactoryVehiculo.getVehiculo(tipo, patente,baul,petFriendly));
 		}
 	}
 	
@@ -115,7 +115,6 @@ public class Sistema {
 	public void modificarVehiculo(String tipo,String patente, int cantPasajeros, boolean baul, boolean petFriendly) throws ExistenteVehiculoException{
 		Vehiculo vehiculo = this.consultarVehiculo(patente);	
 		if(vehiculo != null) {
-			vehiculo.setCantPasajeros(cantPasajeros);
 			vehiculo.setBaul(baul);
 			vehiculo.setPetFriendly(petFriendly);
 		}else {
@@ -325,17 +324,14 @@ public class Sistema {
      * @param fechaFinal
      * @throws ExistenteUsuarioException 
      */
-    public void reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) 
-    		throws ExistenteUsuarioException 
-    {
-    	if(!usuarios.contains(usuario))
-    		throw new ExistenteUsuarioException("Error, cliente ingresado para el reporte de viaje incorrecto.");
-		System.out.println("Viajes realizados por el usuario: " + usuario.getUsuario());
+    public ArrayList<IViaje> reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) {
+    	ArrayList<IViaje> viajeCliente = new ArrayList<IViaje>();
 		for(int i=0; i< viajes.size(); i++) {				//Lo anule para probar
 			if(viajes.get(i).getCliente().equals(usuario)) {//&& viajes.get(i).getPedido().getFecha().after(fechaInicial) && viajes.get(i).getPedido().getFecha().before(fechaFinal)) {
-				System.out.println(viajes.get(i).toString());
+				viajeCliente.add(viajes.get(i));
 			}
 		}
+		return viajeCliente;
 	}
     
     /**
@@ -343,20 +339,16 @@ public class Sistema {
 	 * @param chofer: de tipo Chofer,chofer que realizó los viajes.
 	 * @param fechaInicial :de tipo date, fecha a partir de la que se realiza la busqueda.
 	 * @param fechaFinal :de tipo date, fecha hasta la cual se realiza la busqueda.
-     * @throws ExistenteChoferException 
 	 */
 
-	public void reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal) 
-			throws ExistenteChoferException 
-	{
-		if(!choferes.contains(chofer))
-			throw new ExistenteChoferException("Error, chofer ingresado para el reporte de viajes incorrecto");
-		System.out.println("Viajes realizados por el chofer: " +chofer.getNombre()+", dni: "+ chofer.getDni());
+	public ArrayList<IViaje> reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal){
+		ArrayList<IViaje> viajeChofer = new ArrayList<IViaje>();
 		for(int i=0; i<this.viajes.size(); i++) {			//lo anule para probar
 			if(viajes.get(i).getChofer().equals(chofer) ){//&& viaje.getPedido().getFecha().after(fechaInicial) && viaje.getPedido().getFecha().before(fechaFinal)) {
-				System.out.println(viajes.get(i).toString());
+				viajeChofer.add(viajes.get(i));
 			}
 		}
+		return viajeChofer;
 	}
     
     /**
@@ -480,7 +472,6 @@ public class Sistema {
     		choferAsignado = choferes.get(0);
     		viaje.setChofer(choferAsignado);
     		choferes.remove(choferes.indexOf(choferAsignado));
-    		choferAsignado.setViaje(viaje);
     	}
     }
     
@@ -500,8 +491,9 @@ public class Sistema {
     /**
      * Metodo que calcula el total dinero a pagar a todos los choferes registrados
      * @return double con el total a pagar chofer
+     * @throws ExistenteChoferException 
      */
-    public double totalSueldoChoferes() {
+    public double totalSueldoChoferes() throws ExistenteChoferException {
     	double totalSueldo = 0;
     	for (int i = 0; i < choferes.size(); i++) {
 			totalSueldo += choferes.get(i).getSueldo();
@@ -513,10 +505,14 @@ public class Sistema {
      * <b>pre:<\b> chofer distinto de null 
      * @param chofer Chofer a calcular el salario
      * @return Double con el sueldo del chofer ingresado
+     * @throws IllegalArgumentException 
+     * @throws ExistenteChoferException 
      */
-    public double getSueldoChofer(Chofer chofer) {
+    public double getSueldoChofer(Chofer chofer) throws IllegalArgumentException, ExistenteChoferException {
     	assert chofer == null:"Chofer ingresado no valido/no existente";
-    	return chofer.getSueldo();
+    	if(consultarChofer(chofer.getDni()) == null)
+    		throw new ExistenteChoferException("Error, chofer a calcular sueldo no existe.");
+		return chofer.getSueldo();
     }
     
 }

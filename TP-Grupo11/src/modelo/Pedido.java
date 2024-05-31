@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
  * La clase Pedido representa un pedido de viaje realizado por un cliente.
  * Contiene información sobre la cantidad de pasajeros, la zona del viaje, si es pet-friendly y si requiere espacio en el baúl.
  */
-public class Pedido {
+public class Pedido implements Cloneable{
     private int cantPasajeros; // Cantidad de pasajeros en el pedido
     private String zona; // Zona del viaje (por ejemplo, "Centro", "Suburbio", etc.)
     private boolean petFriendly; // Indica si se permite llevar mascotas en el viaje
@@ -69,6 +69,10 @@ public class Pedido {
         return fecha;
     }
     
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+    	return super.clone();
+    }
     
 }
 

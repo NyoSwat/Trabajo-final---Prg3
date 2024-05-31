@@ -5,13 +5,11 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     
     /**
      * Obtiene el objeto IViaje subyacente.
-     *
      * @return El viaje base.
      */
     public IViaje getViaje(){
         return this.viaje;
     }
-    
     
     public void setIViaje(IViaje viaje) {
     	this.viaje = viaje;
@@ -51,7 +49,6 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     
     /**
      * Obtiene la distancia total del viaje.
-     *
      * @return La distancia en kilómetros del viaje.
      */
     public double getDistancia() {
@@ -86,9 +83,20 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     }
     
     public Object clone() throws CloneNotSupportedException{
-		return super.clone();
-    	
+    	ViajeDecorador viaje = (ViajeDecorador) super.clone();
+    	viaje.viaje = (IViaje) this.viaje.clone();
+		return viaje;
     }
+    
+    @Override
+	public int compareTo(IViaje o) {
+		if(this.getViaje().getCosto() < o.getCosto())
+			return -1;
+		else if(this.getViaje().getCosto() > o.getCosto())
+			return 1;
+		else
+			return 0;
+	}
     
     @Override
     public String toString() {

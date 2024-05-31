@@ -6,15 +6,14 @@ package modelo;
  */
 
 public class Combi extends Vehiculo {
-
+	private static int maxPasajeros = 10;
 
     /**
      * Constructor para crear un objeto Combi.
      * @param patente: de tipo String, con la patente de la combi.
      */
-    public Combi(String patente,boolean baul,boolean pet,int maxPasajeros) {
-        super(patente, baul, pet,10);
-        setCantPasajeros(maxPasajeros);
+    public Combi(String patente,boolean baul,boolean pet) {
+        super(patente, baul, pet);
     }
 
     /**Verifica si se puede acceder al servicio de baul deseado.
@@ -60,19 +59,22 @@ public class Combi extends Vehiculo {
 	 * Devuelve una representación en forma de cadena de Combi
 	 * @return String que representa al objeto Combi
 	 */
-
 	public String toString() {
 		return "\n**********"+
-				"\nCombi"+super.toString();
+				"\nCombi"+super.toString()+"\nCantMaxPasajeros: "+Combi.maxPasajeros+"\n";
 	}
-	@Override
-	public void setCantPasajeros(int cantidad)throws IllegalArgumentException {
-		if(verifica_Cant_Pas(cantidad))
-			super.maxPasajeros = cantidad;
-		else {
-			super.maxPasajeros = 10;
+
+	public static void setCantPasajeros(int cantidad)throws IllegalArgumentException {
+		if(cantidad > 10)
 			throw new IllegalArgumentException("Cantidad invalida.Maximo 10");
-		}
+		Combi.maxPasajeros = cantidad;
 	}
+
+	@Override
+	public int getCantMaxPasajeros() {
+		return Combi.maxPasajeros;
+	}
+	
+	
 }
 
