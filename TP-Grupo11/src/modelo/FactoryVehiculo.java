@@ -22,7 +22,7 @@ public class FactoryVehiculo {
         else if (vehiculoType.equalsIgnoreCase("auto"))
             return new Automovil(patente,baul,pet);
         else if (vehiculoType.equalsIgnoreCase("combi"))
-            return new Combi(patente,baul,pet);
+            return new Combi(patente, baul, pet);
         else
             throw new IllegalArgumentException("Tipo de vehiculo no valido.");
     }

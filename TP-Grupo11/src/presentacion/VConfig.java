@@ -52,8 +52,11 @@ public class VConfig extends JFrame {
 	 * Create the frame.
 	 */
 	public VConfig() {
+		super("Configuracion Simulacion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 533);
+		setBounds(100, 100, 600, 533);
+		setResizable(false);
+		setLocationRelativeTo(null);
 		principalPanel = new JPanel();
 		principalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -61,22 +64,22 @@ public class VConfig extends JFrame {
 		principalPanel.setLayout(null);
 		
 		JPanel titlePanel = new JPanel();
-		titlePanel.setBounds(5, 0, 424, 494);
+		titlePanel.setBounds(5, 0, 580, 494);
 		principalPanel.add(titlePanel);
 		titlePanel.setLayout(null);
 		
 		JLabel titleLabel = new JLabel("Configuracion de Simulacion");
-		titleLabel.setBounds(109, 5, 201, 15);
+		titleLabel.setBounds(185, 5, 210, 15);
 		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(titleLabel);
 		
 		JSeparator separatorTitle = new JSeparator();
-		separatorTitle.setBounds(0, 23, 424, 2);
+		separatorTitle.setBounds(0, 23, 580, 2);
 		titlePanel.add(separatorTitle);
 		
 		JPanel clientePanel = new JPanel();
-		clientePanel.setBounds(0, 26, 424, 130);
+		clientePanel.setBounds(0, 26, 580, 130);
 		titlePanel.add(clientePanel);
 		clientePanel.setLayout(null);
 		
@@ -107,7 +110,7 @@ public class VConfig extends JFrame {
 		cantPedidoField.setColumns(10);
 		
 		JList listClientes = new JList();
-		listClientes.setBounds(270, 1, 154, 129);
+		listClientes.setBounds(270, 1, 310, 129);
 		clientePanel.add(listClientes);
 		
 		JButton deleteClienteBtn = new JButton("Eliminar");
@@ -115,11 +118,17 @@ public class VConfig extends JFrame {
 		clientePanel.add(deleteClienteBtn);
 		
 		JButton addClienteBtn = new JButton("Agregar");
+		addClienteBtn.addActionListener(new ActionListener() {
+		VNewCliente frameNewCliente = new VNewCliente(VConfig.this);
+			public void actionPerformed(ActionEvent arg0) {
+				frameNewCliente.setVisible(true);
+			}
+		});
 		addClienteBtn.setBounds(181, 58, 81, 21);
 		clientePanel.add(addClienteBtn);
 		
 		JPanel vehiculoPanel = new JPanel();
-		vehiculoPanel.setBounds(0, 163, 424, 135);
+		vehiculoPanel.setBounds(0, 163, 580, 135);
 		titlePanel.add(vehiculoPanel);
 		vehiculoPanel.setLayout(null);
 		
@@ -135,7 +144,7 @@ public class VConfig extends JFrame {
 		vehiculoPanel.add(automovilLabel);
 		
 		JList listVehiculos = new JList();
-		listVehiculos.setBounds(270, 1, 154, 134);
+		listVehiculos.setBounds(270, 1, 310, 134);
 		vehiculoPanel.add(listVehiculos);
 		
 		JButton deleteVehiculoBtn = new JButton("Eliminar");
@@ -185,7 +194,7 @@ public class VConfig extends JFrame {
 		vehiculoPanel.add(typeVehiculoComboBox);
 
 		JPanel chofePanel = new JPanel();
-		chofePanel.setBounds(0, 305, 424, 140);
+		chofePanel.setBounds(0, 305, 580, 140);
 		titlePanel.add(chofePanel);
 		chofePanel.setLayout(null);
 		
@@ -196,7 +205,7 @@ public class VConfig extends JFrame {
 		chofePanel.add(choferesLabel);
 		
 		JList listChoferes = new JList();
-		listChoferes.setBounds(270, 1, 154, 139);
+		listChoferes.setBounds(270, 1, 310, 139);
 		chofePanel.add(listChoferes);
 		
 		JLabel categoriaLabel = new JLabel("Categoria");
@@ -242,7 +251,7 @@ public class VConfig extends JFrame {
 		cantHijosField.setVisible(false);
 		
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBounds(0, 452, 424, 42);
+		buttonPanel.setBounds(0, 452, 580, 42);
 		titlePanel.add(buttonPanel);
 		buttonPanel.setLayout(null);
 		
@@ -264,20 +273,20 @@ public class VConfig extends JFrame {
 		chofePanel.add(categoriaComboBox);
 
 		JButton saveBtn = new JButton("Guardar Datos");
-		saveBtn.setBounds(150, 5, 120, 25);
+		saveBtn.setBounds(230, 5, 120, 25);
 		buttonPanel.add(saveBtn);
 		
 		JSeparator separatorVehiculo = new JSeparator();
-		separatorVehiculo.setBounds(0, 301, 424, 2);
+		separatorVehiculo.setBounds(0, 301, 580, 2);
 		titlePanel.add(separatorVehiculo);
 		
 		JSeparator separatorCliente = new JSeparator();
 		separatorCliente.setBackground(new Color(255, 255, 255));
-		separatorCliente.setBounds(0, 159, 424, 2);
+		separatorCliente.setBounds(0, 159, 580, 2);
 		titlePanel.add(separatorCliente);
 		
 		JSeparator separatorChofer = new JSeparator();
-		separatorChofer.setBounds(0, 448, 424, 2);
+		separatorChofer.setBounds(0, 448, 580, 2);
 		titlePanel.add(separatorChofer);
 	}
 }
