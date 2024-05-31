@@ -64,7 +64,7 @@ public class Administrador extends Usuario {
 
 	public void agregarChofer(String dni, String nombre, String categoria) {
 		try {
-			sistema.agregarChofer(dni, nombre, categoria);
+//			sistema.agregarChofer(dni, nombre, categoria);
 		} catch (Exception e) {
 			System.out.println("Error al agregar chofer: " + e.getMessage());
 		}

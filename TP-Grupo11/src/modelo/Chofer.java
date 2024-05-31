@@ -25,6 +25,7 @@ public abstract class Chofer implements Serializable,Cloneable{
         super();
         this.dni = dni;
         this.nombre = nombre;
+        assert	dni == null || nombre == null :"Los parametos para crear chofer no pueden ser null.";
     }
 
     /**
@@ -34,14 +35,26 @@ public abstract class Chofer implements Serializable,Cloneable{
      */
     public abstract double getSueldo();
     
+    /**
+     * Metodo que retorna el dni del chofer
+     * @return String con dni del chofer
+     */
 	public String getDni() {
 		return this.dni;
 	}
 	
+	/**
+	 * Metodo que retorna el nombre del chofer
+	 * @return String con el nombre del chefer
+	 */
 	public String getNombre() {
 		return this.nombre;
 	}
 	
+	/**
+	 * Metodo que obtiene los viajes realizados por el chofer
+	 * @return arraylist con los viajes realizador por el chofer
+	 */
 	public ArrayList<IViaje> getViajes(){
 		return Sistema.getInstance().reporteViajesChofer(this, null, null);
 	}

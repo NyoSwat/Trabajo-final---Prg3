@@ -5,33 +5,30 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
 import java.awt.FlowLayout;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JSeparator;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.JTextField;
+import javax.swing.JList;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.Component;
+import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 
 public class VConfig extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel PrincipalPane;
+	private JPanel principalPanel;
+	private JTextField cantClienteField;
+	private JTextField cantPedidoField;
+	private JTextField patenteField;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -54,155 +51,203 @@ public class VConfig extends JFrame {
 	 */
 	public VConfig() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 317, 475);
-		PrincipalPane = new JPanel();
-		PrincipalPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBounds(100, 100, 450, 533);
+		principalPanel = new JPanel();
+		principalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(PrincipalPane);
-		GridLayout gbl_principalPane = new GridLayout();
-		gbl_principalPane.setColumns(1);
-		gbl_principalPane.setRows(4);
-		PrincipalPane.setLayout(gbl_principalPane);
+		setContentPane(principalPanel);
+		principalPanel.setLayout(null);
 		
-		JPanel usuarioPanel = new JPanel();
-		GridBagConstraints gbc_usuarioPanel = new GridBagConstraints();
-		gbc_usuarioPanel.fill = GridBagConstraints.BOTH;
-		gbc_usuarioPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_usuarioPanel.gridx = 0;
-		gbc_usuarioPanel.gridy = 1;
-		PrincipalPane.add(usuarioPanel, gbc_usuarioPanel);
-		usuarioPanel.setLayout(null);
+		JPanel titlePanel = new JPanel();
+		titlePanel.setBounds(5, 0, 424, 494);
+		principalPanel.add(titlePanel);
+		titlePanel.setLayout(null);
 		
-		JLabel usuarioLabel = new JLabel("Usuarios");
-		usuarioLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		usuarioLabel.setBounds(8, 10, 62, 13);
-		usuarioPanel.add(usuarioLabel);
+		JLabel titleLabel = new JLabel("Configuracion de Simulacion");
+		titleLabel.setBounds(109, 5, 201, 15);
+		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titlePanel.add(titleLabel);
 		
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(0, 26, 453, 2);
-		usuarioPanel.add(separator_2);
+		JSeparator separatorTitle = new JSeparator();
+		separatorTitle.setBounds(0, 23, 424, 2);
+		titlePanel.add(separatorTitle);
 		
-		textField = new JTextField();
-		textField.setBounds(170, 30, 76, 19);
-		usuarioPanel.add(textField);
-		textField.setColumns(10);
+		JPanel clientePanel = new JPanel();
+		clientePanel.setBounds(0, 26, 424, 130);
+		titlePanel.add(clientePanel);
+		clientePanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Cantidad de Usuarios");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(18, 33, 117, 13);
-		usuarioPanel.add(lblNewLabel);
+		JLabel cantClienteLabel = new JLabel("Cantidad de clientes");
+		cantClienteLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		cantClienteLabel.setBounds(8, 20, 120, 15);
+		clientePanel.add(cantClienteLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Cantidad de Viajes por Usuario");
-		lblNewLabel_1.setBounds(18, 67, 144, 13);
-		usuarioPanel.add(lblNewLabel_1);
+		cantClienteField = new JTextField();
+		cantClienteField.setBounds(8, 40, 90, 20);
+		clientePanel.add(cantClienteField);
+		cantClienteField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(170, 64, 76, 19);
-		usuarioPanel.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel clienteLabel = new JLabel("Clientes");
+		clienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		clienteLabel.setBounds(0, 0, 70, 15);
+		clientePanel.add(clienteLabel);
+		clienteLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		JPanel choferPanel = new JPanel();
-		GridBagConstraints gbc_choferPanel = new GridBagConstraints();
-		gbc_choferPanel.fill = GridBagConstraints.BOTH;
-		gbc_choferPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_choferPanel.gridx = 0;
-		gbc_choferPanel.gridy = 2;
-		PrincipalPane.add(choferPanel, gbc_choferPanel);
-		choferPanel.setLayout(null);
+		JLabel cantPedidosLabel = new JLabel("Pedidos por Cliente");
+		cantPedidosLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		cantPedidosLabel.setBounds(8, 70, 110, 15);
+		clientePanel.add(cantPedidosLabel);
 		
-		JLabel choferLabel = new JLabel("Choferes");
-		choferLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		choferLabel.setBounds(8, 10, 59, 13);
-		choferPanel.add(choferLabel);
+		cantPedidoField = new JTextField();
+		cantPedidoField.setBounds(8, 90, 90, 20);
+		clientePanel.add(cantPedidoField);
+		cantPedidoField.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Cantidad de Chofer Contratado");
-		lblNewLabel_2.setBounds(18, 33, 147, 13);
-		choferPanel.add(lblNewLabel_2);
+		JList listClientes = new JList();
+		listClientes.setBounds(270, 1, 154, 129);
+		clientePanel.add(listClientes);
 		
-		JLabel lblNewLabel_3 = new JLabel("Cantidad de chofer Temporario");
-		lblNewLabel_3.setBounds(18, 56, 147, 13);
-		choferPanel.add(lblNewLabel_3);
+		JButton deleteClienteBtn = new JButton("Eliminar");
+		deleteClienteBtn.setBounds(181, 89, 81, 21);
+		clientePanel.add(deleteClienteBtn);
 		
-		JLabel lblNewLabel_4 = new JLabel("Cantidad de Chofer Permanente");
-		lblNewLabel_4.setBounds(18, 79, 147, 13);
-		choferPanel.add(lblNewLabel_4);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(173, 30, 76, 19);
-		choferPanel.add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(173, 53, 76, 19);
-		choferPanel.add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(173, 76, 76, 19);
-		choferPanel.add(textField_4);
-		textField_4.setColumns(10);
-		
-		JSeparator separator_2_1 = new JSeparator();
-		separator_2_1.setBounds(0, 24, 291, 2);
-		choferPanel.add(separator_2_1);
+		JButton addClienteBtn = new JButton("Agregar");
+		addClienteBtn.setBounds(181, 58, 81, 21);
+		clientePanel.add(addClienteBtn);
 		
 		JPanel vehiculoPanel = new JPanel();
-		GridBagConstraints gbc_vehiculoPanel = new GridBagConstraints();
-		gbc_vehiculoPanel.fill = GridBagConstraints.BOTH;
-		gbc_vehiculoPanel.gridx = 0;
-		gbc_vehiculoPanel.gridy = 3;
-		PrincipalPane.add(vehiculoPanel, gbc_vehiculoPanel);
+		vehiculoPanel.setBounds(0, 163, 424, 135);
+		titlePanel.add(vehiculoPanel);
 		vehiculoPanel.setLayout(null);
 		
-		JLabel vehiculoLabel = new JLabel("Vehiculos");
-		vehiculoLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		vehiculoLabel.setBounds(8, 10, 57, 13);
-		vehiculoLabel.setVerticalAlignment(SwingConstants.TOP);
-		vehiculoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		vehiculoPanel.add(vehiculoLabel);
+		JLabel vehiculosLabel = new JLabel("Vehiculos");
+		vehiculosLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		vehiculosLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		vehiculosLabel.setBounds(0, 0, 80, 15);
+		vehiculoPanel.add(vehiculosLabel);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 26, 453, 2);
-		vehiculoPanel.add(separator);
+		JLabel automovilLabel = new JLabel("Tipo");
+		automovilLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		automovilLabel.setBounds(8, 28, 40, 15);
+		vehiculoPanel.add(automovilLabel);
 		
-		JLabel lblNewLabel_5 = new JLabel("Cantidad de Automovil");
-		lblNewLabel_5.setBounds(18, 38, 119, 13);
-		vehiculoPanel.add(lblNewLabel_5);
+		JList listVehiculos = new JList();
+		listVehiculos.setBounds(270, 1, 154, 134);
+		vehiculoPanel.add(listVehiculos);
 		
-		JLabel lblNewLabel_6 = new JLabel("Cantidad de Moto");
-		lblNewLabel_6.setBounds(18, 61, 107, 13);
-		vehiculoPanel.add(lblNewLabel_6);
+		JButton deleteVehiculoBtn = new JButton("Eliminar");
+		deleteVehiculoBtn.setBounds(181, 102, 81, 21);
+		vehiculoPanel.add(deleteVehiculoBtn);
 		
-		JLabel lblNewLabel_7 = new JLabel("Cantidad de Combi");
-		lblNewLabel_7.setBounds(18, 84, 107, 13);
-		vehiculoPanel.add(lblNewLabel_7);
+		JLabel patenteLabel = new JLabel("Patente");
+		patenteLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		patenteLabel.setBounds(8, 53, 60, 15);
+		vehiculoPanel.add(patenteLabel);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(175, 35, 76, 19);
-		vehiculoPanel.add(textField_5);
-		textField_5.setColumns(10);
+		JButton addVehiculoBtn = new JButton("Agregar");
+		addVehiculoBtn.setBounds(181, 75, 81, 21);
+		vehiculoPanel.add(addVehiculoBtn);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(175, 81, 76, 19);
-		vehiculoPanel.add(textField_6);
-		textField_6.setColumns(10);
+		JComboBox typeVehiculoOption = new JComboBox();
+		typeVehiculoOption.setModel(new DefaultComboBoxModel(new String[] {"Automovil", "Combi", "Moto"}));
+		typeVehiculoOption.setBounds(70, 25, 100, 21);
+		vehiculoPanel.add(typeVehiculoOption);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(175, 58, 76, 19);
-		vehiculoPanel.add(textField_7);
-		textField_7.setColumns(10);
+		patenteField = new JTextField();
+		patenteField.setBounds(70, 53, 76, 20);
+		vehiculoPanel.add(patenteField);
+		patenteField.setColumns(10);
 		
-		JPanel panel = new JPanel();
-		PrincipalPane.add(panel);
-		panel.setLayout(null);
+		JCheckBox baulChkBox = new JCheckBox("Baul");
+		baulChkBox.setSelected(true);
+		baulChkBox.setBounds(8, 75, 89, 21);
+		vehiculoPanel.add(baulChkBox);
 		
-		JButton btnNewButton = new JButton("Cargar Datos");
-		btnNewButton.setBounds(27, 37, 99, 21);
-		panel.add(btnNewButton);
+		JCheckBox petFriendlyChkBox = new JCheckBox("Pet Friendly");
+		petFriendlyChkBox.setSelected(true);
+		petFriendlyChkBox.setBounds(8, 102, 119, 21);
+		vehiculoPanel.add(petFriendlyChkBox);
 		
-		JButton btnNewButton_1 = new JButton("Guardar Datos");
-		btnNewButton_1.setBounds(149, 37, 99, 21);
-		panel.add(btnNewButton_1);
+		JPanel chofePanel = new JPanel();
+		chofePanel.setBounds(0, 305, 424, 140);
+		titlePanel.add(chofePanel);
+		chofePanel.setLayout(null);
 		
+		JLabel choferesLabel = new JLabel("Choferes");
+		choferesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		choferesLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		choferesLabel.setBounds(0, 0, 69, 15);
+		chofePanel.add(choferesLabel);
+		
+		JList listChoferes = new JList();
+		listChoferes.setBounds(270, 1, 154, 139);
+		chofePanel.add(listChoferes);
+		
+		JLabel contratadoLabel = new JLabel("Categoria");
+		contratadoLabel.setBounds(10, 30, 70, 15);
+		chofePanel.add(contratadoLabel);
+		
+		JLabel permanenteLabel = new JLabel("DNI");
+		permanenteLabel.setBounds(10, 55, 70, 15);
+		chofePanel.add(permanenteLabel);
+		
+		JLabel TemporarioLabel = new JLabel("Nombre");
+		TemporarioLabel.setBounds(10, 80, 70, 15);
+		chofePanel.add(TemporarioLabel);
+		
+		JButton addContratadoBtn = new JButton("Agregar");
+		addContratadoBtn.setBounds(181, 85, 81, 21);
+		chofePanel.add(addContratadoBtn);
+		
+		JButton deleteChoferBtn = new JButton("Eliminar");
+		deleteChoferBtn.setBounds(181, 116, 81, 21);
+		chofePanel.add(deleteChoferBtn);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Contratado", "Permanente", "Temporario"}));
+		comboBox.setBounds(80, 25, 100, 21);
+		chofePanel.add(comboBox);
+		
+		textField = new JTextField();
+		textField.setBounds(80, 55, 76, 20);
+		chofePanel.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(80, 80, 76, 20);
+		chofePanel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Cantidad hijos");
+		lblNewLabel.setBounds(8, 105, 92, 15);
+		chofePanel.add(lblNewLabel);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(100, 105, 55, 20);
+		chofePanel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBounds(0, 452, 424, 42);
+		titlePanel.add(buttonPanel);
+		buttonPanel.setLayout(null);
+		
+		JButton saveBtn = new JButton("Guardar Datos");
+		saveBtn.setBounds(150, 5, 120, 25);
+		buttonPanel.add(saveBtn);
+		
+		JSeparator separatorVehiculo = new JSeparator();
+		separatorVehiculo.setBounds(0, 301, 424, 2);
+		titlePanel.add(separatorVehiculo);
+		
+		JSeparator separatorCliente = new JSeparator();
+		separatorCliente.setBackground(new Color(255, 255, 255));
+		separatorCliente.setBounds(0, 159, 424, 2);
+		titlePanel.add(separatorCliente);
+		
+		JSeparator separatorChofer = new JSeparator();
+		separatorChofer.setBounds(0, 448, 424, 2);
+		titlePanel.add(separatorChofer);
 	}
 }

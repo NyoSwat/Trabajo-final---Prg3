@@ -46,14 +46,27 @@ public class Sistema {
         return _instance;
     }
     
+    
+    /**
+     * Metodo creado para persistir los vehiculos guardados en el archivo
+     * @param vehiculos array de vehiculos
+     */
     public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
     	this.vehiculos = vehiculos;
     }
     
+    /**
+     * Metodo creado para persistir los choferes guardados en el archivo
+     * @param choferes array de choferes
+     */
     public void setChoferes(ArrayList<Chofer> choferes) {
     	this.choferes = choferes;
     }
 
+    /**
+     * Metodo creado para persistir los usuarios guardados en el archivo
+     * @param usuarios array de usuarios 
+     */
     public void setUsuarios(ArrayList<Usuario> usuarios) {
     	this.usuarios = usuarios;
     }
@@ -146,23 +159,6 @@ public class Sistema {
     	return null;
     }
     
-    /**
-     * Agrega un nuevo chofer al sistema
-     * @param dni : DNI correspondiente al nuevo chofer.
-     * @param nombre : Nombre del nuevo chofer.
-     * @param categoria : Categoria del nuevo chofer (Permanente, Contratado o Temporario).
-     * @throws IllegalArgumentException en caso de que dni y nombre sean vacios o null o que la categoria no sea correcta.
-     */
-    public void agregarChofer(String dni, String nombre, String categoria)throws IllegalArgumentException, ExistenteChoferException{
-    	if(dni.equals("") || dni.equals(null) || nombre.equals("") || nombre.equals(null) || 
-    			(!categoria.equalsIgnoreCase("contratado") && !categoria.equalsIgnoreCase("temporario") && !categoria.equalsIgnoreCase("Permanente"))) {
-    		throw new IllegalArgumentException("Parametros invalidos");
-    	}else if(this.consultarChofer(dni) != null) {
-    		throw new ExistenteChoferException("El chofer: "+nombre+",dni: "+dni+" ya existe");
-    	}else {
-    		this.choferes.add(FactoryChofer.crearChofer(nombre, dni, categoria));
-    	}
-    }
     
     public void agregarChofer(Chofer chofer) throws ExistenteChoferException {
     	if(chofer.getDni().equals("") || chofer.getDni().equals(null) || chofer.getNombre().equals("") || chofer.getNombre().equals(null) ){
@@ -207,7 +203,6 @@ public class Sistema {
     	}else {
     		while( i < usuarios.size() && !this.usuarios.get(i).getUsuario().equals(usuario))
     			i++;
-    		
     		if( i < usuarios.size())
     			return usuarios.get(i);
  
@@ -252,7 +247,6 @@ public class Sistema {
      */
     public void modificarUsuario(String usuario,String password,String nombre) throws ExistenteUsuarioException{
     	Usuario cliente = this.consultarUsuario(usuario);
-    	
     	if(cliente != null) {
     		cliente.setUsuario(usuario);
     		cliente.setPassword(password);
@@ -297,11 +291,10 @@ public class Sistema {
     	return this.viajes;
     }
     
-    
     /**
      * Devuelve la lista de viajes ordenada por costos de menor a mayor
-     * @return
-     * @throws CloneNotSupportedException 
+     * @return retorna un arraylist con los viajes clonados profundamente (chofer,pedido,vehiculo,cliente)
+     * @throws CloneNotSupportedException excepcion que se lanza cuando una clase no es cloneable
      */
     public ArrayList<IViaje> listaViajesOrdenada() throws CloneNotSupportedException {
     	if( this.viajes == null || this.viajes.isEmpty())
@@ -322,7 +315,7 @@ public class Sistema {
      * @param usuario Usuario al hacer el reporte
      * @param fechaInicial 
      * @param fechaFinal
-     * @throws ExistenteUsuarioException 
+     * @throws ExistenteUsuarioException Se lanza cuando el cliente a reportar no existe
      */
     public ArrayList<IViaje> reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) {
     	ArrayList<IViaje> viajeCliente = new ArrayList<IViaje>();
@@ -340,7 +333,6 @@ public class Sistema {
 	 * @param fechaInicial :de tipo date, fecha a partir de la que se realiza la busqueda.
 	 * @param fechaFinal :de tipo date, fecha hasta la cual se realiza la busqueda.
 	 */
-
 	public ArrayList<IViaje> reporteViajesChofer(Chofer chofer, Date fechaInicial, Date fechaFinal){
 		ArrayList<IViaje> viajeChofer = new ArrayList<IViaje>();
 		for(int i=0; i<this.viajes.size(); i++) {			//lo anule para probar
@@ -426,7 +418,6 @@ public class Sistema {
 		System.out.println("vehiculo asignado");
     	asignarChofer(viaje);
     	System.out.println("chofer asignado");
-    	
     	
     	viajes.add(viaje);
     	
