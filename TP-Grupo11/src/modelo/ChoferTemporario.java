@@ -48,7 +48,7 @@ public class ChoferTemporario extends ChoferEmpleado {
      */
     @Override
     public String toString(){
-    	return super.toString()+"\nCantidad de viajes: "+super.getViajes().size();
+    	return super.toString()+"\n, Cantidad de viajes: "+super.getViajes().size();
     }
 
 

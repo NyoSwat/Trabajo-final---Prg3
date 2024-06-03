@@ -160,11 +160,12 @@ public class Sistema {
     }
     
     
-    public void agregarChofer(Chofer chofer) throws ExistenteChoferException {
-    	if(chofer.getDni().equals("") || chofer.getDni().equals(null) || chofer.getNombre().equals("") || chofer.getNombre().equals(null) ){
+    public void agregarChofer(Chofer chofer) throws ExistenteChoferException,IllegalArgumentException {
+    	if(chofer.getDni().equals("") || chofer.getDni().equals(null) || !chofer.getDni().matches("^[0-9]+$") || 
+    			chofer.getNombre().equals("") || chofer.getNombre().equals(null) || !chofer.getNombre().matches("^[a-zA-Z\\s]{4,20}$") ){
     		throw new IllegalArgumentException("Parametros invalidos");
     	}else if(this.consultarChofer(chofer.getDni()) != null) {
-    		throw new ExistenteChoferException("El chofer: "+chofer.getNombre()+",dni: "+chofer.getDni()+" ya existe");
+    		throw new ExistenteChoferException("Ya existe chofer con dni: "+chofer.getDni());
     	}else {
     		this.choferes.add(chofer);
     	}

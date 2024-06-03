@@ -139,9 +139,9 @@ public abstract class Vehiculo implements Serializable,Cloneable{
 	 */
 	@Override
 	public String toString() {
-		return "\nPatente: "+this.patente+
-				"\nBaul: "+this.baul+
-				"\nPetFriendly: "+this.petFriendly;
+		return "\n Patente: "+this.patente+
+				"\n, Baul: "+this.baul+
+				"\n, PetFriendly: "+this.petFriendly;
 	}
 
 }

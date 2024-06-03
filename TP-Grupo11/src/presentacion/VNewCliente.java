@@ -1,6 +1,5 @@
 package presentacion;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +21,15 @@ public class VNewCliente extends JDialog {
 	private JTextField nombreField;
 	private JTextField usuarioField;
 	private JTextField contrasenaFiled;
+	private JPanel titlePanel;
+	private JLabel titleNewClienteLabel;
+	private JPanel formPanel;
+	private JLabel nombreLabel;
+	private JLabel usuarioLabel;
+	private JLabel contrasenaLabel;
+	private JCheckBox adminChckBox;
+	private JPanel btnPanel;
+	private JButton addClienteBtn;
 
 	/**
 	 * Create the frame.
@@ -31,74 +39,99 @@ public class VNewCliente extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 249, 248);
 		setResizable(false);
-		setLocationRelativeTo(Vconfig);
-		principalPanel = new JPanel();
-		principalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		this.principalPanel = new JPanel();
+		this.principalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(principalPanel);
-		principalPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		this.principalPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JPanel titlePanel = new JPanel();
-		principalPanel.add(titlePanel);
-		titlePanel.setLayout(null);
+		this.titlePanel = new JPanel();
+		this.principalPanel.add(titlePanel);
+		this.titlePanel.setLayout(null);
 		
-		JLabel titleNewClienteLabel = new JLabel("Nuevo Cliente");
-		titleNewClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleNewClienteLabel.setFont(new Font("Dialog", Font.BOLD, 12));
-		titleNewClienteLabel.setBounds(62, 6, 100, 15);
-		titlePanel.add(titleNewClienteLabel);
+		this.titleNewClienteLabel = new JLabel("Nuevo Cliente");
+		this.titleNewClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.titleNewClienteLabel.setFont(new Font("Dialog", Font.BOLD, 12));
+		this.titleNewClienteLabel.setBounds(62, 6, 100, 15);
+		this.titlePanel.add(titleNewClienteLabel);
 		
-		JPanel formPanel = new JPanel();
-		formPanel.setBounds(0, 31, 223, 124);
-		titlePanel.add(formPanel);
-		formPanel.setLayout(null);
+		this.formPanel = new JPanel();
+		this.formPanel.setBounds(0, 31, 223, 124);
+		this.titlePanel.add(formPanel);
+		this.formPanel.setLayout(null);
 		
-		JLabel nombreLabel = new JLabel("Nombre");
-		nombreLabel.setBounds(8, 5, 60, 15);
-		formPanel.add(nombreLabel);
+		this.nombreLabel = new JLabel("Nombre");
+		this.nombreLabel.setBounds(8, 5, 60, 15);
+		this.formPanel.add(nombreLabel);
 		
-		nombreField = new JTextField();
-		nombreField.setBounds(80, 5, 120, 20);
-		formPanel.add(nombreField);
-		nombreField.setColumns(10);
+		this.nombreField = new JTextField();
+		this.nombreField.setBounds(80, 5, 120, 20);
+		this.formPanel.add(nombreField);
+		this.nombreField.setColumns(10);
 		
-		JLabel usuarioLabel = new JLabel("Usuario");
-		usuarioLabel.setBounds(8, 30, 60, 15);
-		formPanel.add(usuarioLabel);
+		this.usuarioLabel = new JLabel("Usuario");
+		this.usuarioLabel.setBounds(8, 30, 60, 15);
+		this.formPanel.add(usuarioLabel);
 		
-		usuarioField = new JTextField();
-		usuarioField.setBounds(80, 30, 120, 20);
-		formPanel.add(usuarioField);
-		usuarioField.setColumns(10);
+		this.usuarioField = new JTextField();
+		this.usuarioField.setBounds(80, 30, 120, 20);
+		this.formPanel.add(usuarioField);
+		this.usuarioField.setColumns(10);
 		
-		JLabel contrasenaLabel = new JLabel("Contraseña");
-		contrasenaLabel.setBounds(8, 55, 80, 15);
-		formPanel.add(contrasenaLabel);
+		this.contrasenaLabel = new JLabel("Contraseña");
+		this.contrasenaLabel.setBounds(8, 55, 80, 15);
+		this.formPanel.add(contrasenaLabel);
 		
-		contrasenaFiled = new JTextField();
-		contrasenaFiled.setBounds(80, 55, 120, 20);
-		formPanel.add(contrasenaFiled);
-		contrasenaFiled.setColumns(10);
+		this.contrasenaFiled = new JTextField();
+		this.contrasenaFiled.setBounds(80, 55, 120, 20);
+		this.formPanel.add(contrasenaFiled);
+		this.contrasenaFiled.setColumns(10);
 		
-		JCheckBox adminChckBox = new JCheckBox("Func. Administrador");
-		adminChckBox.setBounds(8, 85, 150, 21);
-		formPanel.add(adminChckBox);
+		this.adminChckBox = new JCheckBox("Func. Administrador");
+		this.adminChckBox.setBounds(8, 85, 150, 21);
+		this.formPanel.add(adminChckBox);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(0, 122, 223, 2);
-		formPanel.add(separator_1);
+		this.formPanel.add(separator_1);
 		
-		JPanel btnPanel = new JPanel();
-		btnPanel.setBounds(0, 157, 223, 40);
-		titlePanel.add(btnPanel);
-		btnPanel.setLayout(null);
+		this.btnPanel = new JPanel();
+		this.btnPanel.setBounds(0, 157, 223, 40);
+		this.titlePanel.add(btnPanel);
+		this.btnPanel.setLayout(null);
 		
-		JButton addClienteBtn = new JButton("Agregar");
-		addClienteBtn.setBounds(71, 10, 80, 20);
-		btnPanel.add(addClienteBtn);
+		this.addClienteBtn = new JButton("Agregar");
+		this.addClienteBtn.setBounds(71, 10, 80, 20);
+		this.btnPanel.add(addClienteBtn);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 23, 223, 2);
-		titlePanel.add(separator);
+		this.titlePanel.add(separator);
 	}
+
+	public JTextField getNombreField() {
+		return nombreField;
+	}
+
+	public JTextField getUsuarioField() {
+		return usuarioField;
+	}
+
+	public JTextField getContrasenaField() {
+		return contrasenaFiled;
+	}
+
+	public JCheckBox getAdminChckBox() {
+		return adminChckBox;
+	}
+
+	public JButton getAddClienteBtn() {
+		return addClienteBtn;
+	}
+	
+	
+	
+	
+	
 }

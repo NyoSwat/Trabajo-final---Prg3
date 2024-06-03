@@ -111,7 +111,7 @@ public class ChoferPermanente extends ChoferEmpleado {
 	 *@return String que representa a Permanente.
 	 */
 	public String toString() {
-		return super.toString()+"\nCantidad de viajes: "+super.getViajes().size()+"\nCantidad de hijos: "+this.cantidadHijos;
+		return super.toString()+"\n, Cantidad de viajes: "+super.getViajes().size()+"\n, Cantidad de hijos: "+this.cantidadHijos;
 	}
 	
 }

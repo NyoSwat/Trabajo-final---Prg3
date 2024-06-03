@@ -56,8 +56,7 @@ public class Moto extends Vehiculo {
 	 */
 
 	public String toString() {
-		return "\n********"+
-				"\nMoto"+super.toString()+"\nCantMaxPasajeros: "+Moto.maxPasajeros+"\n";
+		return "\nMoto"+super.toString()+"\n, CantMaxPasajeros: "+Moto.maxPasajeros+"\n";
 	}
 
 	public static void setCantPasajeros(int cantidad) throws IllegalArgumentException {

@@ -78,8 +78,7 @@ public class Automovil extends Vehiculo {
 	 *@return String que representa a Automovil.
 	 */
 	public String toString() {
-		return "\n*********"+
-				"\nAutomovil"+super.toString()+"\nCantMaxPasajeros: "+Automovil.maxPasajeros+"\n";
+		return "\nAutomovil: "+super.toString()+"\n, CantMaxPasajeros: "+Automovil.maxPasajeros+"\n";
 	}
 }
 	

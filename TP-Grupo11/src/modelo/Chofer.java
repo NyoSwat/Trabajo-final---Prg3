@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import Excepciones.ExistenteChoferException;
@@ -70,10 +71,10 @@ public abstract class Chofer implements Serializable,Cloneable{
 	 * @throws  
 	*/
 	public String toString() {
-		return "\n********"+
-				"\nNombre: "+this.nombre+
-				"\nDNI: "+this.dni+
-				"\nSueldo: $"+getSueldo();
+		DecimalFormat formato = new DecimalFormat("#.##");
+		return "\nNombre: "+this.nombre+
+				"\n, DNI: "+this.dni+
+				"\n, Sueldo: $"+formato.format(getSueldo());
 	}
     
 }

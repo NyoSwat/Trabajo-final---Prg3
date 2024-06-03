@@ -87,6 +87,6 @@ public abstract class Usuario implements Serializable,Cloneable{
 	
 	@Override
 	public String toString() {
-		return this.nombre;
+		return this.nombre +"\n, usuario: "+this.usuario+"\n, contrasena: "+this.password+"\n";
 	}
 }

@@ -60,8 +60,7 @@ public class Combi extends Vehiculo {
 	 * @return String que representa al objeto Combi
 	 */
 	public String toString() {
-		return "\n**********"+
-				"\nCombi"+super.toString()+"\nCantMaxPasajeros: "+Combi.maxPasajeros+"\n";
+		return "\nCombi"+super.toString()+"\n, CantMaxPasajeros: "+Combi.maxPasajeros+"\n";
 	}
 
 	public static void setCantPasajeros(int cantidad)throws IllegalArgumentException {

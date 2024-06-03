@@ -81,12 +81,12 @@ public class Prueba{
     		sistema.agregarChofer(new ChoferContratado("4", "Chofer4"));
     		sistema.agregarChofer(new ChoferContratado("5", "Chofer5"));
     		//creacion de clientes validos
-    		sistema.agregarCliente(new Cliente("Usuario1","sdasda", "Usuario uno"));
-    		sistema.agregarCliente(new Cliente("Usuario2","sdasda", "Usuario dos"));
-    		sistema.agregarCliente(new Cliente("Usuario3","sdasda", "Usuario tres"));
-    		sistema.agregarCliente(new Cliente("Usuario4","sdasda", "Usuario cuatro"));
-    		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
-    		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
+//    		sistema.agregarCliente(new Cliente("Usuario1","sdasda", "Usuario uno"));
+//    		sistema.agregarCliente(new Cliente("Usuario2","sdasda", "Usuario dos"));
+//    		sistema.agregarCliente(new Cliente("Usuario3","sdasda", "Usuario tres"));
+//    		sistema.agregarCliente(new Cliente("Usuario4","sdasda", "Usuario cuatro"));
+//    		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
+//    		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
     		//creacion de vehiculos validos
     		sistema.agregarVehiculo("Auto", "49d", true, true);
     		sistema.agregarVehiculo("moto", "h23", false, false);
