@@ -1,48 +1,38 @@
 package modelo;
 
-public class Evento {
-    private String descripcion;//Deberia omitirla?
-    private String tipo;
-  //Tipos->Viaje solicitado
-       //->Vehiculo asignado
-       //->Viaje iniciado
-       //->Viaje pagado
-       //->Viaje finalizado
-       //->Simulacion Finalizada
-   
-
-    public Evento(String tipo) {//completar en base a respuespuesta docente
-		this.tipo = tipo;
-		if(this.tipo.equalsIgnoreCase("Viaje Finalizado"))
-				this.descripcion="Viaje finalizado por chofer ";//averiguar como se obtiene ref al chofer
-	}
-
+public abstract class Evento {
+	private String tipo;
+    private String descripcion;
+    private Viaje viajeAct;
 	
 
-    public String getTipo() {
-		return tipo;
+	public Evento(String tipo, Viaje viajeAct) {
+		this.tipo = tipo;
+		this.setViajeAct(viajeAct);
 	}
 
-
+	public String getTipo() {
+		return tipo;
+	}
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
-
-
 	public String getDescripcion() {
 		return descripcion;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "Evento [descripcion=" + descripcion + ", tipo=" + tipo + "]";
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public void setDescripcion(String descripcion) {///será segun el tipo de evento
-        this.descripcion = descripcion;
-    }
+	public Viaje getViajeAct() {
+		return viajeAct;
+	}
+
+	public void setViajeAct(Viaje viajeAct) {
+		this.viajeAct = viajeAct;
+	}
+
 }
