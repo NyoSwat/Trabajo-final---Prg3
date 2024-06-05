@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import modelo.ChoferThread;
+import modelo.ClienteThread;
 import modelo.Evento;
 
 

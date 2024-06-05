@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Observable;
 
-public class ClienteThread extends Observable implements Runnable{
+public class ClienteThread extends MiObservable implements Runnable{
 	private RecursoCompartido rc;
 	private String nombre;
 	public ClienteThread(RecursoCompartido rc) {

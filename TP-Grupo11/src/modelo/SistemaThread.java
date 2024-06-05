@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Observable;
 
-public class SistemaThread extends Observable implements Runnable {
+public class SistemaThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;
     
 	public SistemaThread(RecursoCompartido rc) {
