@@ -13,12 +13,12 @@ public class RecursoCompartido extends Observable{
 	private boolean ChoferAsignado;//si esta asignado el cliente puede pagar el viaje
 	private boolean VehiculoAsignado;//si Sistema asigna vehiculo el Chofer puede tomar el viaje
 	private boolean viajePago;//cuando el cliente paga el chofer puede finalizar el viaje
-	private boolean viajeFinalizado;//Estimo que es necesaria para que el chofer quede disponible para otro viaje 
 	
 	
 	private ArrayList<Viaje> viajes = new ArrayList<Viaje>();
 	private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 	private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
+	private boolean viajeFinalizado;
 
 	
 	//clienteThread pide crear Pedido y solicita aceptacion?
@@ -29,7 +29,7 @@ public class RecursoCompartido extends Observable{
 	}
 	
 	//clienteThread solicita Viaje sobre pedido aceptado
-	@SuppressWarnings("deprecation")
+	
 	public synchronized void solicitaViaje(ClienteThread cliente)
 	{  while(!this.pedidoAceptado)
 	   {  try
@@ -42,8 +42,13 @@ public class RecursoCompartido extends Observable{
 	   }
 	   // Pedido aceptado, solicitar viaje
        this.viajeSolicitado=true;
+       //anuncia evento a ObservadorVchofer
+       cliente.setChangedExternamente(); 
+       cliente.notifyObservers(new Evento("Viaje solicitado"));
+       
+       //anuncia evento a ObservadorVGeneral
        this.setChanged();
-       this.notifyObservers(new Evento("Viaje solicitado por"+cliente.getNombre()));
+       this.notifyObservers();
 		
 	}
 	
@@ -61,8 +66,12 @@ public class RecursoCompartido extends Observable{
 	   }
 	   //
       this.viajePago=true;
+      cliente.setChangedExternamente();
+      cliente.notifyObservers(new Evento("Viaje pagado"));
+      
+    //anuncia evento a ObservadorVGeneral
       this.setChanged();
-      this.notifyObservers(new Evento("Viaje pagado "+cliente.getNombre()+" pagó el viaje."));
+      this.notifyObservers();
 		
 	}
 	//sistemaThread asigna vehículo
@@ -78,10 +87,16 @@ public class RecursoCompartido extends Observable{
 	   }
 	   //
     this.VehiculoAsignado=true;
+    sistema.setChangedExternamente();
+    sistema.notifyObservers(new Evento("Vehiculo asignado"));
+    
+  //anuncia evento a ObservadorVGeneral
     this.setChanged();
-    this.notifyObservers(new Evento("Viaje con vehiculo, asignado por sistema."));
+    this.notifyObservers();
 		
 	}
+	
+	
 	//choferThread toma un viaje de la lista
 	public synchronized void tomaViaje(ChoferThread chofer)
 	{ while(!this.VehiculoAsignado)
@@ -94,10 +109,16 @@ public class RecursoCompartido extends Observable{
 	      }
 	   }
     this.ChoferAsignado=true;
+    chofer.setChangedExternamente();
+    chofer.notifyObservers(new Evento("Viaje iniciado"));
+    
+  //anuncia evento a ObservadorVGeneral
     this.setChanged();
-    this.notifyObservers(new Evento("Viaje iniciado"+ chofer.getNombre() + " ha iniciado un viaje."));
+    this.notifyObservers();
 
 	}
+	
+	
 	//choferThread finaliza viaje
 	public synchronized void finalizaViaje(ChoferThread chofer)
 	{   while(!this.viajePago)
@@ -106,12 +127,16 @@ public class RecursoCompartido extends Observable{
 		   	wait();
 		  }
        catch (InterruptedException e)
-		  {	
+		  {	//simulacion detenida
 	      }
 	   }
     this.viajeFinalizado=true;
+    chofer.setChangedExternamente();
+    chofer.notifyObservers(new Evento("Viaje Finalizado"));
+    
+  //anuncia evento a ObservadorVGeneral
     this.setChanged();
-    this.notifyObservers(new Evento("Viaje finalizado por chofer "+chofer.getNombre()));
+    this.notifyObservers();
 		
 	}
 	
@@ -119,12 +144,16 @@ public class RecursoCompartido extends Observable{
 	
 	public synchronized void detenerSimulacion()
 	{    this.simulacionActiva=false;
+	     //anuncia evento a ObservadorVGeneral
 	     this.setChanged();
 	     this.notifyObservers(new Evento("Simulacion Finalizada"));
+	     
 	}
+	
 	public boolean isSimulacionActiva() {
 		return simulacionActiva;
 	}
+	
 	public void setSimulacionActiva(boolean simulacionActiva) {
 		this.simulacionActiva = simulacionActiva;
 	}

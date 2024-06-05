@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Observable;
 
-public class ChoferThread extends Observable implements Runnable {
+public class ChoferThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;
     private String nombre;
 
