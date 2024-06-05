@@ -13,19 +13,27 @@ public class RecursoCompartido extends Observable{
 	private boolean ChoferAsignado;//si esta asignado el cliente puede pagar el viaje
 	private boolean VehiculoAsignado;//si Sistema asigna vehiculo el Chofer puede tomar el viaje
 	private boolean viajePago;//cuando el cliente paga el chofer puede finalizar el viaje
+	private boolean viajeFinalizado;
 	
+	private Viaje viajeAct; 
 	
 	private ArrayList<Viaje> viajes = new ArrayList<Viaje>();
 	private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 	private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
-	private boolean viajeFinalizado;
-
 	
+
+	public RecursoCompartido( ArrayList<Viaje> viajes, ArrayList<Vehiculo> vehiculos,
+			ArrayList<Chofer> choferes) {
+		this.simulacionActiva =true;
+		this.viajes = viajes;
+		this.vehiculos = vehiculos;
+		this.choferes = choferes;
+	}
 	//clienteThread pide crear Pedido y solicita aceptacion?
 	public void validarPedido(ClienteThread cliente)
 	{ ///
       //
-	  //
+	  //settear viajeAct
 	}
 	
 	//clienteThread solicita Viaje sobre pedido aceptado
@@ -44,7 +52,7 @@ public class RecursoCompartido extends Observable{
        this.viajeSolicitado=true;
        //anuncia evento a ObservadorVchofer
        cliente.setChangedExternamente(); 
-       cliente.notifyObservers(new Evento("Viaje solicitado"));
+       cliente.notifyObservers(new EventoCliente("Viaje solicitado",this.viajeAct,cliente));
        
        //anuncia evento a ObservadorVGeneral
        this.setChanged();
@@ -53,6 +61,8 @@ public class RecursoCompartido extends Observable{
 	}
 	
 	
+	
+
 	//clienteThread paga viaje
 	public synchronized void pagaViaje(ClienteThread cliente)
 	{  while(!this.ChoferAsignado)
@@ -67,7 +77,7 @@ public class RecursoCompartido extends Observable{
 	   //
       this.viajePago=true;
       cliente.setChangedExternamente();
-      cliente.notifyObservers(new Evento("Viaje pagado"));
+      cliente.notifyObservers(new EventoCliente("Viaje pagado",this.viajeAct,cliente));
       
     //anuncia evento a ObservadorVGeneral
       this.setChanged();
@@ -88,7 +98,7 @@ public class RecursoCompartido extends Observable{
 	   //
     this.VehiculoAsignado=true;
     sistema.setChangedExternamente();
-    sistema.notifyObservers(new Evento("Vehiculo asignado"));
+    sistema.notifyObservers(new EventoSistema("Vehiculo asignado",this.viajeAct));
     
   //anuncia evento a ObservadorVGeneral
     this.setChanged();
@@ -110,7 +120,7 @@ public class RecursoCompartido extends Observable{
 	   }
     this.ChoferAsignado=true;
     chofer.setChangedExternamente();
-    chofer.notifyObservers(new Evento("Viaje iniciado"));
+    chofer.notifyObservers(new EventoChofer("Viaje iniciado",this.viajeAct));
     
   //anuncia evento a ObservadorVGeneral
     this.setChanged();
@@ -132,7 +142,7 @@ public class RecursoCompartido extends Observable{
 	   }
     this.viajeFinalizado=true;
     chofer.setChangedExternamente();
-    chofer.notifyObservers(new Evento("Viaje Finalizado"));
+    chofer.notifyObservers(new EventoChofer("Viaje Finalizado",this.viajeAct));
     
   //anuncia evento a ObservadorVGeneral
     this.setChanged();

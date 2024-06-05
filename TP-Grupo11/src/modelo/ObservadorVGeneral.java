@@ -1,10 +1,7 @@
-package controlador;
+package modelo;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import modelo.Evento;
-import modelo.RecursoCompartido;
 
 public class ObservadorVGeneral implements Observer {
 	private RecursoCompartido observable;

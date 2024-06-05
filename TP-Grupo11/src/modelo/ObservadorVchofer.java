@@ -1,11 +1,7 @@
-package controlador;
+package modelo;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import modelo.ChoferThread;
-import modelo.ClienteThread;
-import modelo.Evento;
 
 
 public class ObservadorVchofer implements Observer {

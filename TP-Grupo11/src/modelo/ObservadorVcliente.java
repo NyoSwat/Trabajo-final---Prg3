@@ -1,10 +1,8 @@
-package controlador;
+package modelo;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import modelo.ClienteThread;
-import modelo.Evento;
 import modelo.Hcliente;
 
 public class ObservadorVcliente implements Observer {
