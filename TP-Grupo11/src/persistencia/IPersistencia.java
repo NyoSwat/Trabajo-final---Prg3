@@ -15,4 +15,6 @@ public interface IPersistencia<Serializable> {
 	void escribir(Serializable objeto) throws IOException;
 	
 	Serializable leer() throws IOException, ClassNotFoundException;
+	
+	void deleteFile();
 }

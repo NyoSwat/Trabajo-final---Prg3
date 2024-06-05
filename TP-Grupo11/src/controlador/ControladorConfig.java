@@ -16,9 +16,9 @@ import modelo.ChoferContratado;
 import modelo.ChoferPermanente;
 import modelo.ChoferTemporario;
 import modelo.FactoryVehiculo;
+import modelo.Sistema;
 import modelo.Usuario;
 import modelo.Vehiculo;
-import negocio.Sistema;
 import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBinaria;
@@ -35,6 +35,7 @@ public class ControladorConfig {
 		this.ventanaConfig = new VConfig();
 		this.addEvents();
 		this.ventanaConfig.setVisible(true);
+		this.deSerializar();
 	}
 	
 	public static ControladorConfig getInstance() {
@@ -68,24 +69,6 @@ public class ControladorConfig {
 			}
 		});
 	
-		ventanaConfig.getDeleteChoferBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-	
-		ventanaConfig.getDeleteClienteBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
-		ventanaConfig.getDeleteVehiculoBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
 		ventanaConfig.getSaveBtn().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -108,10 +91,17 @@ public class ControladorConfig {
 			}
 		});
 		
+		ventanaConfig.getDeleteDatosBtn().addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				deleteDatos();
+			}
+		});
+		
 	}
 	
 	
-	public void deSerializar() {
+	private void deSerializar() {
 		try {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirInput("sistema.dat");
@@ -139,19 +129,25 @@ public class ControladorConfig {
 	}
 	
 	
-	public void serializar() {
+	private void serializar() {
 		try {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirOutput("sistema.dat");
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
+			ventanaConfig.dispose();
 		}
 		catch(IOException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 	
+	private void deleteDatos() {
+		IPersistencia<Serializable> persistir = new PersistenciaBinaria();
+		persistir.deleteFile();
+		ventanaConfig.dispose();
+	}
 	
 	private void abrirVentanaNuevoCliente() {
 		ControladorNewCliente CNewCliente = new ControladorNewCliente(ventanaConfig);
@@ -192,20 +188,17 @@ public class ControladorConfig {
 		String tipo = ventanaConfig.getTypeVehiculoComboBox().getSelectedItem().toString();
 		Boolean baul = ventanaConfig.getBaulChkBox().isSelected();
 		Boolean pet = ventanaConfig.getPetFriendlyChkBox().isSelected();
-		
-		if(patente == null || patente == "")
-			JOptionPane.showMessageDialog(null, "La patente no puede ser nula.");
-		else
-			try {
-				Sistema.getInstance().agregarVehiculo(tipo, patente, baul, pet);
-				ventanaConfig.getList_vehiculos().addElement(FactoryVehiculo.getVehiculo(tipo, patente, baul, pet));
-			}
-			catch (IllegalArgumentException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
-			catch(ExistenteVehiculoException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+	
+		try {
+			Sistema.getInstance().agregarVehiculo(tipo, patente, baul, pet);
+			ventanaConfig.getList_vehiculos().addElement(FactoryVehiculo.getVehiculo(tipo, patente, baul, pet));
+		}
+		catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		catch(ExistenteVehiculoException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 		
 		ventanaConfig.getPatenteField().setText("");
 	}

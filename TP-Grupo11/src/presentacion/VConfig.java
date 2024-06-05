@@ -56,13 +56,11 @@ public class VConfig extends JFrame {
 	private JList listClientes;
 	private JList listVehiculos;
 	private JList listChoferes;
-	private JButton deleteClienteBtn;
 	private JButton addClienteBtn;
-	private JButton deleteVehiculoBtn;
 	private JButton addVehiculoBtn;
 	private JButton addChoferBtn;
 	private JButton saveBtn;
-	private JButton deleteChoferBtn;
+	private JButton deleteDatosBtn;
 	private JCheckBox baulChkBox;
 	private JCheckBox petFriendlyChkBox;
 	private JComboBox<String> typeVehiculoComboBox;
@@ -139,12 +137,8 @@ public class VConfig extends JFrame {
 		this.scrollUsuarios.setBounds(270, 1, 470, 129);
 		this.clientePanel.add(scrollUsuarios);
 		
-		this.deleteClienteBtn = new JButton("Eliminar");
-		this.deleteClienteBtn.setBounds(181, 89, 81, 21);
-		this.clientePanel.add(deleteClienteBtn);
-		
 		this.addClienteBtn = new JButton("Agregar");
-		this.addClienteBtn.setBounds(181, 58, 81, 21);
+		this.addClienteBtn.setBounds(182, 87, 80, 25);
 		this.clientePanel.add(addClienteBtn);
 		
 		this.vehiculoPanel = new JPanel();
@@ -171,12 +165,8 @@ public class VConfig extends JFrame {
 		this.scrollVehiculos.setBounds(270, 1, 470, 134);
 		this.vehiculoPanel.add(scrollVehiculos);
 		
-		this.deleteVehiculoBtn = new JButton("Eliminar");
-		this.deleteVehiculoBtn.setBounds(181, 102, 81, 21);
-		this.vehiculoPanel.add(deleteVehiculoBtn);
-		
 		this.addVehiculoBtn = new JButton("Agregar");
-		this.addVehiculoBtn.setBounds(181, 75, 81, 21);
+		this.addVehiculoBtn.setBounds(181, 102, 80, 25);
 		this.vehiculoPanel.add(addVehiculoBtn);
 		
 		this.patenteLabel = new JLabel("Patente");
@@ -236,13 +226,8 @@ public class VConfig extends JFrame {
 		this.chofePanel.add(nombreLabel);
 		
 		this.addChoferBtn = new JButton("Agregar");
-		this.addChoferBtn.setBounds(181, 85, 81, 21);
+		this.addChoferBtn.setBounds(181, 102, 80, 25);
 		this.chofePanel.add(addChoferBtn);
-		
-		this.deleteChoferBtn = new JButton("Eliminar");
-		this.deleteChoferBtn.setBounds(181, 116, 81, 21);
-		this.chofePanel.add(deleteChoferBtn);
-		
 		
 		this.dniField = new JTextField();
 		this.dniField.setBounds(80, 55, 76, 20);
@@ -276,8 +261,12 @@ public class VConfig extends JFrame {
 		this.chofePanel.add(categoriaComboBox);
 
 		this.saveBtn = new JButton("Guardar Datos");
-		this.saveBtn.setBounds(315, 5, 120, 25);
+		this.saveBtn.setBounds(480, 5, 120, 25);
 		this.buttonPanel.add(saveBtn);
+		
+		this.deleteDatosBtn = new JButton("Eliminar Datos");
+		this.deleteDatosBtn.setBounds(150, 5, 120, 25);
+		this.buttonPanel.add(deleteDatosBtn);
 		
 		JSeparator separatorVehiculo = new JSeparator();
 		separatorVehiculo.setBounds(0, 301, 750, 2);
@@ -302,30 +291,21 @@ public class VConfig extends JFrame {
 		return this.addClienteBtn;
 	}
 
-	public JButton getDeleteClienteBtn() {
-		return this.deleteClienteBtn;
-	}
-
 	public JButton getAddVehiculoBtn() {
 		return this.addVehiculoBtn;
-	}
-
-	public JButton getDeleteVehiculoBtn() {
-		return this.deleteVehiculoBtn;
 	}
 	
 	public JButton getAddChoferBtn() {
 		return this.addChoferBtn;
-	}
-
-	public JButton getDeleteChoferBtn() {
-		return this.deleteChoferBtn;
 	}
 	
 	public JButton getSaveBtn() {
 		return saveBtn;
 	}
 
+	public JButton getDeleteDatosBtn() {
+		return deleteDatosBtn;
+	}
 
 	public JTextField getCantClienteField() {
 		return cantClienteField;
@@ -395,8 +375,4 @@ public class VConfig extends JFrame {
 	public JLabel getCantHijosLabel() {
 		return cantHijosLabel;
 	}
-
-
-
-	
 }

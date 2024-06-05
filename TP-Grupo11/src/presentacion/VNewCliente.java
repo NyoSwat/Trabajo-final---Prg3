@@ -37,7 +37,7 @@ public class VNewCliente extends JDialog {
 	public VNewCliente(JFrame Vconfig) {
 		super(Vconfig,"Crear nuevo Cliente",true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 249, 248);
+		setBounds(100, 100, 300, 249);
 		setResizable(false);
 		
 		this.principalPanel = new JPanel();
@@ -52,44 +52,47 @@ public class VNewCliente extends JDialog {
 		
 		this.titleNewClienteLabel = new JLabel("Nuevo Cliente");
 		this.titleNewClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		this.titleNewClienteLabel.setFont(new Font("Dialog", Font.BOLD, 12));
-		this.titleNewClienteLabel.setBounds(62, 6, 100, 15);
+		this.titleNewClienteLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		this.titleNewClienteLabel.setBounds(62, 6, 150, 15);
 		this.titlePanel.add(titleNewClienteLabel);
 		
 		this.formPanel = new JPanel();
-		this.formPanel.setBounds(0, 31, 223, 124);
+		this.formPanel.setBounds(0, 31, 274, 124);
 		this.titlePanel.add(formPanel);
 		this.formPanel.setLayout(null);
 		
 		this.nombreLabel = new JLabel("Nombre");
-		this.nombreLabel.setBounds(8, 5, 60, 15);
+		nombreLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		this.nombreLabel.setBounds(15, 10, 60, 15);
 		this.formPanel.add(nombreLabel);
 		
 		this.nombreField = new JTextField();
-		this.nombreField.setBounds(80, 5, 120, 20);
+		this.nombreField.setBounds(100, 10, 150, 20);
 		this.formPanel.add(nombreField);
 		this.nombreField.setColumns(10);
 		
 		this.usuarioLabel = new JLabel("Usuario");
-		this.usuarioLabel.setBounds(8, 30, 60, 15);
+		usuarioLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		this.usuarioLabel.setBounds(15, 35, 60, 15);
 		this.formPanel.add(usuarioLabel);
 		
 		this.usuarioField = new JTextField();
-		this.usuarioField.setBounds(80, 30, 120, 20);
+		this.usuarioField.setBounds(100, 35, 150, 20);
 		this.formPanel.add(usuarioField);
 		this.usuarioField.setColumns(10);
 		
 		this.contrasenaLabel = new JLabel("Contraseña");
-		this.contrasenaLabel.setBounds(8, 55, 80, 15);
+		contrasenaLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		this.contrasenaLabel.setBounds(15, 60, 80, 15);
 		this.formPanel.add(contrasenaLabel);
 		
 		this.contrasenaFiled = new JTextField();
-		this.contrasenaFiled.setBounds(80, 55, 120, 20);
+		this.contrasenaFiled.setBounds(100, 60, 150, 20);
 		this.formPanel.add(contrasenaFiled);
 		this.contrasenaFiled.setColumns(10);
 		
 		this.adminChckBox = new JCheckBox("Func. Administrador");
-		this.adminChckBox.setBounds(8, 85, 150, 21);
+		this.adminChckBox.setBounds(15, 100, 150, 21);
 		this.formPanel.add(adminChckBox);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -97,16 +100,16 @@ public class VNewCliente extends JDialog {
 		this.formPanel.add(separator_1);
 		
 		this.btnPanel = new JPanel();
-		this.btnPanel.setBounds(0, 157, 223, 40);
+		this.btnPanel.setBounds(0, 157, 274, 43);
 		this.titlePanel.add(btnPanel);
 		this.btnPanel.setLayout(null);
 		
 		this.addClienteBtn = new JButton("Agregar");
-		this.addClienteBtn.setBounds(71, 10, 80, 20);
+		this.addClienteBtn.setBounds(98, 10, 80, 25);
 		this.btnPanel.add(addClienteBtn);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 23, 223, 2);
+		separator.setBounds(0, 23, 274, 2);
 		this.titlePanel.add(separator);
 	}
 

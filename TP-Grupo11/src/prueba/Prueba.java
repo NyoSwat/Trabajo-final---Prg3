@@ -16,7 +16,7 @@ import modelo.Combi;
 import modelo.IViaje;
 import modelo.Moto;
 import modelo.Pedido;
-import negocio.Sistema;
+import modelo.Sistema;
 
 
 public class Prueba{
@@ -24,10 +24,6 @@ public class Prueba{
     	
     	Sistema sistema = Sistema.getInstance();
     	
-    	/**
-    	 * En el TP dice que hay un administrador y varios clientes ¿Deberia usar singleton para el administrador tambien?
-    	 */
-//    	Administrador admin = new Administrador(sistema,"Admin", "1234", "Admin Admin");
     	
     	//agregar de usuarios repetidos
 //    	try {
@@ -75,18 +71,18 @@ public class Prueba{
        	
     	try {
     		//Creacion de choferes validos
-    		sistema.agregarChofer(new ChoferContratado("1", "Chofer1"));
-    		sistema.agregarChofer(new ChoferPermanente("2", "Chofer2",2));
-    		sistema.agregarChofer(new ChoferTemporario("3", "Chofer3"));
-    		sistema.agregarChofer(new ChoferContratado("4", "Chofer4"));
-    		sistema.agregarChofer(new ChoferContratado("5", "Chofer5"));
+    		sistema.agregarChofer(new ChoferContratado("1", "Chofer uno"));
+    		sistema.agregarChofer(new ChoferPermanente("2", "Chofer dos",2));
+    		sistema.agregarChofer(new ChoferTemporario("3", "Chofer tre"));
+    		sistema.agregarChofer(new ChoferContratado("4", "Chofer cuatro"));
+    		sistema.agregarChofer(new ChoferContratado("5", "Chofer cinco"));
     		//creacion de clientes validos
-//    		sistema.agregarCliente(new Cliente("Usuario1","sdasda", "Usuario uno"));
-//    		sistema.agregarCliente(new Cliente("Usuario2","sdasda", "Usuario dos"));
-//    		sistema.agregarCliente(new Cliente("Usuario3","sdasda", "Usuario tres"));
-//    		sistema.agregarCliente(new Cliente("Usuario4","sdasda", "Usuario cuatro"));
-//    		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
-//    		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
+    		sistema.agregarCliente(new Cliente("Usuario1","sdasda", "Usuario uno"));
+    		sistema.agregarCliente(new Cliente("Usuario2","sdasda", "Usuario dos"));
+    		sistema.agregarCliente(new Cliente("Usuario3","sdasda", "Usuario tres"));
+    		sistema.agregarCliente(new Cliente("Usuario4","sdasda", "Usuario cuatro"));
+    		sistema.agregarCliente(new Cliente("Usuario5","sdasda", "Usuario cinco"));
+    		sistema.agregarCliente(new Cliente("Usuario6","sdasda", "Usuario seis"));
     		//creacion de vehiculos validos
     		sistema.agregarVehiculo("Auto", "49d", true, true);
     		sistema.agregarVehiculo("moto", "h23", false, false);

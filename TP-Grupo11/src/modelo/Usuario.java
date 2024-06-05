@@ -3,7 +3,7 @@ package modelo;
 import java.io.Serializable;
 
 public abstract class Usuario implements Serializable,Cloneable{
-    private String usuario;
+	private String usuario;
     private String password;
     private String nombre;
     

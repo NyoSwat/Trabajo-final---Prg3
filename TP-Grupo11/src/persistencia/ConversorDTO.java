@@ -1,6 +1,6 @@
 package persistencia;
 
-import negocio.Sistema;
+import modelo.Sistema;
 
 public class ConversorDTO {
 	

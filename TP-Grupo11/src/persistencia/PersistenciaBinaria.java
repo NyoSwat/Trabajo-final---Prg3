@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,5 +53,9 @@ public class PersistenciaBinaria implements IPersistencia<Serializable>{
 		return serializable;
 	}
 	
-	
+	@Override
+	public void deleteFile() {
+		File file = new File("sistema.dat");
+		file.delete();
+	}
 }
