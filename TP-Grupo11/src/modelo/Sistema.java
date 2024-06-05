@@ -1,4 +1,4 @@
-package negocio;
+package modelo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,16 +12,6 @@ import Excepciones.ExistenteUsuarioException;
 import Excepciones.ExistenteVehiculoException;
 import Excepciones.FaltaChoferException;
 import Excepciones.FaltaVehiculoException;
-import modelo.Chofer;
-import modelo.Cliente;
-import modelo.FactoryVehiculo;
-import modelo.FactoryViaje;
-import modelo.IViaje;
-import modelo.Pedido;
-import modelo.FactoryChofer;
-import modelo.Usuario;
-import modelo.Vehiculo;
-import modelo.Viaje;
 
 /**
  * La clase Sistema representa la gestion de peticiones del usuario, informes, viajes, etc.
@@ -70,7 +60,6 @@ public class Sistema {
     public void setUsuarios(ArrayList<Usuario> usuarios) {
     	this.usuarios = usuarios;
     }
-
     
     /**
 	 * Consulta un vehiculo existente

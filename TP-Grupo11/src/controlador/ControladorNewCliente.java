@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 import Excepciones.ExistenteUsuarioException;
 import modelo.Cliente;
-import negocio.Sistema;
+import modelo.Sistema;
 import presentacion.VConfig;
 import presentacion.VNewCliente;
 

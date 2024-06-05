@@ -1,18 +1,17 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 import Excepciones.ExistenteUsuarioException;
 import Excepciones.FaltaChoferException;
 import Excepciones.FaltaVehiculoException;
-import negocio.Sistema;
 
 /**
  * La clase Cliente representa a un usuario cliente en el sistema.
  * Hereda de la clase Usuario y agrega información específica para clientes.
  */
-public class Cliente extends Usuario {
-	Sistema sistema;
+public class Cliente extends Usuario{
     /**
      * Constructor para crear un objeto Cliente.
      *
@@ -22,7 +21,6 @@ public class Cliente extends Usuario {
      */
     public Cliente(String usuario, String password, String nombre) {
         super(usuario, password, nombre);
-        this.sistema = Sistema.getInstance();
     }
     
     
@@ -33,7 +31,7 @@ public class Cliente extends Usuario {
     		FaltaChoferException, 
     		InterruptedException 
     {
-    	sistema.generarPedido(this,cantPasajeros,distancia,zona,mascota,baul,new GregorianCalendar());
+    	Sistema.getInstance().generarPedido(this,cantPasajeros,distancia,zona,mascota,baul,new GregorianCalendar());
     }
 
     

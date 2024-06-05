@@ -1,6 +1,7 @@
 package prueba;
 
 import controlador.ControladorConfig;
+import modelo.Sistema;
 
 public class PruebaVConfig {
 
@@ -9,8 +10,9 @@ public class PruebaVConfig {
 		
 		ControladorConfig controlConfig = ControladorConfig.getInstance();
 		
-		controlConfig.deSerializar();
-		
-		
+		Sistema sistema = Sistema.getInstance();
+		System.out.println(sistema.listaUsuarios());
+		System.out.println(sistema.listaChoferes());
+		System.out.println(sistema.listaVehiculos());
 	}
 }
