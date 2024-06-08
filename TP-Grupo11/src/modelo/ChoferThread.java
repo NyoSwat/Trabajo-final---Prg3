@@ -6,10 +6,18 @@ public class ChoferThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;
     private String nombre;
     private Viaje viaje;
+    private int CantdeViajes; //ingresa con la cantidad maxima y decrementa al realizar viaje
+    private int CantMaxdeViajes;
     
-	public ChoferThread(RecursoCompartido rc, String nombre) {
+	
+
+	public ChoferThread(RecursoCompartido rc, String nombre, Viaje viaje, int cantMaxdeViajes) {
+		super();
 		this.rc = rc;
 		this.nombre = nombre;
+		this.viaje = viaje;
+		CantdeViajes = cantMaxdeViajes;
+		CantMaxdeViajes = cantMaxdeViajes;
 	}
 
 	public String getNombre() {
@@ -23,11 +31,13 @@ public class ChoferThread extends MiObservable implements Runnable {
 	
 
 	public void run() {
-	  while(this.rc.isSimulacionActiva())//dos condiciones 
+	int i=0;
+	  while(this.rc.isHayClienteHumano()&& (i<this.CantMaxdeViajes))//dos condiciones 
 	  {	//lo otro esta bien
 		this.rc.tomaViaje(this);
 		UtilThread.espera();
 		this.rc.finalizaViaje(this);
+		i++;
 	  }//por qué condicion salio?
 	  //
 	}
@@ -39,6 +49,22 @@ public class ChoferThread extends MiObservable implements Runnable {
 
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
+	}
+
+	public int getCantdeViajes() {
+		return CantdeViajes;
+	}
+
+	public void setCantdeViajes(int cantdeViajes) {
+		CantdeViajes = cantdeViajes;
+	}
+
+	public int getCantMaxdeViajes() {
+		return CantMaxdeViajes;
+	}
+
+	public void setCantMaxdeViajes(int cantMaxdeViajes) {
+		CantMaxdeViajes = cantMaxdeViajes;
 	}
 
 }
