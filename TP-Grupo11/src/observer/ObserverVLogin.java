@@ -8,16 +8,15 @@ import javax.swing.JOptionPane;
 
 import controlador.ControladorVCliente;
 import modelo.Sistema;
-import vista.VentanaConfig;
 import vista.VentanaLogin;
 
 public class ObserverVLogin implements Observer{
 	
 	private VentanaLogin ventana;
 	
-	public ObserverVLogin(VentanaLogin ventana) {
+	public ObserverVLogin(VentanaLogin ventana,Sistema sistema) {
 		this.ventana = ventana;
-		Sistema.getInstance().addObserver(this);
+		sistema.addObserver(this);
 	}
 
 	@Override

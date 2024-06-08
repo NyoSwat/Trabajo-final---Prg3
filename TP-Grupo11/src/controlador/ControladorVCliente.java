@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import modelo.Sistema;
 import vista.VentanaCliente;
-import vista.VentanaConfig;
 import vista.VentanaLogin;
 
 public class ControladorVCliente implements ActionListener{
@@ -22,7 +21,6 @@ public class ControladorVCliente implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub
 		if(event.getActionCommand().equals("crearPedido")) {
 			
 		}

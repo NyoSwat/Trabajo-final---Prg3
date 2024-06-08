@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Observable;
-import java.util.Random;
 
 import excepciones.ExistenteChoferException;
 import excepciones.ExistenteUsuarioException;

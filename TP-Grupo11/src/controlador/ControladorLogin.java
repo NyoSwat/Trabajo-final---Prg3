@@ -13,12 +13,12 @@ public class ControladorLogin implements ActionListener{
 	private Sistema sistema;
 	private ObserverVLogin ojo;
 	
-	public ControladorLogin() {
-		this.sistema = Sistema.getInstance();
+	public ControladorLogin(Sistema sistema) {
+		this.sistema = sistema;
 		this.vista = new VentanaLogin();
 		this.vista.setControlador(this);
 		this.vista.setVisible(true);
-		this.ojo = new ObserverVLogin(this.vista);
+		this.ojo = new ObserverVLogin(this.vista,sistema);
 	}
 
 	@Override

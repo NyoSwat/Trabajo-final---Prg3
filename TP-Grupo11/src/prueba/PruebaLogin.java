@@ -28,8 +28,8 @@ public class PruebaLogin {
 		catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		ControladorLogin control = new ControladorLogin();
-		ControladorLogin control2 = new ControladorLogin();
-		ControladorLogin control3 = new ControladorLogin();
+		ControladorLogin control = new ControladorLogin(sistema);
+		ControladorLogin control2 = new ControladorLogin(sistema);
+		ControladorLogin control3 = new ControladorLogin(sistema);
 	}
 }
