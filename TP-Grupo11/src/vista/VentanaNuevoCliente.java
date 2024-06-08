@@ -1,4 +1,4 @@
-package presentacion;
+package vista;
 
 
 import javax.swing.JPanel;

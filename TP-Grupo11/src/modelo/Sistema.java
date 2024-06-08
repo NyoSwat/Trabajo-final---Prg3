@@ -13,6 +13,7 @@ import excepciones.ExistenteUsuarioException;
 import excepciones.ExistenteVehiculoException;
 import excepciones.FaltaChoferException;
 import excepciones.FaltaVehiculoException;
+import observer.ObserverVLogin;
 
 /**
  * La clase Sistema representa la gestion de peticiones del usuario, informes, viajes, etc.
@@ -24,6 +25,7 @@ public class Sistema extends Observable{
     private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
     private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>(); //vehiculos totales (disponibles o no)
     private ArrayList<IViaje> viajes = new ArrayList<IViaje>();
+    private Usuario usuarioLogeado;
     
     
     /**
@@ -498,19 +500,29 @@ public class Sistema extends Observable{
     }
     
     
-    public void logearse(String usuario,String contrasena) {
+    public void logearse(ObserverVLogin ojo,String usuario,String contrasena) {
     	String mensaje = "Incorrecto";
     	int i = 0;
-    	
     	while(i < this.usuarios.size() && !this.usuarios.get(i).getUsuario().equals(usuario)) {
     		i++;
     	}
     	
-    	if(i<this.usuarios.size() && this.usuarios.get(i).getUsuario().equals(usuario) && this.usuarios.get(i).getPassword().equals(contrasena))
+		if(i<this.usuarios.size() && this.usuarios.get(i).getUsuario().equals(usuario) && this.usuarios.get(i).getPassword().equals(contrasena)) {
     		mensaje = "Correcto";
+    		setUsuarioLogeado(this.usuarios.get(i));
+    	}
     	
     	this.setChanged();
-    	this.notifyObservers(mensaje);
+//    	this.notifyObservers(mensaje);
+    	ojo.update(this,mensaje); //Hago esto para que no notifique a todos, solo al que lo lanza--- No se si es correcto 
+    }
+    
+    public Usuario getUsuarioLogeado() {
+    	return this.usuarioLogeado;
+    }
+    
+    public void setUsuarioLogeado(Usuario usuario) {
+    	this.usuarioLogeado = usuario;
     }
     
 }

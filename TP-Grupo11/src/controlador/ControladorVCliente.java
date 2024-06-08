@@ -4,14 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.Sistema;
+import vista.VentanaCliente;
+import vista.VentanaConfig;
+import vista.VentanaLogin;
 
 public class ControladorVCliente implements ActionListener{
 	
 	private Sistema sistema;
-	//private VCliente vista;
+	private VentanaCliente vista;
 	
-	public ControladorVCliente(Sistema sistema) {
-		
+	public ControladorVCliente(Sistema sistema,VentanaLogin ventana) {
+		this.vista = new VentanaCliente(sistema.getUsuarioLogeado().getNombre());
+		this.sistema = sistema;
+		this.vista.setVisible(true);
+		this.vista.setLocationRelativeTo(ventana);
 	}
 	
 	@Override

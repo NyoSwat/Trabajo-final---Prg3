@@ -23,8 +23,8 @@ import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBinaria;
 import persistencia.SistemaDTO;
-import presentacion.VentanaConfig;
-import presentacion.VentanaNuevoCliente;
+import vista.VentanaConfig;
+import vista.VentanaNuevoCliente;
 
 public class ControladorConfig implements ActionListener{
 	
@@ -134,9 +134,9 @@ public class ControladorConfig implements ActionListener{
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirOutput("sistema.dat");
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
-			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
-			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
-			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
+//			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
+//			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
+//			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
 			ventanaConfig.dispose();

@@ -9,16 +9,16 @@ import javax.swing.JOptionPane;
 import excepciones.ExistenteUsuarioException;
 import modelo.Cliente;
 import modelo.Sistema;
-import presentacion.VentanaConfig;
-import presentacion.VentanaNuevoCliente;
+import vista.VentanaConfig;
+import vista.VentanaNuevoCliente;
 
 public class ControladorNewCliente implements ActionListener{
 	private VentanaNuevoCliente ventanaCliente = null;
-	private VentanaConfig parent;
+	private JFrame parent;
 	private Sistema sistema;
 	
 	public ControladorNewCliente(JFrame frame) {
-		this.parent = (VentanaConfig) frame;
+		this.parent = frame;
 		this.ventanaCliente = new VentanaNuevoCliente();
 		this.sistema = Sistema.getInstance();
 		this.ventanaCliente.setLocationRelativeTo(frame);
@@ -38,7 +38,9 @@ public class ControladorNewCliente implements ActionListener{
 				Cliente cliente = new Cliente(usuario, password, nombre);
 				sistema.agregarCliente(cliente);
 				ventanaCliente.dispose();
-				parent.actualizoListaCliente(sistema.listaUsuarios());
+				if(parent instanceof VentanaConfig) {
+					((VentanaConfig)parent).actualizoListaCliente(sistema.listaUsuarios());
+				}
 			}
 			catch(IllegalArgumentException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage());

@@ -6,13 +6,16 @@ import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
+import controlador.ControladorVCliente;
 import modelo.Sistema;
+import vista.VentanaConfig;
+import vista.VentanaLogin;
 
 public class ObserverVLogin implements Observer{
 	
-	private VLogin ventana;
+	private VentanaLogin ventana;
 	
-	public ObserverVLogin(Observable observable,VLogin ventana) {
+	public ObserverVLogin(VentanaLogin ventana) {
 		this.ventana = ventana;
 		Sistema.getInstance().addObserver(this);
 	}
@@ -22,11 +25,12 @@ public class ObserverVLogin implements Observer{
 		if( o != Sistema.getInstance() )
 			throw new InvalidParameterException();
 		if(arg.toString().equals("Correcto")) {
+			ControladorVCliente usuario = new ControladorVCliente(Sistema.getInstance(),this.ventana);
 			this.ventana.dispose();
-			ControladorUsuario usuario = new ControladorUsuario();
+			System.out.println(Sistema.getInstance().getUsuarioLogeado().getNombre()+"Se logeo");
 		}
 		else if(arg.toString().equals("Incorrecto")) {
-			JOptionPane.showMessageDialog(null,"Usuario o contrasena incorrecta");
+			JOptionPane.showMessageDialog(ventana,"Usuario o contrasena incorrecta");
 		}
 			
 	}
