@@ -3,14 +3,14 @@ package modelo;
 import java.util.Observable;
 import java.util.Observer;
 
-import modelo.Hcliente;
+import vista.VentanaCliente;
+import vista.VentanaGeneral;
 
 public class ObservadorVcliente implements Observer {
 	private ClienteThread observable;
-	//referencia a ventana que informa datos de un cliente,cambiar tipo en base a lo
-    //diseñado por la vista
-	private VentanaC ventana;
-	public ObservadorVcliente(ClienteThread observable, VentanaC ventana) {
+	//referencia a ventana que informa datos de un cliente
+	private VentanaCliente ventana;
+	public ObservadorVcliente(ClienteThread observable, VentanaCliente ventana) {
 		super();
 		this.observable = observable;
 		this.ventana = ventana;
@@ -19,9 +19,9 @@ public class ObservadorVcliente implements Observer {
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(o== this.observable)
-		{  ClienteThread Hc= (ClienteThread)o;
-		   Evento evento = (Evento) arg;
-		   this.ventana.appendText(evento.getDescripcion());;
+		{  //ClienteThread Hc= (ClienteThread)o;
+		   EventoCliente evento = (EventoCliente) arg;
+		   this.ventana.appendText(evento.getDescripcion());   
 		}
 		else 
 		   throw new IllegalArgumentException();

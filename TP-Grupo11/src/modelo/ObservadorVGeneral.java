@@ -3,14 +3,16 @@ package modelo;
 import java.util.Observable;
 import java.util.Observer;
 
+import vista.VentanaGeneral;
+
 public class ObservadorVGeneral implements Observer {
 	private RecursoCompartido observable;
 	//referencia a ventana que informa datos generales,cambiar tipo en base a los
     //diseñado por la vista
-	private VentanaG ventana;
+	private VentanaGeneral ventana;
 	private Object arg;
    
-	public ObservadorVGeneral(RecursoCompartido observable, VentanaG ventana) {
+	public ObservadorVGeneral(RecursoCompartido observable, VentanaGeneral ventana) {
 		super();
 		this.observable = observable;
 		this.ventana = ventana;
@@ -22,7 +24,7 @@ public class ObservadorVGeneral implements Observer {
 		
 		if(o==this.observable)
 		{
-			RecursoCompartido rc = (RecursoCompartido) o;
+			//RecursoCompartido rc = (RecursoCompartido) o;
 			Evento evento = (Evento) arg;
 			this.ventana.appendText(evento.getDescripcion());
 					
