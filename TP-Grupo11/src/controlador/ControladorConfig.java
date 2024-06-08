@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Excepciones.ExistenteChoferException;
-import Excepciones.ExistenteVehiculoException;
+import excepciones.ExistenteChoferException;
+import excepciones.ExistenteVehiculoException;
 import modelo.Chofer;
 import modelo.ChoferContratado;
 import modelo.ChoferPermanente;
@@ -23,18 +23,20 @@ import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBinaria;
 import persistencia.SistemaDTO;
-import presentacion.VConfig;
-import presentacion.VNewCliente;
+import vista.VentanaConfig;
+import vista.VentanaNuevoCliente;
 
-public class ControladorConfig {
+public class ControladorConfig implements ActionListener{
 	
 	private static ControladorConfig instance = null;
-	private VConfig ventanaConfig;
+	private VentanaConfig ventanaConfig;
+	private Sistema sistema;
 	
 	private ControladorConfig() {
-		this.ventanaConfig = new VConfig();
-		this.addEvents();
+		this.ventanaConfig = new VentanaConfig();
+		this.sistema = Sistema.getInstance();
 		this.ventanaConfig.setVisible(true);
+		this.ventanaConfig.setControlador(this);
 		this.deSerializar();
 	}
 	
@@ -44,60 +46,65 @@ public class ControladorConfig {
 		return instance;
 	}
 
-	
-	
-	private void addEvents() {
+	@Override
+	public void actionPerformed(ActionEvent evento) {
 		
-		ventanaConfig.getAddClienteBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				abrirVentanaNuevoCliente();
+		if(evento.getActionCommand().equals("agregarChofer")) {
+			String nombre = ventanaConfig.getNombreChofer();
+			String dni = ventanaConfig.getDniChofer();
+			String categoria = ventanaConfig.getCategoriaChofer();
+			Chofer chofer;
+			try {
+				if(categoria.equalsIgnoreCase("contratado"))
+					chofer = new ChoferContratado(dni, nombre);
+				else if (categoria.equalsIgnoreCase("temporario"))
+					chofer = new ChoferTemporario(dni, nombre);
+				else
+					chofer = new ChoferPermanente(dni, nombre, Integer.parseInt(ventanaConfig.getCantHijos()));
+				sistema.agregarChofer(chofer);
+				ventanaConfig.setDniChofer("");
+				ventanaConfig.setNombreChofer("");
+				ventanaConfig.setCantHijos("");
 			}
-		});
-		
-		ventanaConfig.getAddVehiculoBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				agregarVehiculo();
+			catch(ExistenteChoferException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
-		});
-
-		ventanaConfig.getAddChoferBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				agregarChofer();
+			catch(IllegalArgumentException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
-		});
-	
-		ventanaConfig.getSaveBtn().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				serializar();
+			ventanaConfig.actualizoListaChofer(sistema.listaChoferes());
+		}
+		else if( evento.getActionCommand().equals("agregarVehiculo")){
+			String patente = ventanaConfig.getPatente();
+			String tipo = ventanaConfig.getTipoVehiculo();
+			
+			try {
+				sistema.agregarVehiculo(tipo, patente, ventanaConfig.getBaul(), ventanaConfig.getMascota());
+				ventanaConfig.setPatente("");
+			} 
+			catch (IllegalArgumentException e ) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
-		});
-		
-		
-		ventanaConfig.getCategoriaComboBox().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				changeTypeCategoriaChofer();
+			catch(ExistenteVehiculoException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
-		});
-		
-		ventanaConfig.getTypeVehiculoComboBox().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				changeTypeVehiculo();
-			}
-		});
-		
-		ventanaConfig.getDeleteDatosBtn().addActionListener( new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				deleteDatos();
-			}
-		});
-		
+			ventanaConfig.actualizoListaVehiculo(sistema.listaVehiculos());
+		}
+		else if(evento.getActionCommand().equals("ventanaCliente")) {
+			abrirVentanaNuevoCliente();
+		}
+		else if(evento.getActionCommand().equals("cambiarCategoria")) {
+			ventanaConfig.changeCategoria();
+		}
+		else if(evento.getActionCommand().equals("cambiarTypeVehiculo")) {
+			ventanaConfig.changeTypeVehiculo();
+		}
+		else if(evento.getActionCommand().equals("guardarDatos")) {
+			serializar();
+		}
+		else if(evento.getActionCommand().equals("eliminarDatos")) {
+			deleteDatos();
+		}
 	}
 	
 	
@@ -109,16 +116,9 @@ public class ControladorConfig {
 			ConversorDTO.sistemaDTOToSistema(Sistema.getInstance(), sistemaDTO);
 			persistir.cerrarInput();
 
-			for (Vehiculo vehiculo : Sistema.getInstance().listaVehiculos()) {
-				ventanaConfig.getList_vehiculos().addElement(vehiculo);
-			}
-			for(Chofer chofer : Sistema.getInstance().listaChoferes()) {
-				ventanaConfig.getList_choferes().addElement(chofer);
-			}
-			for(Usuario usuario : Sistema.getInstance().listaUsuarios()) {
-				ventanaConfig.getList_usuarios().addElement(usuario);
-			}
-			
+			ventanaConfig.actualizoListaChofer(sistema.listaChoferes());
+			ventanaConfig.actualizoListaVehiculo(sistema.listaVehiculos());
+			ventanaConfig.actualizoListaCliente(sistema.listaUsuarios());
 		}
 		catch(IOException e) {
 			JOptionPane.showMessageDialog(null,e.getMessage());
@@ -134,6 +134,9 @@ public class ControladorConfig {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirOutput("sistema.dat");
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
+//			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
+//			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
+//			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
 			ventanaConfig.dispose();
@@ -154,83 +157,6 @@ public class ControladorConfig {
 	}
 	
 	
-	private void changeTypeCategoriaChofer() {
-		if(ventanaConfig.getCategoriaComboBox().getSelectedItem().equals("Permanente")) {
-			ventanaConfig.getCantHijosLabel().setVisible(true);
-			ventanaConfig.getCantHijosField().setVisible(true);
-		}
-		else{
-			ventanaConfig.getCantHijosLabel().setVisible(false);
-			ventanaConfig.getCantHijosField().setVisible(false);
-		}
-	}
-	
-	
-	private void changeTypeVehiculo() {
-		if(ventanaConfig.getTypeVehiculoComboBox().getSelectedItem().equals("Moto")) {
-			ventanaConfig.getBaulChkBox().setVisible(false);
-			ventanaConfig.getPetFriendlyChkBox().setVisible(false);
-			ventanaConfig.getBaulChkBox().setSelected(false);
-			ventanaConfig.getPetFriendlyChkBox().setSelected(false);
-			
-		}
-		else {
-			ventanaConfig.getBaulChkBox().setVisible(true);
-			ventanaConfig.getPetFriendlyChkBox().setVisible(true);
-			ventanaConfig.getBaulChkBox().setSelected(true);
-			ventanaConfig.getPetFriendlyChkBox().setSelected(true);
-		}
-	}
-	
-	
-	private void agregarVehiculo() {
-		String patente = ventanaConfig.getPatenteField().getText();
-		String tipo = ventanaConfig.getTypeVehiculoComboBox().getSelectedItem().toString();
-		Boolean baul = ventanaConfig.getBaulChkBox().isSelected();
-		Boolean pet = ventanaConfig.getPetFriendlyChkBox().isSelected();
-	
-		try {
-			Sistema.getInstance().agregarVehiculo(tipo, patente, baul, pet);
-			ventanaConfig.getList_vehiculos().addElement(FactoryVehiculo.getVehiculo(tipo, patente, baul, pet));
-		}
-		catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		catch(ExistenteVehiculoException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		
-		ventanaConfig.getPatenteField().setText("");
-	}
-	
-	
-	private void agregarChofer() {
-		String nombre = ventanaConfig.getNombreField().getText();
-		String dni = ventanaConfig.getDniField().getText();
-		Chofer chofer = null;
-		
-		try {
-			if(ventanaConfig.getCategoriaComboBox().getSelectedItem().equals("Temporario"))
-				chofer = new ChoferTemporario(dni, nombre);
-			else if (ventanaConfig.getCategoriaComboBox().getSelectedItem().equals("Contratado"))
-				chofer = new ChoferContratado(dni, nombre);
-			else if (ventanaConfig.getCategoriaComboBox().getSelectedItem().equals("Permanente")) {
-				int cantHijos = Integer.parseInt(ventanaConfig.getCantHijosField().getText());
-				chofer = new ChoferPermanente(dni, nombre, cantHijos);
-			}
-			Sistema.getInstance().agregarChofer(chofer);
-			ventanaConfig.getList_choferes().addElement(chofer);	
-		}
-		catch(ExistenteChoferException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		catch(IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		ventanaConfig.getCantHijosField().setText("");
-		ventanaConfig.getDniField().setText("");
-		ventanaConfig.getNombreField().setText("");
-	}
 	
 	
 }

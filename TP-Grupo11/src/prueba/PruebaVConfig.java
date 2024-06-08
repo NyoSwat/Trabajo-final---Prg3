@@ -14,5 +14,6 @@ public class PruebaVConfig {
 		System.out.println(sistema.listaUsuarios());
 		System.out.println(sistema.listaChoferes());
 		System.out.println(sistema.listaVehiculos());
+		
 	}
 }

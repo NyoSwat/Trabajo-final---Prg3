@@ -1,4 +1,4 @@
-package Excepciones;
+package excepciones;
 
 /**
  * Excepción personalizada que se lanza cuando se intenta agregar un chofer existente.

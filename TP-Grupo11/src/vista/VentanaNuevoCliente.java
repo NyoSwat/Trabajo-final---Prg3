@@ -1,9 +1,11 @@
-package presentacion;
+package vista;
 
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.ControladorNewCliente;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -14,7 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 
-public class VNewCliente extends JDialog {
+public class VentanaNuevoCliente extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel principalPanel;
@@ -34,8 +36,7 @@ public class VNewCliente extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public VNewCliente(JFrame Vconfig) {
-		super(Vconfig,"Crear nuevo Cliente",true);
+	public VentanaNuevoCliente() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 249);
 		setResizable(false);
@@ -105,6 +106,7 @@ public class VNewCliente extends JDialog {
 		this.btnPanel.setLayout(null);
 		
 		this.addClienteBtn = new JButton("Agregar");
+		this.addClienteBtn.setActionCommand("agregarCliente");
 		this.addClienteBtn.setBounds(98, 10, 80, 25);
 		this.btnPanel.add(addClienteBtn);
 		
@@ -113,27 +115,34 @@ public class VNewCliente extends JDialog {
 		this.titlePanel.add(separator);
 	}
 
-	public JTextField getNombreField() {
-		return nombreField;
-	}
-
-	public JTextField getUsuarioField() {
-		return usuarioField;
-	}
-
-	public JTextField getContrasenaField() {
-		return contrasenaFiled;
-	}
-
-	public JCheckBox getAdminChckBox() {
-		return adminChckBox;
-	}
-
-	public JButton getAddClienteBtn() {
-		return addClienteBtn;
+	public void setControlador(ControladorNewCliente control) {
+		this.addClienteBtn.addActionListener(control);
 	}
 	
 	
+	public String getNombreCliente() {
+		return this.nombreField.getText();
+	}
+	
+	public void setNombreCliente(String texto) {
+		this.nombreField.setText(texto);
+	}
+	
+	public String getUsuarioCliente() {
+		return this.usuarioField.getText();
+	}
+	
+	public void setUsuarioCliente(String texto) {
+		this.usuarioField.setText(texto);
+	}
+	
+	public String getContrasenaCliente() {
+		return this.contrasenaFiled.getText();
+	}
+	
+	public void setContrasenaCliente(String texto) {
+		this.contrasenaFiled.setText(texto);
+	}
 	
 	
 	
