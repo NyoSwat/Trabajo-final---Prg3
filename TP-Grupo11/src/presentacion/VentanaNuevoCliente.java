@@ -1,7 +1,6 @@
 package presentacion;
 
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -17,7 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 
-public class VNewCliente extends JDialog {
+public class VentanaNuevoCliente extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel principalPanel;
@@ -37,8 +36,7 @@ public class VNewCliente extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public VNewCliente(JFrame Vconfig) {
-		super(Vconfig,"Crear nuevo Cliente",true);
+	public VentanaNuevoCliente() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 249);
 		setResizable(false);

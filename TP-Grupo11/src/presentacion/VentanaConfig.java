@@ -4,7 +4,6 @@ package presentacion;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ControladorConfig;
@@ -24,14 +23,13 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JButton;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 
-public class VConfig extends JFrame implements KeyListener{
+public class VentanaConfig extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel principalPanel;
@@ -81,7 +79,7 @@ public class VConfig extends JFrame implements KeyListener{
 	/**
 	 * Create the frame.
 	 */
-	public VConfig() {
+	public VentanaConfig() {
 		super("Configuracion Simulacion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 558);

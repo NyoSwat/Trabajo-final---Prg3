@@ -6,20 +6,20 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Excepciones.ExistenteUsuarioException;
+import excepciones.ExistenteUsuarioException;
 import modelo.Cliente;
 import modelo.Sistema;
-import presentacion.VConfig;
-import presentacion.VNewCliente;
+import presentacion.VentanaConfig;
+import presentacion.VentanaNuevoCliente;
 
 public class ControladorNewCliente implements ActionListener{
-	private VNewCliente ventanaCliente = null;
-	private VConfig parent;
+	private VentanaNuevoCliente ventanaCliente = null;
+	private VentanaConfig parent;
 	private Sistema sistema;
 	
 	public ControladorNewCliente(JFrame frame) {
-		this.parent = (VConfig) frame;
-		this.ventanaCliente = new VNewCliente(frame);
+		this.parent = (VentanaConfig) frame;
+		this.ventanaCliente = new VentanaNuevoCliente();
 		this.sistema = Sistema.getInstance();
 		this.ventanaCliente.setLocationRelativeTo(frame);
 		this.ventanaCliente.setControlador(this);

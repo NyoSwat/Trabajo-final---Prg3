@@ -5,23 +5,24 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Observable;
 import java.util.Random;
 
-import Excepciones.ExistenteChoferException;
-import Excepciones.ExistenteUsuarioException;
-import Excepciones.ExistenteVehiculoException;
-import Excepciones.FaltaChoferException;
-import Excepciones.FaltaVehiculoException;
+import excepciones.ExistenteChoferException;
+import excepciones.ExistenteUsuarioException;
+import excepciones.ExistenteVehiculoException;
+import excepciones.FaltaChoferException;
+import excepciones.FaltaVehiculoException;
 
 /**
  * La clase Sistema representa la gestion de peticiones del usuario, informes, viajes, etc.
  */
-public class Sistema {
+public class Sistema extends Observable{
     
     private static Sistema _instance = null;
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
-    private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+    private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>(); //vehiculos totales (disponibles o no)
     private ArrayList<IViaje> viajes = new ArrayList<IViaje>();
     
     
@@ -494,6 +495,22 @@ public class Sistema {
     	if(consultarChofer(chofer.getDni()) == null)
     		throw new ExistenteChoferException("Error, chofer a calcular sueldo no existe.");
 		return chofer.getSueldo();
+    }
+    
+    
+    public void logearse(String usuario,String contrasena) {
+    	String mensaje = "Incorrecto";
+    	int i = 0;
+    	
+    	while(i < this.usuarios.size() && !this.usuarios.get(i).getUsuario().equals(usuario)) {
+    		i++;
+    	}
+    	
+    	if(i<this.usuarios.size() && this.usuarios.get(i).getUsuario().equals(usuario) && this.usuarios.get(i).getPassword().equals(contrasena))
+    		mensaje = "Correcto";
+    	
+    	this.setChanged();
+    	this.notifyObservers(mensaje);
     }
     
 }

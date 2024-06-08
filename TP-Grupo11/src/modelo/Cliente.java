@@ -3,9 +3,9 @@ package modelo;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-import Excepciones.ExistenteUsuarioException;
-import Excepciones.FaltaChoferException;
-import Excepciones.FaltaVehiculoException;
+import excepciones.ExistenteUsuarioException;
+import excepciones.FaltaChoferException;
+import excepciones.FaltaVehiculoException;
 
 /**
  * La clase Cliente representa a un usuario cliente en el sistema.

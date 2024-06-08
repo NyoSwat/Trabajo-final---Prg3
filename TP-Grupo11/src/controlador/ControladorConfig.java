@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Excepciones.ExistenteChoferException;
-import Excepciones.ExistenteVehiculoException;
+import excepciones.ExistenteChoferException;
+import excepciones.ExistenteVehiculoException;
 import modelo.Chofer;
 import modelo.ChoferContratado;
 import modelo.ChoferPermanente;
@@ -23,17 +23,17 @@ import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBinaria;
 import persistencia.SistemaDTO;
-import presentacion.VConfig;
-import presentacion.VNewCliente;
+import presentacion.VentanaConfig;
+import presentacion.VentanaNuevoCliente;
 
 public class ControladorConfig implements ActionListener{
 	
 	private static ControladorConfig instance = null;
-	private VConfig ventanaConfig;
+	private VentanaConfig ventanaConfig;
 	private Sistema sistema;
 	
 	private ControladorConfig() {
-		this.ventanaConfig = new VConfig();
+		this.ventanaConfig = new VentanaConfig();
 		this.sistema = Sistema.getInstance();
 		this.ventanaConfig.setVisible(true);
 		this.ventanaConfig.setControlador(this);
@@ -134,6 +134,9 @@ public class ControladorConfig implements ActionListener{
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirOutput("sistema.dat");
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
+			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
+			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
+			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
 			ventanaConfig.dispose();

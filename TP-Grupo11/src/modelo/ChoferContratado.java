@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-import Excepciones.ExistenteChoferException;
+import excepciones.ExistenteChoferException;
 
 /**
  * La clase Contratado representa una categoría de empleados contratados en la empresa.

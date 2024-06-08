@@ -1,6 +1,6 @@
 package modelo;
 
-import Excepciones.ExistenteChoferException;
+import excepciones.ExistenteChoferException;
 
 /**
  * La clase Temporario representa a un empleado temporal en la empresa.
