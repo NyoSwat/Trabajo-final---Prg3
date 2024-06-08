@@ -497,6 +497,11 @@ public class Sistema extends Observable{
     		throw new ExistenteChoferException("Error, chofer a calcular sueldo no existe.");
 		return chofer.getSueldo();
     }
+    // necesario para parte 2
+    public Pedido CreaPedido2(int cantPasajeros, String zona, boolean petFriendly, boolean baul,GregorianCalendar fechaHora)
+    {   return new Pedido(cantPasajeros,zona,petFriendly,baul,fechaHora);
+      
+    }
     
     
     public void logearse(ObserverVLogin ojo,String usuario,String contrasena) {

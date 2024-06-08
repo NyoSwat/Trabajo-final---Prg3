@@ -3,13 +3,13 @@ package modelo;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 
-public class ClienteThread extends MiObservable implements Runnable{
+public class ClienteHumano extends MiObservable implements Runnable{
 	Sistema sistema = Sistema.getInstance();
 	private RecursoCompartido rc;
 	private String nombre;
 	private DatosPedido datosP;
 	private Viaje viaje;
-	public ClienteThread(RecursoCompartido rc) {
+	public ClienteHumano(RecursoCompartido rc) {
 		this.rc = rc;
 	}
   //falta constructor
@@ -44,3 +44,4 @@ public class ClienteThread extends MiObservable implements Runnable{
 	}   
 
 }
+

@@ -5,7 +5,7 @@ import java.util.Observable;
 public class ChoferThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;
     private String nombre;
-
+    private Viaje viaje;
     
 	public ChoferThread(RecursoCompartido rc, String nombre) {
 		this.rc = rc;
@@ -23,12 +23,22 @@ public class ChoferThread extends MiObservable implements Runnable {
 	
 
 	public void run() {
-	  while(this.rc.isSimulacionActiva())
-	  {	
+	  while(this.rc.isSimulacionActiva())//dos condiciones 
+	  {	//lo otro esta bien
 		this.rc.tomaViaje(this);
 		UtilThread.espera();
 		this.rc.finalizaViaje(this);
-	  }
+	  }//por qué condicion salio?
+	  //
+	}
+
+
+	public Viaje getViaje() {
+		return viaje;
+	}
+
+	public void setViaje(Viaje viaje) {
+		this.viaje = viaje;
 	}
 
 }

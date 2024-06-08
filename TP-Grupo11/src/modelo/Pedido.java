@@ -28,6 +28,7 @@ public class Pedido implements Cloneable{
         this.baul = baul;
         this.fecha = fechaHora;
     }
+    
 
     /**
      * Obtiene la cantidad de pasajeros en el pedido.

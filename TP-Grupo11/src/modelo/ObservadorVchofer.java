@@ -3,13 +3,15 @@ package modelo;
 import java.util.Observable;
 import java.util.Observer;
 
+import vista.VentanaChofer;
+
+
+
 
 public class ObservadorVchofer implements Observer {
 	private ChoferThread observable;
-	//referencia a ventana que informa datos de un chofer,cambiar tipo en base a lo
-    //diseñado por la vista
-	private VentanaCh ventana;
-	public ObservadorVchofer(ChoferThread observable, VentanaCh ventana) {
+	private VentanaChofer ventana;
+	public ObservadorVchofer(ChoferThread observable, VentanaChofer ventana) {
 		super();
 		this.observable = observable;
 		this.ventana = ventana;
@@ -18,8 +20,8 @@ public class ObservadorVchofer implements Observer {
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(o== this.observable)
-		{  ChoferThread Hc= (ChoferThread)o;
-		   Evento evento = (Evento) arg;
+		{ // ChoferThread Hc= (ChoferThread)o;
+		   EventoChofer evento = (EventoChofer) arg;
 		   this.ventana.appendText(evento.getDescripcion());
 		}
 		else 
