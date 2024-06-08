@@ -76,13 +76,15 @@ public class VConfig extends JFrame implements KeyListener{
 	private JScrollPane scrollUsuarios;
 	private JScrollPane scrollVehiculos;
 	private JScrollPane scrollChoferes;
+	private JLabel cantViajesChoferLabel;
+	private JTextField cantViajesChoferField;
 	/**
 	 * Create the frame.
 	 */
 	public VConfig() {
 		super("Configuracion Simulacion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 771, 533);
+		setBounds(100, 100, 771, 558);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
@@ -93,7 +95,7 @@ public class VConfig extends JFrame implements KeyListener{
 		principalPanel.setLayout(null);
 		
 		this.titlePanel = new JPanel();
-		this.titlePanel.setBounds(5, 0, 750, 494);
+		this.titlePanel.setBounds(5, 0, 750, 467);
 		this.principalPanel.add(titlePanel);
 		this.titlePanel.setLayout(null);
 		
@@ -206,7 +208,7 @@ public class VConfig extends JFrame implements KeyListener{
 		this.vehiculoPanel.add(typeVehiculoComboBox);
 
 		this.chofePanel = new JPanel();
-		this.chofePanel.setBounds(0, 305, 741, 140);
+		this.chofePanel.setBounds(0, 305, 741, 163);
 		this.titlePanel.add(chofePanel);
 		this.chofePanel.setLayout(null);
 		
@@ -221,19 +223,19 @@ public class VConfig extends JFrame implements KeyListener{
 		this.listChoferes.setModel(list_choferes);
 		this.scrollChoferes = new JScrollPane();
 		this.scrollChoferes.setViewportView(listChoferes);
-		this.scrollChoferes.setBounds(270, 1, 470, 139);
+		this.scrollChoferes.setBounds(270, 1, 470, 160);
 		this.chofePanel.add(scrollChoferes);
 		
 		this.categoriaLabel = new JLabel("Categoria");
-		this.categoriaLabel.setBounds(10, 30, 70, 15);
+		this.categoriaLabel.setBounds(10, 58, 70, 15);
 		this.chofePanel.add(categoriaLabel);
 		
 		this.dniLabel = new JLabel("DNI");
-		this.dniLabel.setBounds(10, 55, 70, 15);
+		this.dniLabel.setBounds(10, 83, 70, 15);
 		this.chofePanel.add(dniLabel);
 		
 		this.nombreLabel = new JLabel("Nombre");
-		this.nombreLabel.setBounds(10, 80, 70, 15);
+		this.nombreLabel.setBounds(10, 108, 70, 15);
 		this.chofePanel.add(nombreLabel);
 		
 		this.addChoferBtn = new JButton("Agregar");
@@ -244,48 +246,42 @@ public class VConfig extends JFrame implements KeyListener{
 		
 		this.dniField = new JTextField();
 		this.dniField.addKeyListener(this);
-		this.dniField.setBounds(80, 55, 76, 20);
+		this.dniField.setBounds(80, 83, 76, 20);
 		this.chofePanel.add(dniField);
 		this.dniField.setColumns(10);
 		
 		this.nombreField = new JTextField();
 		this.nombreField.addKeyListener(this);
-		this.nombreField.setBounds(80, 80, 76, 20);
+		this.nombreField.setBounds(80, 108, 76, 20);
 		this.chofePanel.add(nombreField);
 		this.nombreField.setColumns(10);
 		
 		this.cantHijosLabel = new JLabel("Cantidad hijos");
-		this.cantHijosLabel.setBounds(8, 105, 92, 15);
+		this.cantHijosLabel.setBounds(8, 133, 92, 15);
 		this.chofePanel.add(cantHijosLabel);
 		this.cantHijosLabel.setVisible(false);
 		
 		this.cantHijosField = new JTextField();
 		this.cantClienteField.addKeyListener(this);
-		this.cantHijosField.setBounds(100, 105, 55, 20);
+		this.cantHijosField.setBounds(100, 133, 55, 20);
 		this.chofePanel.add(cantHijosField);
 		this.cantHijosField.setColumns(10);
 		this.cantHijosField.setVisible(false);
 		
-		this.buttonPanel = new JPanel();
-		this.buttonPanel.setBounds(0, 452, 750, 42);
-		this.titlePanel.add(buttonPanel);
-		this.buttonPanel.setLayout(null);
-		
 		this.categoriaComboBox = new JComboBox<String>();
 		this.categoriaComboBox.setActionCommand("cambiarCategoria");
 		this.categoriaComboBox.setModel(new DefaultComboBoxModel(new String[] {"Contratado", "Permanente", "Temporario"}));
-		this.categoriaComboBox.setBounds(80, 25, 100, 21);
+		this.categoriaComboBox.setBounds(80, 53, 100, 21);
 		this.chofePanel.add(categoriaComboBox);
-
-		this.saveBtn = new JButton("Guardar Datos");
-		this.saveBtn.setActionCommand("guardarDatos");
-		this.saveBtn.setBounds(480, 5, 120, 25);
-		this.buttonPanel.add(saveBtn);
 		
-		this.deleteDatosBtn = new JButton("Eliminar Datos");
-		this.deleteDatosBtn.setActionCommand("eliminarDatos");
-		this.deleteDatosBtn.setBounds(150, 5, 120, 25);
-		this.buttonPanel.add(deleteDatosBtn);
+		cantViajesChoferLabel = new JLabel("Cantidad de viajes");
+		cantViajesChoferLabel.setBounds(10, 25, 118, 15);
+		chofePanel.add(cantViajesChoferLabel);
+		
+		cantViajesChoferField = new JTextField();
+		cantViajesChoferField.setBounds(135, 23, 45, 20);
+		chofePanel.add(cantViajesChoferField);
+		cantViajesChoferField.setColumns(10);
 		
 		JSeparator separatorVehiculo = new JSeparator();
 		separatorVehiculo.setBounds(0, 301, 750, 2);
@@ -296,13 +292,28 @@ public class VConfig extends JFrame implements KeyListener{
 		separatorCliente.setBounds(0, 159, 750, 2);
 		titlePanel.add(separatorCliente);
 		
-		JSeparator separatorChofer = new JSeparator();
-		separatorChofer.setBounds(0, 448, 750, 2);
-		titlePanel.add(separatorChofer);
-		
 		JSeparator separatorTitle = new JSeparator();
 		separatorTitle.setBounds(0, 23, 750, 2);
 		this.titlePanel.add(separatorTitle);
+		
+		this.buttonPanel = new JPanel();
+		buttonPanel.setBounds(0, 475, 750, 42);
+		principalPanel.add(buttonPanel);
+		this.buttonPanel.setLayout(null);
+		
+				this.saveBtn = new JButton("Guardar Datos");
+				this.saveBtn.setActionCommand("guardarDatos");
+				this.saveBtn.setBounds(480, 5, 120, 25);
+				this.buttonPanel.add(saveBtn);
+				
+				this.deleteDatosBtn = new JButton("Eliminar Datos");
+				this.deleteDatosBtn.setActionCommand("eliminarDatos");
+				this.deleteDatosBtn.setBounds(150, 5, 120, 25);
+				this.buttonPanel.add(deleteDatosBtn);
+				
+				JSeparator separatorChofer = new JSeparator();
+				separatorChofer.setBounds(5, 470, 750, 2);
+				principalPanel.add(separatorChofer);
 	}
 	
 	public void setControlador(ControladorConfig control) {
@@ -410,6 +421,18 @@ public class VConfig extends JFrame implements KeyListener{
 		}
 	}
 	
+	public int getCantPedidosCliente() {
+		return Integer.parseInt(this.cantPedidoField.getText());
+	}
+	
+	public int getCantClietes() {
+		return Integer.parseInt(this.cantClienteField.getText());
+	}
+	
+	public int getCantViajesChofer() {
+		return Integer.parseInt(this.cantViajesChoferField.getText());
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
@@ -427,6 +450,4 @@ public class VConfig extends JFrame implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 }
