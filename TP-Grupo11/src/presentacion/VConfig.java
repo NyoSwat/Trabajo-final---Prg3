@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import controlador.ControladorConfig;
 import modelo.Chofer;
 import modelo.Usuario;
 import modelo.Vehiculo;
@@ -14,6 +15,10 @@ import modelo.Vehiculo;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JList;
@@ -26,7 +31,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 
-public class VConfig extends JFrame {
+public class VConfig extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel principalPanel;
@@ -109,6 +114,7 @@ public class VConfig extends JFrame {
 		this.clientePanel.add(cantClienteLabel);
 		
 		this.cantClienteField = new JTextField();
+		this.cantClienteField.addKeyListener(this);
 		this.cantClienteField.setBounds(8, 40, 90, 20);
 		this.clientePanel.add(cantClienteField);
 		this.cantClienteField.setColumns(10);
@@ -125,6 +131,7 @@ public class VConfig extends JFrame {
 		this.clientePanel.add(cantPedidosLabel);
 		
 		this.cantPedidoField = new JTextField();
+		this.cantPedidoField.addKeyListener(this);
 		this.cantPedidoField.setBounds(8, 90, 90, 20);
 		this.clientePanel.add(cantPedidoField);
 		this.cantPedidoField.setColumns(10);
@@ -138,6 +145,7 @@ public class VConfig extends JFrame {
 		this.clientePanel.add(scrollUsuarios);
 		
 		this.addClienteBtn = new JButton("Agregar");
+		this.addClienteBtn.setActionCommand("ventanaCliente");;
 		this.addClienteBtn.setBounds(182, 87, 80, 25);
 		this.clientePanel.add(addClienteBtn);
 		
@@ -166,6 +174,7 @@ public class VConfig extends JFrame {
 		this.vehiculoPanel.add(scrollVehiculos);
 		
 		this.addVehiculoBtn = new JButton("Agregar");
+		this.addVehiculoBtn.setActionCommand("agregarVehiculo");
 		this.addVehiculoBtn.setBounds(181, 102, 80, 25);
 		this.vehiculoPanel.add(addVehiculoBtn);
 		
@@ -175,6 +184,7 @@ public class VConfig extends JFrame {
 		this.vehiculoPanel.add(patenteLabel);
 		
 		this.patenteField = new JTextField();
+		this.patenteField.addKeyListener(this);
 		this.patenteField.setBounds(70, 53, 76, 20);
 		this.vehiculoPanel.add(patenteField);
 		this.patenteField.setColumns(10);
@@ -190,6 +200,7 @@ public class VConfig extends JFrame {
 		this.vehiculoPanel.add(petFriendlyChkBox);
 		
 		this.typeVehiculoComboBox = new JComboBox<String>();
+		this.typeVehiculoComboBox.setActionCommand("cambiarTypeVehiculo");
 		this.typeVehiculoComboBox.setModel(new DefaultComboBoxModel(new String[] {"Auto", "Combi", "Moto"}));
 		this.typeVehiculoComboBox.setBounds(70, 25, 100, 21);
 		this.vehiculoPanel.add(typeVehiculoComboBox);
@@ -226,15 +237,19 @@ public class VConfig extends JFrame {
 		this.chofePanel.add(nombreLabel);
 		
 		this.addChoferBtn = new JButton("Agregar");
+		this.addChoferBtn.setActionCommand("agregarChofer");
 		this.addChoferBtn.setBounds(181, 102, 80, 25);
 		this.chofePanel.add(addChoferBtn);
 		
+		
 		this.dniField = new JTextField();
+		this.dniField.addKeyListener(this);
 		this.dniField.setBounds(80, 55, 76, 20);
 		this.chofePanel.add(dniField);
 		this.dniField.setColumns(10);
 		
 		this.nombreField = new JTextField();
+		this.nombreField.addKeyListener(this);
 		this.nombreField.setBounds(80, 80, 76, 20);
 		this.chofePanel.add(nombreField);
 		this.nombreField.setColumns(10);
@@ -245,6 +260,7 @@ public class VConfig extends JFrame {
 		this.cantHijosLabel.setVisible(false);
 		
 		this.cantHijosField = new JTextField();
+		this.cantClienteField.addKeyListener(this);
 		this.cantHijosField.setBounds(100, 105, 55, 20);
 		this.chofePanel.add(cantHijosField);
 		this.cantHijosField.setColumns(10);
@@ -256,15 +272,18 @@ public class VConfig extends JFrame {
 		this.buttonPanel.setLayout(null);
 		
 		this.categoriaComboBox = new JComboBox<String>();
+		this.categoriaComboBox.setActionCommand("cambiarCategoria");
 		this.categoriaComboBox.setModel(new DefaultComboBoxModel(new String[] {"Contratado", "Permanente", "Temporario"}));
 		this.categoriaComboBox.setBounds(80, 25, 100, 21);
 		this.chofePanel.add(categoriaComboBox);
 
 		this.saveBtn = new JButton("Guardar Datos");
+		this.saveBtn.setActionCommand("guardarDatos");
 		this.saveBtn.setBounds(480, 5, 120, 25);
 		this.buttonPanel.add(saveBtn);
 		
 		this.deleteDatosBtn = new JButton("Eliminar Datos");
+		this.deleteDatosBtn.setActionCommand("eliminarDatos");
 		this.deleteDatosBtn.setBounds(150, 5, 120, 25);
 		this.buttonPanel.add(deleteDatosBtn);
 		
@@ -286,93 +305,128 @@ public class VConfig extends JFrame {
 		this.titlePanel.add(separatorTitle);
 	}
 	
-
-	public JButton getAddClienteBtn() {
-		return this.addClienteBtn;
+	public void setControlador(ControladorConfig control) {
+		this.addChoferBtn.addActionListener(control);
+		this.addClienteBtn.addActionListener(control);
+		this.addVehiculoBtn.addActionListener(control);
+		this.categoriaComboBox.addActionListener(control);
+		this.typeVehiculoComboBox.addActionListener(control);
+		
+		this.deleteDatosBtn.addActionListener(control);
+		this.saveBtn.addActionListener(control);
+		
 	}
 
-	public JButton getAddVehiculoBtn() {
-		return this.addVehiculoBtn;
+	public String getNombreChofer() {
+		return this.nombreField.getText();
 	}
 	
-	public JButton getAddChoferBtn() {
-		return this.addChoferBtn;
+	public void setNombreChofer(String texto) {
+		this.nombreField.setText(texto);
 	}
 	
-	public JButton getSaveBtn() {
-		return saveBtn;
+	public String getDniChofer() {
+		return this.dniField.getText();
+	}
+	
+	public void setDniChofer(String dni) {
+		this.dniField.setText(dni);
+	}
+	
+	public String getCategoriaChofer() {
+		return this.categoriaComboBox.getItemAt(this.categoriaComboBox.getSelectedIndex());
 	}
 
-	public JButton getDeleteDatosBtn() {
-		return deleteDatosBtn;
+	public String getCantHijos() {
+		return this.cantHijosField.getText();
+	}
+	
+	public void setCantHijos(String texto) {
+		this.cantPedidoField.setText(texto);
+	}
+	
+	public String getTipoVehiculo() {
+		return this.typeVehiculoComboBox.getItemAt(this.typeVehiculoComboBox.getSelectedIndex());
+	}
+	
+	public String getPatente() {
+		return this.patenteField.getText();
+	}
+	
+	public void setPatente(String texto) {
+		this.patenteField.setText(texto);
+	}
+	
+	public boolean getBaul() {
+		return this.baulChkBox.isSelected();
+	}
+	
+	public boolean getMascota() {
+		return this.petFriendlyChkBox.isSelected();
 	}
 
-	public JTextField getCantClienteField() {
-		return cantClienteField;
+	public void actualizoListaChofer(ArrayList<Chofer> choferes) {
+		this.list_choferes.clear();
+		for(Chofer chofer : choferes) {
+			this.list_choferes.addElement(chofer);
+		}
+	}
+	public void actualizoListaVehiculo(ArrayList<Vehiculo> vehiculos) {
+		this.list_vehiculos.clear();
+		for(Vehiculo vehiculo : vehiculos) {
+			this.list_vehiculos.addElement(vehiculo);
+		}
+	}
+	public void actualizoListaCliente(ArrayList<Usuario> usuarios) {
+		this.list_usuarios.clear();
+		for(Usuario usuario : usuarios) {
+			this.list_usuarios.addElement(usuario);
+		}
+	}
+	
+	public void changeCategoria() {
+		if(this.categoriaComboBox.getSelectedItem().equals("Permanente")) {
+			this.cantHijosField.setVisible(true);
+			this.cantHijosLabel.setVisible(true);
+		}
+		else {
+			this.cantHijosField.setVisible(false);
+			this.cantHijosLabel.setVisible(false);
+		}
+	}
+	
+	public void changeTypeVehiculo() {
+		if(this.typeVehiculoComboBox.getSelectedItem().equals("Moto")) {
+			this.baulChkBox.setVisible(false);
+			this.baulChkBox.setSelected(false);
+			this.petFriendlyChkBox.setVisible(false);
+			this.petFriendlyChkBox.setSelected(false);
+		}
+		else {
+			this.baulChkBox.setVisible(true);
+			this.baulChkBox.setSelected(true);
+			this.petFriendlyChkBox.setVisible(true);
+			this.petFriendlyChkBox.setSelected(true);
+		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
-
-	public JTextField getCantPedidoField() {
-		return cantPedidoField;
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
-
-	public JTextField getPatenteField() {
-		return patenteField;
-	}
-
-
-	public JTextField getDniField() {
-		return dniField;
-	}
-
-
-	public JTextField getNombreField() {
-		return nombreField;
-	}
-
-
-	public JTextField getCantHijosField() {
-		return cantHijosField;
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
-	public DefaultListModel<Vehiculo> getList_vehiculos() {
-		return list_vehiculos;
-	}
-
-
-	public DefaultListModel<Chofer> getList_choferes() {
-		return list_choferes;
-	}
-
-
-	public DefaultListModel<Usuario> getList_usuarios() {
-		return list_usuarios;
-	}
-
-
-	public JCheckBox getBaulChkBox() {
-		return baulChkBox;
-	}
-
-
-	public JCheckBox getPetFriendlyChkBox() {
-		return petFriendlyChkBox;
-	}
-
-
-	public JComboBox<String> getTypeVehiculoComboBox() {
-		return typeVehiculoComboBox;
-	}
-
-
-	public JComboBox<String> getCategoriaComboBox() {
-		return categoriaComboBox;
-	}
-
-
-	public JLabel getCantHijosLabel() {
-		return cantHijosLabel;
-	}
 }
