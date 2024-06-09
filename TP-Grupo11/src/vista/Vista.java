@@ -2,10 +2,18 @@ package vista;
 
 
 public class Vista {
+	
+	
+	
+	public void Vista() {
+		//TO DO
+	}
     
     public static void main(String[] args) {
-        VentanaGeneral vistaGeneral = new VentanaGeneral();
+    	VentanaLogin login = new VentanaLogin();
     }
+    
+    
 
 }
 
