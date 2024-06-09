@@ -35,13 +35,12 @@ public class ChoferThread extends MiObservable implements Runnable {
 	public void run() {
 	int i=0;
 	  while(this.rc.isHayClienteHumano()&& (i<this.CantMaxdeViajes))//dos condiciones 
-	  {	//lo otro esta bien
+	  {	
 		this.rc.tomaViaje(this);
 		UtilThread.espera();
 		this.rc.finalizaViaje(this);
 		i++;
-	  }//por qué condicion salio?
-	  //
+	  }
 	}
 
 

@@ -11,7 +11,6 @@ public class ClienteThread extends MiObservable implements Runnable{
 	private Viaje viaje;
 	private int CantMaxdeViajes; 
 	private int CantdeViajes;
-	
     
 	
 	public ClienteThread(RecursoCompartido rc, String nombre, DatosPedido datosP, int cantMaxdeViajes) {
@@ -20,10 +19,11 @@ public class ClienteThread extends MiObservable implements Runnable{
 		this.nombre = nombre;
 		this.datosP = datosP;
 		CantMaxdeViajes = cantMaxdeViajes;
+		
 	}
 	public void run() {
-	  int i=0;
-	  while(i<this.CantMaxdeViajes && rc.isHayClienteHumano())
+	 CantdeViajes=0;
+	  while(CantdeViajes<this.CantMaxdeViajes && rc.isHayClienteHumano())
 	  { Pedido pedido;
 	    pedido=sistema.CreaPedido2(datosP.getCantPasajeros(),datosP.getZona(),datosP.isPetFriendly(),datosP.isPetFriendly(), datosP.getFecha());
 		this.rc.validarPedido(pedido);//solicita aceptacion
@@ -31,7 +31,11 @@ public class ClienteThread extends MiObservable implements Runnable{
 		this.rc.solicitaViaje(this, pedido);
 		UtilThread.espera();
 		this.rc.pagaViaje(this);
-		i++;
+		CantdeViajes++;
+	  }
+	  if(CantdeViajes==this.CantMaxdeViajes)
+	  {this.rc.setCantClientesTharead(this.rc.getCantClientesTharead()-1);
+		  
 	  }
 		
 	}

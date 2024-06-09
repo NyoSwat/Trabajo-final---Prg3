@@ -14,6 +14,8 @@ import Excepciones.FaltaVehiculoException;
 public class RecursoCompartido extends Observable{
 	private int cantClientesTharead; 
 	
+	
+
 	private boolean hayClienteHumano;
 	private boolean pedidoAceptado;//Cuando se valida el pedido (en validarPedido) ->pedidoAceptado=true/
 	private boolean viajeSolicitado;
@@ -81,14 +83,15 @@ public class RecursoCompartido extends Observable{
    		i++;
    	}
 	}
-	 if(ExisteChofer && ExisteVehiculo)//enta un cliente robot a la simulacion
-		 this.cantClientesTharead++;
       this.pedidoAceptado= ExisteChofer && ExisteVehiculo;
     }
 
 	//clienteThread solicita Viaje sobre pedido aceptado
 	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido)
 	{  EventoCliente evento;
+	   if(cliente.getCantdeViajes()==0)
+		   this.cantClientesTharead++; //entra un cliente robot a la simulación
+				 
 		while((this.choferes.size()>0&& this.hayClienteHumano)&&!this.pedidoAceptado)
 	   {  try
 		  {	
@@ -262,6 +265,8 @@ public class RecursoCompartido extends Observable{
     //anuncia evento a ObservadorVGeneral
       this.setChanged();
       this.notifyObservers(evento);
+      
+      if
 		
 	 }
 	}
@@ -372,7 +377,13 @@ public class RecursoCompartido extends Observable{
 		this.choferes = choferes;
 	}
 	
-	
+	public int getCantClientesTharead() {
+		return cantClientesTharead;
+	}
+
+	public void setCantClientesTharead(int cantClientesTharead) {
+		this.cantClientesTharead = cantClientesTharead;
+	}
 }
     
 	
