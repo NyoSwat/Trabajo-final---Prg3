@@ -3,7 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Excepciones.ExistenteUsuarioException;
+import excepciones.ExistenteUsuarioException;
 import modelo.Chofer;
 import modelo.Usuario;
 import modelo.Vehiculo;

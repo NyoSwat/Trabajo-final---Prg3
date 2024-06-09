@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import Excepciones.ExistenteChoferException;
+import excepciones.ExistenteChoferException;
 
 /**
  * La clase Chofer representa a un conductor con su información personal y categoría.
