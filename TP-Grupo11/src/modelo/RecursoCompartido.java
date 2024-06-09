@@ -127,10 +127,12 @@ public class RecursoCompartido extends Observable{
 	
 	
 	//sistemaThread asigna vehículo
-	public synchronized void asignaVehiculo(SistemaThread sistema,Pedido pedido)
+	public synchronized void asignaVehiculo(SistemaThread sistema)
 	{ EventoSistema evento;
 	  Vehiculo vehiculo;
-	  while(!this.viajeSolicitado||posMovilApropiadoLibre(pedido)<0)
+	  Viaje viajeSinAuto;
+	  
+	  while(!this.viajeSolicitado||!HayViajeSinVehiculo()||(HayViajeSinVehiculo()&&posMovilApropiadoLibre(BuscaViajeSinVehiculo())<0))
 	  {  try
 		 {	wait();
 		 }
@@ -138,25 +140,29 @@ public class RecursoCompartido extends Observable{
 		 {	
 		 }
 	  }
+	   viajeSinAuto=BuscaViajeSinVehiculo();
 	   //saco al vehiculo de la lista de vehiculos disponibles
-       vehiculo=this.vehiculosDisp.get(posMovilApropiadoLibre(pedido));
+       vehiculo=this.vehiculosDisp.get(posMovilApropiadoLibre(viajeSinAuto));
 	   this.vehiculosDisp.remove(vehiculo);
-	   
-	   //asigno este vehiculo al viaje
-	   //this.viajeAct.setVehiculo(vehiculo);
-	  // sistema.setViaje(this.viajeAct);
+	   //le asigno vehiculo al viaje
+	   this.viajes.get(PosViajeSinVehiculo()).setVehiculo(vehiculo);
+	 
+	   //cambio referencia al viaje del sistema
+	   sistema.setViaje(viajeSinAuto);
 	   
 	   //cambio la condicion 
 	   this.VehiculoAsignado=true;
 	   
-	   //notifico cambios
+	   //creo el evento
 	   evento=new EventoSistema("Vehiculo asignado",this.viajeAct);
-	   sistema.setChangedExternamente();
-	   sistema.notifyObservers(evento);
+	   
+	   
+	  // sistema.setChangedExternamente();
+	   //sistema.notifyObservers(evento);
 	    
 	  //anuncia evento a ObservadorVGeneral
 	    this.setChanged();
-	    this.notifyObservers(evento);//hacer bien
+	    this.notifyObservers(evento);
 			
 	}
 	
@@ -265,8 +271,6 @@ public class RecursoCompartido extends Observable{
     //anuncia evento a ObservadorVGeneral
       this.setChanged();
       this.notifyObservers(evento);
-      
-      if
 		
 	 }
 	}
@@ -274,13 +278,13 @@ public class RecursoCompartido extends Observable{
 	
 	
 	
-   public int posMovilApropiadoLibre(Pedido p)
+   public int posMovilApropiadoLibre(Viaje v)
 	{  boolean ExisteVehiculo = false;
   	   int i = 0;
 	   while( i < this.vehiculosDisp.size() && !ExisteVehiculo)
-	   {  if(this.vehiculosDisp.get(i).getCantMaxPasajeros() >= p.getCantPasajeros()
-  				&& !(p.isBaul()==true && vehiculos.get(i).isBaul()==false) 
-  				&& !(p.isPetFriendly()==true && this.vehiculosDisp.get(i).isPetFriendly()==false) ) 
+	   {  if(this.vehiculosDisp.get(i).getCantMaxPasajeros() >= v.getPedido().getCantPasajeros()
+  				&& !(v.getPedido().isBaul()==true && vehiculos.get(i).isBaul()==false) 
+  				&& !(v.getPedido().isPetFriendly()==true && this.vehiculosDisp.get(i).isPetFriendly()==false) ) 
   			ExisteVehiculo = true;
   		 i++;
   	   }
@@ -328,7 +332,36 @@ public class RecursoCompartido extends Observable{
 	   }
 	   
    }
-   
+   public boolean HayViajeSinVehiculo()
+   {   Viaje viaje=BuscaViajeSinVehiculo();
+	   return(viaje!=null);
+   }
+   public Viaje BuscaViajeSinVehiculo()
+   {
+	   boolean encuentra=false;
+	   Viaje viaje=null;
+	   int i=0;
+	   while(this.viajes.size()!=0 && i<this.viajes.size()&&!encuentra)
+	   {   if(this.viajes.get(i).getVehiculo()==null)
+	        {   encuentra=true;
+	            viaje=this.viajes.get(i);
+	        }
+	       i++;
+	   }
+	   return viaje;
+	   
+   }
+   public int PosViajeSinVehiculo()
+   {   int i=0;
+	   while(this.viajes.size()!=0 && i<this.viajes.size()&&(this.viajes.get(i).getVehiculo()!=null))
+	   {     i++;
+	   }
+	   if(i<this.viajes.size())
+		   return i;
+	   else 
+		   return -1;
+	   
+   }
    
    
    public void CambioSituacionChofer(ChoferThread chofer)

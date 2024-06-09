@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class SistemaThread extends Thread implements Observer   {
+public class SistemaThread extends Thread {
     private RecursoCompartido rc;
     private ArrayList<Viaje> observable;
     private Viaje viaje;
@@ -12,7 +12,6 @@ public class SistemaThread extends Thread implements Observer   {
   public SistemaThread(RecursoCompartido rc,Viaje viaje) {
 		this.rc = rc;
 		this.observable=this.rc.getViajes();
-		//this.observable.// no me deja que observe un ArayList
 		this.viaje = viaje;
 	}
     public void run() {
@@ -29,10 +28,6 @@ public class SistemaThread extends Thread implements Observer   {
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
 	}
-	@Override
-	public void update(Observable o, Object arg) {
-		if(o==this.rc.getViajes())
-		{}
-	}
+	
 
 }
