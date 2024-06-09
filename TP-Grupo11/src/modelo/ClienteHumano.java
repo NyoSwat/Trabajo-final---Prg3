@@ -19,13 +19,9 @@ public class ClienteHumano extends MiObservable implements Runnable{
 		this.rc.setHayClienteHumano(true);
 	}
 	public void run() {
-	  while(this.ventanaActiva&&(this.rc.getChoferes().size()>0))//considerar que cambiara si se cierra la ventana
+	  while(this.ventanaActiva&&(this.rc.getChoferes().size()>0))//considerar que termina si se cierra la ventana
 	  { //entra con pedido aceptado
-		  
-		 //hacer que sistemaThread le asigne un vehiculo
-		
-		this.rc.pagaViaje(this);
-		//evaluar si quedan choferes 
+	     this.rc.pagaViaje(this);
 	  }
 		
 	}

@@ -12,7 +12,7 @@ import Excepciones.FaltaVehiculoException;
 //
 //Los métodos no están realizando los cambios base, solo planteé una estructura inicial
 public class RecursoCompartido extends Observable{
-	private int cantClientesTharead; 
+	private int cantClientesThread; 
 	
 	
 
@@ -51,7 +51,7 @@ public class RecursoCompartido extends Observable{
 		this.choferes = choferes;
 		this.choferesDisp=choferes;
 		
-		this.cantClientesTharead=0;
+		this.cantClientesThread=0;
 		this.hayClienteHumano=false;
 		//guardo la referecia al recurso compartido en cada choferThread
 		for(i=0;i<choferes.size();i++)
@@ -90,7 +90,7 @@ public class RecursoCompartido extends Observable{
 	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido)
 	{  EventoCliente evento;
 	   if(cliente.getCantdeViajes()==0)
-		   this.cantClientesTharead++; //entra un cliente robot a la simulación
+		   this.cantClientesThread++; //entra un cliente robot a la simulación
 				 
 		while((this.choferes.size()>0&& this.hayClienteHumano)&&!this.pedidoAceptado)
 	   {  try
@@ -102,9 +102,12 @@ public class RecursoCompartido extends Observable{
 	      }
 	   }
 	   if(this.choferes.size()>0&& this.hayClienteHumano)
-	   {  // Pedido aceptado
+	   {this.pedidoAceptado=false;//////verrrrr
+		   
+		   // Pedido aceptado
 	     //crea viaje
 		 this.viajeAct= new Viaje(cliente,pedido);
+		 this.viajeAct.setVehiculo(null);
 	     cliente.setViaje(this.viajeAct);
 	     
 	     //agrego este viaje a la lista
@@ -140,6 +143,9 @@ public class RecursoCompartido extends Observable{
 		 {	
 		 }
 	  }
+	  this.viajeSolicitado=false; //verr;
+	  
+	  
 	   viajeSinAuto=BuscaViajeSinVehiculo();
 	   //saco al vehiculo de la lista de vehiculos disponibles
        vehiculo=this.vehiculosDisp.get(posMovilApropiadoLibre(viajeSinAuto));
@@ -170,8 +176,8 @@ public class RecursoCompartido extends Observable{
     public synchronized void tomaViaje(ChoferThread chofer)
 	{ EventoChofer evento;
 	  Viaje viajeAsignado = null;
-	 while(((this.hayClienteHumano && this.cantClientesTharead>0)||
-			 (this.hayClienteHumano && this.cantClientesTharead<0))&&!this.VehiculoAsignado)
+	 while(((this.hayClienteHumano && this.cantClientesThread>0)||
+			 (this.hayClienteHumano && this.cantClientesThread<0))&&!this.VehiculoAsignado)
      {  try
 	  {		wait();
 	  }
@@ -179,8 +185,11 @@ public class RecursoCompartido extends Observable{
 	  {	
       }
 	}
-	  if(this.hayClienteHumano||this.cantClientesTharead>0)
-	  { //tomo el primer viaje de la lista
+	  if(this.hayClienteHumano||this.cantClientesThread>0)
+	  { this.VehiculoAsignado=false;///verrr
+	  
+	  
+		 //tomo el primer viaje de la lista
 		sacaViaje(viajeAsignado);
 		//guardo el viaje en chofer
 		chofer.setViaje(viajeAsignado);
@@ -210,8 +219,8 @@ public class RecursoCompartido extends Observable{
 		//choferThread finaliza viaje
 		public synchronized void finalizaViaje(ChoferThread chofer)
 		{ EventoChofer evento;
-			while(((this.hayClienteHumano && this.cantClientesTharead>0)||
-					 (this.hayClienteHumano && this.cantClientesTharead<0))&&!this.VehiculoAsignado)
+			while(((this.hayClienteHumano && this.cantClientesThread>0)||
+					 (this.hayClienteHumano && this.cantClientesThread<0))&&!this.viajePago)
 	        {  	try {
 					wait();
 				} catch (InterruptedException e) {
@@ -219,8 +228,10 @@ public class RecursoCompartido extends Observable{
 				}
 			
 		   }
-		if(this.hayClienteHumano || this.cantClientesTharead>0)
-	    {  this.viajeFinalizado=true;
+		if(this.hayClienteHumano || this.cantClientesThread>0)
+	    { this.viajePago=false;///ver 
+			
+		  this.viajeFinalizado=true;
 	    
 	       evento=new EventoChofer("Viaje iniciado",chofer.getViaje());
 	       chofer.setChangedExternamente();
@@ -257,7 +268,9 @@ public class RecursoCompartido extends Observable{
 	   }
 	   //
 	 if(this.choferes.size()>0)
-	 { this.viajePago=true;
+	 { this.ChoferAsignado=false;//verr
+		 
+	 this.viajePago=true;
 	 evento=new EventoCliente("Viaje pagado",this.viajeAct,cliente);
 	 
 	 //anuncia evento a ObservadorVChofer
@@ -278,36 +291,41 @@ public class RecursoCompartido extends Observable{
 	
 	
 	
+   
+   //humanoThread
+   public synchronized void pagaViaje(ClienteHumano cliente)
+   {
+	   while((this.choferes.size()>0 &&!this.ChoferAsignado))
+	   {    try {
+				wait();
+			} catch (InterruptedException e) 
+	        {
+				
+			}
+		 
+	   }
+	   if(this.choferes.size()>0)
+	   {  this.ChoferAsignado=false;//verrr
+	       
+	      this.viajePago=true;}
+   }
+   
+   
    public int posMovilApropiadoLibre(Viaje v)
 	{  boolean ExisteVehiculo = false;
-  	   int i = 0;
+ 	   int i = 0;
 	   while( i < this.vehiculosDisp.size() && !ExisteVehiculo)
 	   {  if(this.vehiculosDisp.get(i).getCantMaxPasajeros() >= v.getPedido().getCantPasajeros()
-  				&& !(v.getPedido().isBaul()==true && vehiculos.get(i).isBaul()==false) 
-  				&& !(v.getPedido().isPetFriendly()==true && this.vehiculosDisp.get(i).isPetFriendly()==false) ) 
-  			ExisteVehiculo = true;
-  		 i++;
-  	   }
+ 				&& !(v.getPedido().isBaul()==true && vehiculos.get(i).isBaul()==false) 
+ 				&& !(v.getPedido().isPetFriendly()==true && this.vehiculosDisp.get(i).isPetFriendly()==false) ) 
+ 			ExisteVehiculo = true;
+ 		 i++;
+ 	   }
 	   if(ExisteVehiculo)
 	     return i;
 	   else
 		 return -1;
 	}
-   //humanoThread
-   public synchronized void pagaViaje(ClienteHumano cliente)
-   {
-	   while((this.choferes.size()>0 &&!this.ChoferAsignado))
-	   {
-		   try {
-			wait();
-		  } catch (InterruptedException e) {
-			
-		   }
-	   }
-	   if(this.choferes.size()>0)
-	   {   }
-   }
-   
    public void sacaViaje(Viaje primerViaje) 
    {
 	   synchronized(this.viajes)
@@ -410,12 +428,12 @@ public class RecursoCompartido extends Observable{
 		this.choferes = choferes;
 	}
 	
-	public int getCantClientesTharead() {
-		return cantClientesTharead;
+	public int getcantClientesThread() {
+		return cantClientesThread;
 	}
 
-	public void setCantClientesTharead(int cantClientesTharead) {
-		this.cantClientesTharead = cantClientesTharead;
+	public void setcantClientesThread(int cantClientesThread) {
+		this.cantClientesThread = cantClientesThread;
 	}
 }
     

@@ -34,7 +34,7 @@ public class ClienteThread extends MiObservable implements Runnable{
 		CantdeViajes++;
 	  }
 	  if(CantdeViajes==this.CantMaxdeViajes)
-	  {this.rc.setCantClientesTharead(this.rc.getCantClientesTharead()-1);
+	  {this.rc.setcantClientesThread(this.rc.getcantClientesThread()-1);
 		  
 	  }
 		
