@@ -1,13 +1,13 @@
 package modelo;
 
-import concurrencia.ClienteThread;
+import java.util.Observable;
 
 /**
  * Esta clase abstracta representa un viaje genérico y proporciona información sobre el pedido,
  * el chofer, el vehículo y la distancia recorrida. Las clases concretas que heredan de esta
  * deben implementar los detalles específicos del viaje.
  */
-public  class Viaje implements IViaje {
+public  class Viaje extends MiObservable implements IViaje {
 	private Usuario cliente;
     private Pedido pedido; 
     private Chofer chofer;

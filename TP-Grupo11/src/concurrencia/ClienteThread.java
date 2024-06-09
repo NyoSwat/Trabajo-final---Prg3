@@ -15,22 +15,33 @@ public class ClienteThread extends MiObservable implements Runnable{
 	private String nombre;
 	private DatosPedido datosP;
 	private Viaje viaje;
+	private int CantMaxdeViajes; 
+	private int CantdeViajes;
+    
 	
-	public ClienteThread(RecursoCompartido rc) {
+	public ClienteThread(RecursoCompartido rc, String nombre, DatosPedido datosP, int cantMaxdeViajes) {
+		super();
 		this.rc = rc;
-		this.nombre = sistema.getUsuarioLogeado().getNombre();
+		this.nombre = nombre;
+		this.datosP = datosP;
+		CantMaxdeViajes = cantMaxdeViajes;
+		
 	}
-  //falta constructor
 	public void run() {
-	  while(this.rc.isSimulacionActiva())//ya no es asi
+	 CantdeViajes=0;
+	  while(CantdeViajes<this.CantMaxdeViajes && rc.isHayClienteHumano())
 	  { Pedido pedido;
 	    pedido=sistema.CreaPedido2(datosP.getCantPasajeros(),datosP.getZona(),datosP.isPetFriendly(),datosP.isPetFriendly(), datosP.getFecha());
 		this.rc.validarPedido(pedido);//solicita aceptacion
 		UtilThread.espera();
-		this.rc.solicitaViaje(this);
+		this.rc.solicitaViaje(this, pedido);
 		UtilThread.espera();
 		this.rc.pagaViaje(this);
-		//evaluar si quedan choferes 
+		CantdeViajes++;
+	  }
+	  if(CantdeViajes==this.CantMaxdeViajes)
+	  {this.rc.setcantClientesThread(this.rc.getcantClientesThread()-1);
+		  
 	  }
 		
 	}
@@ -50,5 +61,17 @@ public class ClienteThread extends MiObservable implements Runnable{
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
 	}   
+	public int getCantMaxdeViajes() {
+		return CantMaxdeViajes;
+	}
+	public void setCantMaxdeViajes(int cantMaxdeViajes) {
+		CantMaxdeViajes = cantMaxdeViajes;
+	}
+	public int getCantdeViajes() {
+		return CantdeViajes;
+	}
+	public void setCantdeViajes(int cantdeViajes) {
+		CantdeViajes = cantdeViajes;
+	}
 
 }

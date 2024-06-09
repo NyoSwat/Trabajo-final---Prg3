@@ -12,7 +12,6 @@ public class ObservadorVGeneral implements Observer {
 	//referencia a ventana que informa datos generales,cambiar tipo en base a los
     //diseñado por la vista
 	private VentanaGeneral ventana;
-	private Object arg;
    
 	public ObservadorVGeneral(RecursoCompartido observable, VentanaGeneral ventana) {
 		super();
@@ -25,9 +24,7 @@ public class ObservadorVGeneral implements Observer {
 	public void update(Observable o, Object arg) {
 		
 		if(o==this.observable)
-		{
-			//RecursoCompartido rc = (RecursoCompartido) o;
-			Evento evento = (Evento) arg;
+		{	Evento evento = (Evento) arg;
 			this.ventana.appendText(evento.getDescripcion());
 					
 		}

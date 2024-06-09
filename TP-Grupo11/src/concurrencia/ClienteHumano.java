@@ -13,31 +13,28 @@ public class ClienteHumano extends MiObservable implements Runnable{
 	Sistema sistema = Sistema.getInstance();
 	private RecursoCompartido rc;
 	private String nombre;
-	private DatosPedido datosP;
+	private Pedido pedido;
 	private Viaje viaje;
-	public ClienteHumano(RecursoCompartido rc) {
+	private boolean ventanaActiva;
+	
+	
+	public ClienteHumano(RecursoCompartido rc, String nombre, Pedido pedido) {
 		this.rc = rc;
+		this.nombre = nombre;
+		this.pedido = pedido;
+		this.rc.setHayClienteHumano(true);
 	}
-  //falta constructor
 	public void run() {
-	  while(this.rc.isSimulacionActiva())//ya no es asi
-	  { Pedido pedido;
-	    pedido=sistema.CreaPedido2(datosP.getCantPasajeros(),datosP.getZona(),datosP.isPetFriendly(),datosP.isPetFriendly(), datosP.getFecha());
-		this.rc.validarPedido(pedido);//solicita aceptacion
-		UtilThread.espera();
-		this.rc.solicitaViaje(this);
-		UtilThread.espera();
-		this.rc.pagaViaje(this);
-		//evaluar si quedan choferes 
+	  while(this.ventanaActiva&&(this.rc.getChoferes().size()>0))//considerar que termina si se cierra la ventana
+	  { //entra con pedido aceptado
+	     this.rc.pagaViaje(this);
 	  }
 		
 	}
 	public String getNombre() {
 		return nombre;
 	}
-	public DatosPedido getDatosP() {
-		return datosP;
-	}
+	
 
 
 

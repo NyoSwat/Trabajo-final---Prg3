@@ -7,32 +7,43 @@ import modelo.Viaje;
 
 public class ChoferThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;
-    private String nombre;
+    public RecursoCompartido getRc() {
+		return rc;
+	}
+
+	public void setRc(RecursoCompartido rc) {
+		this.rc = rc;
+	}
+
+	private String nombre;
     private Viaje viaje;
+    private int CantdeViajes; //ingresa con la cantidad maxima y decrementa al realizar viaje
+    private int CantMaxdeViajes;
     
-	public ChoferThread(RecursoCompartido rc, String nombre) {
+	
+
+	public ChoferThread(RecursoCompartido rc, String nombre, Viaje viaje, int cantMaxdeViajes) {
+		super();
 		this.rc = rc;
 		this.nombre = nombre;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.viaje = viaje;
+		CantdeViajes = cantMaxdeViajes;
+		CantMaxdeViajes = cantMaxdeViajes;
 	}
 
 	
 
+	
+
 	public void run() {
-	  while(this.rc.isSimulacionActiva())//dos condiciones 
-	  {	//lo otro esta bien
+	int i=0;
+	  while(this.rc.isHayClienteHumano()&& (i<this.CantMaxdeViajes))//dos condiciones 
+	  {	
 		this.rc.tomaViaje(this);
 		UtilThread.espera();
 		this.rc.finalizaViaje(this);
-	  }//por qué condicion salio?
-	  //
+		i++;
+	  }
 	}
 
 
@@ -44,4 +55,26 @@ public class ChoferThread extends MiObservable implements Runnable {
 		this.viaje = viaje;
 	}
 
+	public int getCantdeViajes() {
+		return CantdeViajes;
+	}
+
+	public void setCantdeViajes(int cantdeViajes) {
+		CantdeViajes = cantdeViajes;
+	}
+
+	public int getCantMaxdeViajes() {
+		return CantMaxdeViajes;
+	}
+
+	public void setCantMaxdeViajes(int cantMaxdeViajes) {
+		CantMaxdeViajes = cantMaxdeViajes;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 }
