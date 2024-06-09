@@ -4,7 +4,15 @@ import java.util.Observable;
 
 public class ChoferThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;
-    private String nombre;
+    public RecursoCompartido getRc() {
+		return rc;
+	}
+
+	public void setRc(RecursoCompartido rc) {
+		this.rc = rc;
+	}
+
+	private String nombre;
     private Viaje viaje;
     private int CantdeViajes; //ingresa con la cantidad maxima y decrementa al realizar viaje
     private int CantMaxdeViajes;
@@ -20,13 +28,7 @@ public class ChoferThread extends MiObservable implements Runnable {
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	
 
 	
 
@@ -66,5 +68,11 @@ public class ChoferThread extends MiObservable implements Runnable {
 	public void setCantMaxdeViajes(int cantMaxdeViajes) {
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
+	public String getNombre() {
+		return nombre;
+	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 }

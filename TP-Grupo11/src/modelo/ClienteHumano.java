@@ -32,9 +32,7 @@ public class ClienteHumano extends MiObservable implements Runnable{
 	public String getNombre() {
 		return nombre;
 	}
-	public DatosPedido getDatosP() {
-		return datosP;
-	}
+	
 
 
 

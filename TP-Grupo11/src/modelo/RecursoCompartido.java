@@ -33,9 +33,9 @@ public class RecursoCompartido extends Observable{
 	
 
 	
-	public RecursoCompartido(ArrayList<Viaje> viajes, ArrayList<Vehiculo> vehiculos,
-			ArrayList<ChoferThread> choferes, ArrayList<ChoferThread> choferesDisp) {
-	
+	public RecursoCompartido(ArrayList<Vehiculo> vehiculos,
+			ArrayList<ChoferThread> choferes) {
+	    int i;
 		this.pedidoAceptado = false;
 		this.viajeSolicitado = false;
 		this.ChoferAsignado = false;
@@ -43,14 +43,19 @@ public class RecursoCompartido extends Observable{
 		this.viajePago = false;
 		this.viajeFinalizado = false;
 		
-		//this.viajes = viajes;
+		
 		this.vehiculos = vehiculos;
 		this.vehiculosDisp = vehiculos;
 		this.choferes = choferes;
-		this.setChoferesDisp(choferes);
+		this.choferesDisp=choferes;
 		
 		this.cantClientesTharead=0;
 		this.hayClienteHumano=false;
+		//guardo la referecia al recurso compartido en cada choferThread
+		for(i=0;i<choferes.size();i++)
+		{
+			choferes.get(i).setRc(this);
+		}
 		
 	}
 
@@ -99,15 +104,9 @@ public class RecursoCompartido extends Observable{
 		 this.viajeAct= new Viaje(cliente,pedido);
 	     cliente.setViaje(this.viajeAct);
 	     
-	   //agrego este viaje a la lista
-	   this.viajes.add(viajeAct);
-	   
-	     
-	     
-          //////////////////////////////////////////////////////
-          //si lista es observada deberia notificar evento
-
-	     
+	     //agrego este viaje a la lista
+	     poneViaje(viajeAct);
+	 
 	     //cambio condicion
          this.viajeSolicitado=true;
          //crea el evento ocurrido
@@ -126,7 +125,8 @@ public class RecursoCompartido extends Observable{
 	
 	//sistemaThread asigna vehículo
 	public synchronized void asignaVehiculo(SistemaThread sistema,Pedido pedido)
-	{ Vehiculo vehiculo;
+	{ EventoSistema evento;
+	  Vehiculo vehiculo;
 	  while(!this.viajeSolicitado||posMovilApropiadoLibre(pedido)<0)
 	  {  try
 		 {	wait();
@@ -147,19 +147,20 @@ public class RecursoCompartido extends Observable{
 	   this.VehiculoAsignado=true;
 	   
 	   //notifico cambios
+	   evento=new EventoSistema("Vehiculo asignado",this.viajeAct);
 	   sistema.setChangedExternamente();
-	   sistema.notifyObservers(new EventoSistema("Vehiculo asignado",this.viajeAct));
+	   sistema.notifyObservers(evento);
 	    
 	  //anuncia evento a ObservadorVGeneral
 	    this.setChanged();
-	    this.notifyObservers();//hacer bien
+	    this.notifyObservers(evento);//hacer bien
 			
 	}
 	
 	//choferThread toma un viaje de la lista
     public synchronized void tomaViaje(ChoferThread chofer)
 	{ EventoChofer evento;
-	  Viaje viajeAsignado;
+	  Viaje viajeAsignado = null;
 	 while(((this.hayClienteHumano && this.cantClientesTharead>0)||
 			 (this.hayClienteHumano && this.cantClientesTharead<0))&&!this.VehiculoAsignado)
      {  try
@@ -171,13 +172,7 @@ public class RecursoCompartido extends Observable{
 	}
 	  if(this.hayClienteHumano||this.cantClientesTharead>0)
 	  { //tomo el primer viaje de la lista
-		viajeAsignado=viajes.get(0);
-		this.viajes.remove(0);
-		
-		
-		//////////////////////////////////////////////////////
-		//si lista es observada deberia notificar evento
-		
+		sacaViaje(viajeAsignado);
 		//guardo el viaje en chofer
 		chofer.setViaje(viajeAsignado);
 		
@@ -187,7 +182,11 @@ public class RecursoCompartido extends Observable{
 	    //creo evento a notificar 
 	    evento=new EventoChofer("Viaje iniciado",viajeAsignado);
 	    
+	   //anuncia a ventanaCliente
+	    chofer.getViaje().setChangedExternamente();
+	    chofer.getViaje().notifyObservers(evento);
 	    
+	    //anuncia a ventanaChofer
 	    chofer.setChangedExternamente();
 	    chofer.notifyObservers(evento);
 	    
@@ -236,7 +235,7 @@ public class RecursoCompartido extends Observable{
 
 	//clienteThread paga viaje
 	public synchronized void pagaViaje(ClienteThread cliente)
-	{ EventoChofer evento;
+	{ EventoCliente evento;
 	 while((this.choferes.size()>0&& this.hayClienteHumano)&&!this.ChoferAsignado)
 	
 	   {  try
@@ -250,12 +249,19 @@ public class RecursoCompartido extends Observable{
 	   //
 	 if(this.choferes.size()>0)
 	 { this.viajePago=true;
+	 evento=new EventoCliente("Viaje pagado",this.viajeAct,cliente);
+	 
+	 //anuncia evento a ObservadorVChofer
+	 cliente.getViaje().setChangedExternamente();
+	 cliente.notifyObservers(evento);
+	 
+	//anuncia evento a ObservadorVcliente
       cliente.setChangedExternamente();
-      cliente.notifyObservers(new EventoCliente("Viaje pagado",this.viajeAct,cliente));
+      cliente.notifyObservers(evento);
       
     //anuncia evento a ObservadorVGeneral
       this.setChanged();
-      this.notifyObservers();
+      this.notifyObservers(evento);
 		
 	 }
 	}
@@ -293,9 +299,36 @@ public class RecursoCompartido extends Observable{
 	   {   }
    }
    
+   public void sacaViaje(Viaje primerViaje) 
+   {
+	   synchronized(this.viajes)
+	   { while(this.viajes.size()==0)
+	     {  try {
+			this.viajes.wait();
+		} catch (InterruptedException e) {
+			
+		}
+	     }
+	     primerViaje=this.viajes.get(0);
+	     this.viajes.remove(0);
+		 this.viajes.notifyAll();  
+	   }
+   }
+   
+   public void poneViaje(Viaje viajeAux)
+   {   synchronized(this.viajes)
+	   {  this.viajes.add(viajeAux);
+	      this.viajes.notifyAll();
+	   
+	   }
+	   
+   }
+   
+   
+   
    public void CambioSituacionChofer(ChoferThread chofer)
    {   if(chofer.getCantdeViajes()==0)
-       {   //saco de la lista de choferes total si ya no realiza mas viajes
+       {   //saco de la lista de choferes porque no realiza mas viajes
     	   this.choferes.remove(chofer);
        }
        else
@@ -318,7 +351,7 @@ public class RecursoCompartido extends Observable{
 	public void setHayClienteHumano(boolean hayClienteHumano) {
 		this.hayClienteHumano = hayClienteHumano;
 	}
-
+    
 
 
 

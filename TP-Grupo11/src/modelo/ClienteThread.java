@@ -14,12 +14,11 @@ public class ClienteThread extends MiObservable implements Runnable{
 	
     
 	
-	public ClienteThread(RecursoCompartido rc, String nombre, DatosPedido datosP, Viaje viaje, int cantMaxdeViajes) {
+	public ClienteThread(RecursoCompartido rc, String nombre, DatosPedido datosP, int cantMaxdeViajes) {
 		super();
 		this.rc = rc;
 		this.nombre = nombre;
 		this.datosP = datosP;
-		this.viaje = viaje;
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
 	public void run() {

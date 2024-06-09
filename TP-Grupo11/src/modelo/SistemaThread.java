@@ -4,37 +4,23 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class SistemaThread extends Thread implements Observer  {
+public class SistemaThread extends Thread implements Observer   {
     private RecursoCompartido rc;
     private ArrayList<Viaje> observable;
     private Viaje viaje;
     
-    
-    
-
-	public SistemaThread(RecursoCompartido rc,Viaje viaje) {
-		super();
+  public SistemaThread(RecursoCompartido rc,Viaje viaje) {
 		this.rc = rc;
-		this.observable = rc.getViajes();
+		this.observable=this.rc.getViajes();
+		//this.observable.// no me deja que observe un ArayList
 		this.viaje = viaje;
 	}
-
-
-
-	public void run() {
-	  while()
+    public void run() {
+	  while(this.rc.isHayClienteHumano()&& this.rc.getChoferes().size()>0)
 	  {	
 		this.rc.asignaVehiculo(this);
 		UtilThread.espera();
 	  }
-	}
-
-	
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
 	}
 	public Viaje getViaje() {
 		return viaje;
@@ -42,6 +28,11 @@ public class SistemaThread extends Thread implements Observer  {
 
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
+	}
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o==this.rc.getViajes())
+		{}
 	}
 
 }
