@@ -1,5 +1,7 @@
 package modelo;
 
+import concurrencia.ClienteThread;
+
 public class EventoCliente extends Evento {
 	//Tipos->Viaje solicitado
 	     //->Viaje pagado

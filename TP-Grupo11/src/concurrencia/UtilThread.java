@@ -1,4 +1,4 @@
-package modelo;
+package concurrencia;
 
 import java.util.Random;
 

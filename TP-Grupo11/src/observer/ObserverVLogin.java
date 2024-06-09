@@ -13,20 +13,22 @@ import vista.VentanaLogin;
 public class ObserverVLogin implements Observer{
 	
 	private VentanaLogin ventana;
+	private Observable observable;
 	
-	public ObserverVLogin(VentanaLogin ventana,Sistema sistema) {
+	public ObserverVLogin(VentanaLogin ventana,Observable observable) {
 		this.ventana = ventana;
-		sistema.addObserver(this);
+		this.observable = observable;
+		observable.addObserver(this);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if( o != Sistema.getInstance() )
+		if( o != this.observable )
 			throw new InvalidParameterException();
 		if(arg.toString().equals("Correcto")) {
+			Thread clienteThread = new Thread(new ClienteThread(RecursoCompartido.getInstance()));//Debe ser Singleto RC?
 			ControladorVCliente usuario = new ControladorVCliente(Sistema.getInstance(),this.ventana);
 			this.ventana.dispose();
-			System.out.println(Sistema.getInstance().getUsuarioLogeado().getNombre()+"Se logeo");
 		}
 		else if(arg.toString().equals("Incorrecto")) {
 			JOptionPane.showMessageDialog(ventana,"Usuario o contrasena incorrecta");

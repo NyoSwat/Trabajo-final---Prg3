@@ -1,4 +1,4 @@
-package modelo;
+package concurrencia;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -7,6 +7,12 @@ import java.util.Observable;
 import Excepciones.ExistenteUsuarioException;
 import Excepciones.FaltaChoferException;
 import Excepciones.FaltaVehiculoException;
+import modelo.EventoChofer;
+import modelo.EventoCliente;
+import modelo.EventoSistema;
+import modelo.Pedido;
+import modelo.Vehiculo;
+import modelo.Viaje;
 //Los carteles de los eventos son muy poco descriptivos ,se podría solucionar con una referecia al viaje
 // en los threads PREGUNTAR
 //
@@ -17,7 +23,7 @@ public class RecursoCompartido extends Observable{
 	private boolean hayClienteHumano;
 	private boolean pedidoAceptado;//Cuando se valida el pedido (en validarPedido) ->pedidoAceptado=true/
 	private boolean viajeSolicitado;
-	private boolean ChoferAsignado;//si esta asignado el cliente puede pagar el viaje
+	private boolean choferAsignado;//si esta asignado el cliente puede pagar el viaje
 	private boolean VehiculoAsignado;//si Sistema asigna vehiculo el Chofer puede tomar el viaje
 	private boolean viajePago;//cuando el cliente paga el chofer puede finalizar el viaje
 	private boolean viajeFinalizado;
@@ -38,7 +44,7 @@ public class RecursoCompartido extends Observable{
 	
 		this.pedidoAceptado = false;
 		this.viajeSolicitado = false;
-		this.ChoferAsignado = false;
+		this.choferAsignado = false;
 		this.VehiculoAsignado = false;
 		this.viajePago = false;
 		this.viajeFinalizado = false;
@@ -161,7 +167,7 @@ public class RecursoCompartido extends Observable{
 			  {	
 		      }
 		   }
-	    this.ChoferAsignado=true;
+	    this.choferAsignado=true;
 	    chofer.setChangedExternamente();
 	    chofer.notifyObservers(new EventoChofer("Viaje iniciado",this.viajeAct));
 	    
@@ -201,7 +207,7 @@ public class RecursoCompartido extends Observable{
 
 	//clienteThread paga viaje
 	public synchronized void pagaViaje(ClienteThread cliente)
-	{  while(this.choferes.size()>0&&!this.ChoferAsignado)
+	{  while(this.choferes.size()>0&&!this.choferAsignado)
 	   {  try
 		  {	
 		   	wait();

@@ -1,8 +1,10 @@
-package modelo;
+package observer;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import concurrencia.ClienteThread;
+import modelo.EventoCliente;
 import vista.VentanaCliente;
 import vista.VentanaGeneral;
 

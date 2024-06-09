@@ -21,13 +21,13 @@ import modelo.Usuario;
 import modelo.Vehiculo;
 import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
-import persistencia.PersistenciaBinaria;
+import persistencia.PersistenciaXML;
 import persistencia.SistemaDTO;
 import vista.VentanaConfig;
 import vista.VentanaNuevoCliente;
 
 public class ControladorConfig implements ActionListener{
-	
+	private static final String nombre_archivo = "sistema.dat";
 	private static ControladorConfig instance = null;
 	private VentanaConfig ventanaConfig;
 	private Sistema sistema;
@@ -110,8 +110,8 @@ public class ControladorConfig implements ActionListener{
 	
 	private void deSerializar() {
 		try {
-			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
-			persistir.abrirInput("sistema.dat");
+			IPersistencia<Serializable> persistir = new PersistenciaXML();
+			persistir.abrirInput(nombre_archivo);
 			SistemaDTO sistemaDTO = (SistemaDTO) persistir.leer();
 			ConversorDTO.sistemaDTOToSistema(Sistema.getInstance(), sistemaDTO);
 			persistir.cerrarInput();
@@ -131,8 +131,8 @@ public class ControladorConfig implements ActionListener{
 	
 	private void serializar() {
 		try {
-			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
-			persistir.abrirOutput("sistema.dat");
+			IPersistencia<Serializable> persistir = new PersistenciaXML();
+			persistir.abrirOutput(nombre_archivo);
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
 //			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
 //			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
@@ -147,8 +147,8 @@ public class ControladorConfig implements ActionListener{
 	}
 	
 	private void deleteDatos() {
-		IPersistencia<Serializable> persistir = new PersistenciaBinaria();
-		persistir.deleteFile();
+		IPersistencia<Serializable> persistir = new PersistenciaXML();
+		persistir.deleteFile(nombre_archivo);
 		ventanaConfig.dispose();
 	}
 	

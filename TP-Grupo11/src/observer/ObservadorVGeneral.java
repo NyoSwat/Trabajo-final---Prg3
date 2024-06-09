@@ -1,8 +1,10 @@
-package modelo;
+package observer;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import concurrencia.RecursoCompartido;
+import modelo.Evento;
 import vista.VentanaGeneral;
 
 public class ObservadorVGeneral implements Observer {

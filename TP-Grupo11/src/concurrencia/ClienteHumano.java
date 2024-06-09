@@ -1,7 +1,13 @@
-package modelo;
+package concurrencia;
 
 import java.util.GregorianCalendar;
 import java.util.Observable;
+
+import modelo.DatosPedido;
+import modelo.MiObservable;
+import modelo.Pedido;
+import modelo.Sistema;
+import modelo.Viaje;
 
 public class ClienteHumano extends MiObservable implements Runnable{
 	Sistema sistema = Sistema.getInstance();

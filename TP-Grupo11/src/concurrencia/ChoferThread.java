@@ -1,6 +1,9 @@
-package modelo;
+package concurrencia;
 
 import java.util.Observable;
+
+import modelo.MiObservable;
+import modelo.Viaje;
 
 public class ChoferThread extends MiObservable implements Runnable {
     private RecursoCompartido rc;

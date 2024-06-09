@@ -1,7 +1,13 @@
-package modelo;
+package concurrencia;
 
 import java.util.GregorianCalendar;
 import java.util.Observable;
+
+import modelo.DatosPedido;
+import modelo.MiObservable;
+import modelo.Pedido;
+import modelo.Sistema;
+import modelo.Viaje;
 
 public class ClienteThread extends MiObservable implements Runnable{
 	Sistema sistema = Sistema.getInstance();
@@ -9,8 +15,10 @@ public class ClienteThread extends MiObservable implements Runnable{
 	private String nombre;
 	private DatosPedido datosP;
 	private Viaje viaje;
+	
 	public ClienteThread(RecursoCompartido rc) {
 		this.rc = rc;
+		this.nombre = sistema.getUsuarioLogeado().getNombre();
 	}
   //falta constructor
 	public void run() {

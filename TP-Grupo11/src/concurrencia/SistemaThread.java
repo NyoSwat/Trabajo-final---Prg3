@@ -1,8 +1,10 @@
-package modelo;
+package concurrencia;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+
+import modelo.Viaje;
 
 public class SistemaThread extends Thread implements Observer  {
     private RecursoCompartido rc;

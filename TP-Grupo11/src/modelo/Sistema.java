@@ -63,6 +63,10 @@ public class Sistema extends Observable{
     	this.usuarios = usuarios;
     }
     
+    public void setViajes(ArrayList<IViaje> viajes) {
+    	this.viajes = viajes;
+    }
+    
     /**
 	 * Consulta un vehiculo existente
 	 * <b>pre:</b>patente no debe ser null ni vacio

@@ -1,8 +1,10 @@
-package modelo;
+package observer;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import concurrencia.SistemaThread;
+import modelo.EventoSistema;
 import vista.VentanaGeneral;
 
 public class ObservadorSistema implements Observer{

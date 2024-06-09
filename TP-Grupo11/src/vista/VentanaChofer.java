@@ -1,18 +1,30 @@
 package vista;
 
 
-
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
-import javax.swing.JTextArea;
+import controlador.ControladorVChofer;
 
+public class VentanaChofer extends JFrame {
 
-public class VentanaChofer extends JFrame{
-    private JTextArea area = new JTextArea();
-  
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
 
-    public void appendText(String arg)
-    {
-	    this.area.append(arg+"\n");
-    }
+	/**
+	 * Create the frame.
+	 */
+	public VentanaChofer() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+	}
+
+	public void setControlador(ControladorVChofer control) {
+		
+	}
 }
