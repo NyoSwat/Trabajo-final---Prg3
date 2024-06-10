@@ -50,4 +50,8 @@ public class VentanaChofer extends JFrame {
 	public void setNombre(String nombre) {
 		this.nombreLabel.setText("Chofer: "+nombre);
 	}
+	
+	public void agregarComentario(String mensaje) {
+		this.textArea.append(mensaje+"\n");
+	}
 }

@@ -4,6 +4,7 @@ package concurrencia;
 import controlador.ControladorChofer;
 import controlador.ControladorLogin;
 import modelo.Chofer;
+import modelo.Cliente;
 import modelo.Sistema;
 import modelo.Usuario;
 import vista.VentanaGeneral;
@@ -20,7 +21,7 @@ public class Simulador {
 	
 	public Simulador(Sistema sistema,int cantClientes,int cantPedidos,int cantViajes) {
 		this.sistema = sistema;
-		this.rc = new RecursoCompartido(sistema.listaVehiculos(), sistema.listaChoferes());
+		this.rc = new RecursoCompartido(sistema,cantClientes);
 		this.cantClientes = cantClientes;
 		this.cantPedidos = cantPedidos;
 		this.cantViajes = cantViajes;
@@ -35,12 +36,12 @@ public class Simulador {
 		}
 		
 		for(int i = 0; i < this.cantClientes; i++) {
-			new ControladorLogin(this.rc,this.sistema);
+			new ControladorLogin(this.rc,this.sistema,this.cantPedidos);
 		}
 		
 		for (int i = 0; i < 5; i++) {
-			ClienteThread nuevo = new ClienteThread(this.rc,"cliente_robot"+i,cantViajes);
-			new Thread(nuevo);
+			ClienteThread nuevo = new ClienteThread(this.rc,new Cliente("","","Cliente_Robot"+i),cantViajes);
+			new Thread(nuevo).start();
 		}
 		
 		new Thread(new SistemaThread(this.rc));

@@ -9,75 +9,65 @@ import modelo.DatosPedido;
 import modelo.MiObservable;
 import modelo.Pedido;
 import modelo.Sistema;
+import modelo.Usuario;
 import modelo.Viaje;
 
 public class ClienteThread extends MiObservable implements Runnable{
-	Sistema sistema = Sistema.getInstance();
-	private RecursoCompartido rc;
-	private DatosPedido datosP;
-	private Viaje viaje;
-    
-	private int CantMaxdeViajes; 
-	private int CantdeViajes;
-	private Random ran = new Random();
-	private String nombre;
 	
-	public ClienteThread(RecursoCompartido rc, String nombre, int cantMaxdeViajes) {
-		super();
+	private RecursoCompartido rc;
+	private int cantMaxdeViajes; 
+	private int cantdeViajes;
+	private Random ran = new Random();
+	private Usuario cliente;
+	
+	public ClienteThread(RecursoCompartido rc,Usuario cliente, int cantMaxdeViajes) {
 		this.rc = rc;
-		this.nombre = nombre;
-//		this.datosP = datosP;
-		CantMaxdeViajes = cantMaxdeViajes;
+		this.cliente = cliente;
+		this.cantMaxdeViajes = cantMaxdeViajes;
 		
 	}
 	
 	public void run() {
-	 CantdeViajes=0;
-	  while(CantdeViajes<this.CantMaxdeViajes && rc.isHayClienteHumano()){ 
-		 Pedido pedido;
-//		 pedido = sistema.CreaPedido2(datosP.getCantPasajeros(),datosP.getZona(),datosP.isPetFriendly(),datosP.isPetFriendly(), datosP.getFecha());
-		 								//(usuario,cantPasajeros,distancia,zona,baul,mascota,calendario)
-		 pedido = sistema.generarPedido(this,ran.nextInt(11),ran.nextInt(70),ran.nextInt(3),ran.nextBoolean(),ran.nextBoolean(),new GregorianCalendar());
-		 this.rc.validarPedido(pedido);//solicita aceptacion
-		UtilThread.espera();
-		this.rc.solicitaViaje(this, pedido);
-		UtilThread.espera();
-		this.rc.pagaViaje(this);
-		CantdeViajes++;
+	 cantdeViajes=0;
+	 Pedido pedido;
+	 boolean valido;
+	 
+	  while(cantdeViajes<this.cantMaxdeViajes && rc.isHayClienteHumano()){ 
+		 								// cantPasajeros,zona,baul,mascota,calendario
+		 pedido = this.rc.generarPedido(ran.nextInt(11),this.generarZona(ran.nextInt(2)),ran.nextBoolean(),ran.nextBoolean(),new GregorianCalendar());
+		 valido = this.rc.validarPedido(pedido,this,ran.nextInt(70));//solicita aceptacion
+		 UtilThread.espera();
+//		this.rc.solicitaViaje(this, pedido);
+//		UtilThread.espera();
+//		 this.rc.pagaViaje(this);
+		 cantdeViajes++;
 	  }
-	  if(CantdeViajes==this.CantMaxdeViajes)
+	  if(cantdeViajes==this.cantMaxdeViajes)
 	  {this.rc.setcantClientesThread(this.rc.getcantClientesThread()-1);
 		  
 	  }
 		
 	}
-	public String getNombre() {
-		return nombre;
-	}
-	public DatosPedido getDatosP() {
-		return datosP;
+
+	public String generarZona(int num) {
+		String zona = null;
+		switch(num) {
+		case(0):zona = "Estandar";
+			break;
+		case(1):zona = "Sin Asfaltar";
+			break;
+		case(2):zona = "Peligrosa";
+			break;
+		}
+		return zona;
 	}
 
-
-
-	public Viaje getViaje() {
-		return viaje;
+	public Usuario getCliente() {
+		return this.cliente;
 	}
-
-	public void setViaje(Viaje viaje) {
-		this.viaje = viaje;
-	}   
-	public int getCantMaxdeViajes() {
-		return CantMaxdeViajes;
+	
+	public void setCantPedidos() {
+		this.cantdeViajes++;
 	}
-	public void setCantMaxdeViajes(int cantMaxdeViajes) {
-		CantMaxdeViajes = cantMaxdeViajes;
-	}
-	public int getCantdeViajes() {
-		return CantdeViajes;
-	}
-	public void setCantdeViajes(int cantdeViajes) {
-		CantdeViajes = cantdeViajes;
-	}
-
+	
 }

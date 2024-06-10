@@ -35,13 +35,6 @@ public  class Viaje extends MiObservable implements IViaje {
         this.distanciaRecorrida = distancia;
     }
   
-    public Viaje(ClienteThread clienteT,Pedido pedido) {
-    	this.cliente.setNombre(clienteT.getNombre());
-    	this.pedido = pedido;
-    	this.distanciaRecorrida=0;//no la necesito para la simulacion
-    }
-
-    
     /**
      * Obtiene el cliente vinculado al viaje.
      * @param cliente

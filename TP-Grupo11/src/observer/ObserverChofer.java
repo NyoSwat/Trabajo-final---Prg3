@@ -23,23 +23,13 @@ public class ObserverChofer implements Observer {
 	
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
-//		if(o== this.observable)
-//		{  ChoferThread hc= (ChoferThread)o;
-//		   EventoChofer evento = (EventoChofer) arg;
-//		   this.ventana.appendText(evento.getDescripcion());
-//		   
-//		   this.viajeObserrvado=hc.getViaje();
-//		   this.viajeObserrvado.addObserver(this);
-		   
-//		}
-//		else 
-//		  if(o==this.viajeObserrvado)
-//		  { 
-//			  EventoCliente evento=(EventoCliente) arg;
-//			  this.ventana.appendText(evento.getDescripcion());
-//		  }
-//		   throw new IllegalArgumentException();
-		
+		if(this.observable == o) {
+			String mensaje = (String) arg;
+			//Como diferencia a que ventana publicar?
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 
