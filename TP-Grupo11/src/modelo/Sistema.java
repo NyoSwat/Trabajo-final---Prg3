@@ -63,6 +63,10 @@ public class Sistema extends Observable{
     	this.usuarios = usuarios;
     }
     
+    public void setViajes(ArrayList<IViaje> viajes) {
+    	this.viajes = viajes;
+    }
+    
     /**
 	 * Consulta un vehiculo existente
 	 * <b>pre:</b>patente no debe ser null ni vacio
@@ -496,6 +500,11 @@ public class Sistema extends Observable{
     	if(consultarChofer(chofer.getDni()) == null)
     		throw new ExistenteChoferException("Error, chofer a calcular sueldo no existe.");
 		return chofer.getSueldo();
+    }
+    // necesario para parte 2
+    public Pedido CreaPedido2(int cantPasajeros, String zona, boolean petFriendly, boolean baul,GregorianCalendar fechaHora)
+    {   return new Pedido(cantPasajeros,zona,petFriendly,baul,fechaHora);
+      
     }
     
     

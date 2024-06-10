@@ -38,7 +38,8 @@ public class ControladorNewCliente implements ActionListener{
 				Cliente cliente = new Cliente(usuario, password, nombre);
 				sistema.agregarCliente(cliente);
 				ventanaCliente.dispose();
-				if(parent instanceof VentanaConfig) {
+				
+				if(parent instanceof VentanaConfig) { // Se puede verificar de esta manera?
 					((VentanaConfig)parent).actualizoListaCliente(sistema.listaUsuarios());
 				}
 			}

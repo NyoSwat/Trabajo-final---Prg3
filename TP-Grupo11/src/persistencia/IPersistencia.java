@@ -2,7 +2,7 @@ package persistencia;
 
 import java.io.IOException;
 
-public interface IPersistencia<Serializable> {
+public interface IPersistencia<Serializable>{
 	
 	void abrirInput(String nombre) throws IOException;
 	
@@ -16,5 +16,5 @@ public interface IPersistencia<Serializable> {
 	
 	Serializable leer() throws IOException, ClassNotFoundException;
 	
-	void deleteFile();
+	void deleteFile(String nombre);
 }

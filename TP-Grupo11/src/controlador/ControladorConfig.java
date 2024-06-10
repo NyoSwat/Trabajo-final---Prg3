@@ -27,7 +27,7 @@ import vista.VentanaConfig;
 import vista.VentanaNuevoCliente;
 
 public class ControladorConfig implements ActionListener{
-	
+	private static final String nombre_archivo = "sistema.dat";
 	private static ControladorConfig instance = null;
 	private VentanaConfig ventanaConfig;
 	private Sistema sistema;
@@ -111,11 +111,14 @@ public class ControladorConfig implements ActionListener{
 	private void deSerializar() {
 		try {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
-			persistir.abrirInput("sistema.dat");
+			persistir.abrirInput(nombre_archivo);
 			SistemaDTO sistemaDTO = (SistemaDTO) persistir.leer();
 			ConversorDTO.sistemaDTOToSistema(Sistema.getInstance(), sistemaDTO);
 			persistir.cerrarInput();
 
+			ventanaConfig.setCantClientes(sistemaDTO.getCantClienteSimulacion());
+			ventanaConfig.setCantPedidosCliente(sistemaDTO.getCantPedidosCliente());
+			ventanaConfig.setCantViajesChofer(sistemaDTO.getCantViajeChofer());
 			ventanaConfig.actualizoListaChofer(sistema.listaChoferes());
 			ventanaConfig.actualizoListaVehiculo(sistema.listaVehiculos());
 			ventanaConfig.actualizoListaCliente(sistema.listaUsuarios());
@@ -132,11 +135,12 @@ public class ControladorConfig implements ActionListener{
 	private void serializar() {
 		try {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
-			persistir.abrirOutput("sistema.dat");
+			persistir.abrirOutput(nombre_archivo);
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
-//			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
-//			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
-//			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
+			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
+			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
+			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
+			
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
 			ventanaConfig.dispose();
@@ -148,7 +152,7 @@ public class ControladorConfig implements ActionListener{
 	
 	private void deleteDatos() {
 		IPersistencia<Serializable> persistir = new PersistenciaBinaria();
-		persistir.deleteFile();
+		persistir.deleteFile(nombre_archivo);
 		ventanaConfig.dispose();
 	}
 	

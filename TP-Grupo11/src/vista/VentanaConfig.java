@@ -299,19 +299,19 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		principalPanel.add(buttonPanel);
 		this.buttonPanel.setLayout(null);
 		
-				this.saveBtn = new JButton("Guardar Datos");
-				this.saveBtn.setActionCommand("guardarDatos");
-				this.saveBtn.setBounds(480, 5, 120, 25);
-				this.buttonPanel.add(saveBtn);
-				
-				this.deleteDatosBtn = new JButton("Eliminar Datos");
-				this.deleteDatosBtn.setActionCommand("eliminarDatos");
-				this.deleteDatosBtn.setBounds(150, 5, 120, 25);
-				this.buttonPanel.add(deleteDatosBtn);
-				
-				JSeparator separatorChofer = new JSeparator();
-				separatorChofer.setBounds(5, 470, 750, 2);
-				principalPanel.add(separatorChofer);
+		this.saveBtn = new JButton("Guardar Datos");
+		this.saveBtn.setActionCommand("guardarDatos");
+		this.saveBtn.setBounds(480, 5, 120, 25);
+		this.buttonPanel.add(saveBtn);
+		
+		this.deleteDatosBtn = new JButton("Eliminar Datos");
+		this.deleteDatosBtn.setActionCommand("eliminarDatos");
+		this.deleteDatosBtn.setBounds(150, 5, 120, 25);
+		this.buttonPanel.add(deleteDatosBtn);
+		
+		JSeparator separatorChofer = new JSeparator();
+		separatorChofer.setBounds(5, 470, 750, 2);
+		principalPanel.add(separatorChofer);
 	}
 	
 	public void setControlador(ControladorConfig control) {
@@ -351,7 +351,7 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	}
 	
 	public void setCantHijos(String texto) {
-		this.cantPedidoField.setText(texto);
+		this.cantHijosField.setText(texto);
 	}
 	
 	public String getTipoVehiculo() {
@@ -429,6 +429,18 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	
 	public int getCantViajesChofer() {
 		return Integer.parseInt(this.cantViajesChoferField.getText());
+	}
+	
+	public void setCantPedidosCliente(int cantidad) {
+		this.cantPedidoField.setText(String.valueOf(cantidad));
+	}
+	
+	public void setCantClientes(int cantidad) {
+		this.cantClienteField.setText(String.valueOf(cantidad));
+	}
+	
+	public void setCantViajesChofer(int cantidad) {
+		this.cantViajesChoferField.setText(String.valueOf(cantidad));
 	}
 	
 	@Override

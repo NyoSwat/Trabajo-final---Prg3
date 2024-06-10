@@ -17,6 +17,9 @@ import javax.swing.JSeparator;
 public class VentanaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private static final int start_y = 50;
+	private static final int start_x = 50;
+	private static int cantVentanas = 0;
 	private JPanel contentPane;
 	private JPanel panel;
 	private JTextField usuarioField;
@@ -35,6 +38,9 @@ public class VentanaLogin extends JFrame {
 		super("Inicio Sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 300);
+		setResizable(false);
+		setLocation(start_x+(360*cantVentanas),start_y);
+		cantVentanas++;
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

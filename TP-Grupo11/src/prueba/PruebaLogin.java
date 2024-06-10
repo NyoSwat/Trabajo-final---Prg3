@@ -16,7 +16,7 @@ public class PruebaLogin {
 		
 		Sistema sistema = Sistema.getInstance();
 		try {
-			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
+			IPersistencia persistir = new PersistenciaBinaria();
 			persistir.abrirInput("sistema.dat");
 			SistemaDTO sistemaDTO = (SistemaDTO) persistir.leer();
 			ConversorDTO.sistemaDTOToSistema(Sistema.getInstance(), sistemaDTO);
@@ -28,8 +28,8 @@ public class PruebaLogin {
 		catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		ControladorLogin control = new ControladorLogin(sistema);
-		ControladorLogin control2 = new ControladorLogin(sistema);
-		ControladorLogin control3 = new ControladorLogin(sistema);
+//		ControladorLogin control1 = new ControladorLogin(sistema,);
+//		ControladorLogin control2 = new ControladorLogin(sistema);
+//		ControladorLogin control3 = new ControladorLogin(sistema);
 	}
 }
