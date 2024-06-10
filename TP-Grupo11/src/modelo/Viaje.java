@@ -14,6 +14,14 @@ public  class Viaje extends MiObservable implements IViaje {
     private double distanciaRecorrida; 
     private Vehiculo vehiculo;
     public static double valorBase = 1000.0; 
+    
+    private boolean iniciado;
+    private boolean finalizado;
+    private boolean pagado;
+    
+    private ChoferThread choferT;
+    private ClienteThread clienteT;
+
 
     /**
      * Constructor Viaje<br>
@@ -33,11 +41,17 @@ public  class Viaje extends MiObservable implements IViaje {
         this.distanciaRecorrida = distancia;
     }
   
-    public Viaje(ClienteThread clienteT,Pedido pedido) {
-    	this.cliente.setNombre(clienteT.getNombre());
+ public Viaje(ClienteThread cliente,Pedido pedido) {
+    	
     	this.pedido = pedido;
+    	this.clienteT=cliente;
     	this.distanciaRecorrida=0;//no la necesito para la simulacion
+    	this.iniciado=false;
+        this.pagado=false;
+        this.finalizado=false;
+    	
     }
+
 
     
     /**
@@ -162,6 +176,46 @@ public  class Viaje extends MiObservable implements IViaje {
     			"\nValor: $"+this.getCosto()+
     			"\n";
     }
+    public boolean isIniciado() {
+		return iniciado;
+	}
+
+	public void setIniciado(boolean iniciado) {
+		this.iniciado = iniciado;
+	}
+
+	public boolean isFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
+	}
+
+	public boolean isPagado() {
+		return pagado;
+	}
+
+	public void setPagado(boolean pagado) {
+		this.pagado = pagado;
+	}
+
+	public ChoferThread getChoferT() {
+		return choferT;
+	}
+
+	public void setChoferT(ChoferThread choferT) {
+		this.choferT = choferT;
+	}
+
+	public ClienteThread getClienteT() {
+		return clienteT;
+	}
+
+	public void setClienteT(ClienteThread clienteT) {
+		this.clienteT = clienteT;
+	}
+
 
 
 }
