@@ -26,6 +26,7 @@ public class RecursoCompartido extends Observable{
 	
 	private int cantChoferes;
 	private int cantClientesHumano;
+	private int cantClientesThread;
 	
 
 	private boolean hayClienteHumano;
@@ -89,43 +90,38 @@ public class RecursoCompartido extends Observable{
    	   	
    	   	if(cantChoferes > 0){  
    	   		mensaje = cliente.getCliente().getNombre()+" genero un pedido valido";
-   	   		this.solicitaViaje(cliente,pedido,distancia);
-   	   		setChanged();
-   	   		notifyObservers(mensaje);
    	   		cliente.setCantPedidos();
    	   		return true;
    	   	}
    	   	else {
    	   		mensaje = "No se pueden generar mas pedidos. No hay mas choferes disponibles.";
-   	   		setChanged();
-   	   		notifyObservers(mensaje);
    	   		return false;
    	   	}
+
     }
 
 	//clienteThread solicita Viaje sobre pedido aceptado
 	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido,int distancia){  
-	   String mensaje;
-		while(this.cantChoferes>0 && this.cantClientesHumano > 0 && this.choferes.isEmpty()){  
-			try{	
-				wait();
-			}
-			catch (InterruptedException e){	
-			}
-		}
-		
-		if(this.cantChoferes > 0 && this.cantClientesHumano > 0){
+		if(validarPedido(pedido,cliente,distancia)) {
+			String mensaje;
+//			while(this.cantChoferes>0 && this.cantClientesHumano > 0 && this.choferes.isEmpty()){  
+//				try{	
+//					wait();
+//				}
+//				catch (InterruptedException e){	
+//				}
+//			}
+			
+			
 			//Como el pedido el valido genero el viaje
 			IViaje viaje = this.sistema.crearViaje((Cliente)cliente.getCliente(), pedido, distancia);
 			//Guardo el viaje 
 			this.viajes.add(viaje);
-			mensaje = viaje.getCliente().getNombre()+" solicito un viaje y fue aceptado.";
+			mensaje = viaje.getCliente().getNombre()+" solicito un viaje y fue aceptado.";	
+			System.out.println(mensaje);
+			setChanged();
+			notifyObservers("SolicitaViaje");
 		}
-		else {
-			mensaje = cliente.getCliente().getNombre()+" solicito un viaje y fue rechazado por falta de chofer.";
-		}
-		setChanged();
-		notifyObservers(mensaje);
 	}
 	
 	
@@ -400,10 +396,7 @@ public class RecursoCompartido extends Observable{
 	public void setHayClienteHumano(boolean hayClienteHumano) {
 		this.hayClienteHumano = hayClienteHumano;
 	}
-    
-
-
-
+  
 
 	public ArrayList<ChoferThread> getChoferesDisp() {
 		return choferesDisp;

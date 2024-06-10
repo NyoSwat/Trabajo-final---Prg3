@@ -19,6 +19,8 @@ public class ClienteThread extends MiObservable implements Runnable{
 	private int cantdeViajes;
 	private Random ran = new Random();
 	private Usuario cliente;
+	private boolean viajeTerminado;
+	private boolean viajeAceptado; 
 	
 	public ClienteThread(RecursoCompartido rc,Usuario cliente, int cantMaxdeViajes) {
 		this.rc = rc;
@@ -70,4 +72,11 @@ public class ClienteThread extends MiObservable implements Runnable{
 		this.cantdeViajes++;
 	}
 	
+	public boolean getViajeTerminado() {
+		return this.viajeTerminado;
+	}
+	
+	public boolean getViajeAceptado() {
+		return this.viajeAceptado;
+	}
 }

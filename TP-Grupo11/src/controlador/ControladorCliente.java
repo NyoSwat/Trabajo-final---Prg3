@@ -2,12 +2,11 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
 import concurrencia.ClienteThread;
 import concurrencia.RecursoCompartido;
-import modelo.Cliente;
-import modelo.Sistema;
-import modelo.Usuario;
+import modelo.Pedido;
 import observer.ObserverCliente;
 import vista.VentanaCliente;
 import vista.VentanaLogin;
@@ -32,21 +31,34 @@ public class ControladorCliente implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getActionCommand().equals("generarPedido")) {
-//			String zona = vista.getZona();
-//			int cantPasajeros = vista.getCantPasajeros();
-//			boolean baul = vista.getBaul();
-//			boolean mascota = vista.getMascota();
-			System.out.println("Un pedido xfa");
+			String zona = vista.getZona();
+			int cantPasajeros = vista.getCantPasajeros();
+			boolean baul = vista.getBaul();
+			boolean mascota = vista.getMascota();
+			Pedido pedido = new Pedido(cantPasajeros, zona, mascota, baul, new GregorianCalendar());
+			//Falta agregar la distancia
+			rc.solicitaViaje(cliente,pedido,1000);
+			System.out.println("Pedido--  \nZona: " + zona.toString() + "\nCant Pasajeros: " + cantPasajeros + "\nBaul: " + baul + "\nMascotas: " + mascota);
 			
 		}
 		else if(event.getActionCommand().equals("pagar")) {
-			System.out.println("QUiero pagar");
-			//rc.pagaViaje(this.cliente);
+			if(cliente.getViajeTerminado()) {
+				this.rc.pagaViaje(cliente);
+			}else {
+				if(cliente.getViajeAceptado())
+					actualizarInformacion("No se puede pagar: viaje en proceso");
+				else
+					actualizarInformacion("No se puede pagar: sin viajes");
+			}
 		}
 		else if(event.getActionCommand().equals("salir")) {
 			System.out.println("QUiero salir");
 			this.vista.dispose();
 		}
+	}
+	
+	public void actualizarInformacion(String texto) {
+		this.vista.escribeJTextArea(texto);
 	}
 	
 }

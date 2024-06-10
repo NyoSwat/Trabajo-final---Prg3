@@ -1,19 +1,19 @@
 package vista;
 
-import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 
 public class VentanaGeneral extends JFrame{
     
 	private static final long serialVersionUID = 1L;
-    //agrega Eugenia (aviso por si rompe algo) BORRAR COMENTARIO
-    private JTextArea area = new JTextArea();
+    private JTextArea textArea;
     
     public VentanaGeneral() 
     {
@@ -26,14 +26,15 @@ public class VentanaGeneral extends JFrame{
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
         getContentPane().add(titleLabel, BorderLayout.NORTH);
         
-        JTextArea textArea = new JTextArea();
+        textArea = new JTextArea();
         getContentPane().add(textArea, BorderLayout.CENTER);
         this.setVisible(true);
         
     }
     
     public void agregarComentario(String mensaje){
-	    this.area.append(mensaje+"\n");
+	    this.textArea.append(mensaje+"\n");
     }
+
 
 }

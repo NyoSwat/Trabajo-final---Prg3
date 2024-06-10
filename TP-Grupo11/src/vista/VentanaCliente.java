@@ -149,4 +149,7 @@ public class VentanaCliente extends JFrame {
 		this.textArea.append(mensaje+"\n");
 	}
 
+	public void escribeJTextArea(String texto) {
+		this.textArea.append(texto + "\n");
+	}
 }

@@ -1,26 +1,22 @@
 package concurrencia;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import controlador.ControladorVGeneral;
+import observer.ObserverVGeneral;
+import vista.VentanaGeneral;
 
-import modelo.Viaje;
-
-public class SistemaThread extends Thread {
+public class SistemaThread extends Thread{
     private RecursoCompartido rc;
-    private Viaje viaje;
+
     
-  public SistemaThread(RecursoCompartido rc/*,Viaje viaje*/) {
+    public SistemaThread(RecursoCompartido rc) {
 		this.rc = rc;
-		this.viaje = viaje;
-	}
+  	}
+    
     public void run() {
-	  while(this.rc.isHayClienteHumano()&& this.rc.getChoferes().size()>0)
-	  {	
-		this.rc.asignaVehiculo(this);
-		UtilThread.espera();
-	  }
-	}
+    	VentanaGeneral VGeneral = new VentanaGeneral();
+    	ControladorVGeneral controlador = new ControladorVGeneral(this.rc, VGeneral);
+    	ObserverVGeneral ojo = new ObserverVGeneral(this.rc, controlador);
+    }
 
-
+    
 }

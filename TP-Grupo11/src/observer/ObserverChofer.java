@@ -4,18 +4,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 import concurrencia.ChoferThread;
-import modelo.EventoChofer;
-import vista.VentanaChofer;
+import controlador.ControladorChofer;
 
 
 public class ObserverChofer implements Observer {
 	private Observable observable;
 //	private Viaje viajeObserrvado;
-	private VentanaChofer ventana;
+	private ControladorChofer controlador;
 	private ChoferThread chofer;
 	
-	public ObserverChofer(Observable observable, VentanaChofer ventana,ChoferThread chofer) {
-		this.ventana = ventana;
+	public ObserverChofer(Observable observable, ControladorChofer controlador,ChoferThread chofer) {
+		this.controlador = controlador;
 		this.observable = observable;
 		this.observable.addObserver(this);
 		this.chofer = chofer;
@@ -23,12 +22,10 @@ public class ObserverChofer implements Observer {
 	
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
-		if(this.observable == o) {
-			String mensaje = (String) arg;
-			//Como diferencia a que ventana publicar?
-		}
-		else {
-			throw new IllegalArgumentException();
+		String text = (String)arg;
+		if(text.equalsIgnoreCase("SolicitaViaje")) {
+			System.out.println("entro");
+			this.controlador.actualizaVentana("Se solicito un viaje");
 		}
 	}
 	
