@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 
-import Excepciones.ExistenteUsuarioException;
-import Excepciones.FaltaChoferException;
-import Excepciones.FaltaVehiculoException;
+import excepciones.ExistenteUsuarioException;
+import excepciones.FaltaChoferException;
+import excepciones.FaltaVehiculoException;
+import modelo.Chofer;
 import modelo.EventoChofer;
 import modelo.EventoCliente;
 import modelo.EventoSistema;
@@ -19,7 +20,8 @@ import modelo.Viaje;
 //Los métodos no están realizando los cambios base, solo planteé una estructura inicial
 public class RecursoCompartido extends Observable{
 	private int cantClientesThread; 
-	
+	private int cantChoferes;
+	private int cantClientesHumano;
 	
 
 	private boolean hayClienteHumano;
@@ -35,14 +37,13 @@ public class RecursoCompartido extends Observable{
 	private ArrayList<Viaje> viajes = new ArrayList<Viaje>();//en espera?
     private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 	private ArrayList<Vehiculo> vehiculosDisp = new ArrayList<Vehiculo>();//necesito los disponibles
-	private ArrayList<ChoferThread> choferes = new ArrayList<ChoferThread>();
+	private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
 	private ArrayList<ChoferThread> choferesDisp = new ArrayList<ChoferThread>();//disponibles que no se encuentran 
 	//en un viaje
 	
 
 	
-	public RecursoCompartido(ArrayList<Vehiculo> vehiculos,
-			ArrayList<ChoferThread> choferes) {
+	public RecursoCompartido(ArrayList<Vehiculo> vehiculos,ArrayList<Chofer> choferes) {
 	    int i;
 		this.pedidoAceptado = false;
 		this.viajeSolicitado = false;
@@ -52,18 +53,18 @@ public class RecursoCompartido extends Observable{
 		this.viajeFinalizado = false;
 		
 		
-		this.vehiculos = vehiculos;
-		this.vehiculosDisp = vehiculos;
+		this.vehiculos = vehiculos; 	//array que almacena todos los vehiculos para ver si hay alguno que satisfaga el pedido
+		this.vehiculosDisp = vehiculos;	//array que pone y saca los vehiculos (disponibilidad para asignar al viaje)
 		this.choferes = choferes;
-		this.choferesDisp=choferes;
+		this.choferesDisp=choferes;		//array que pone y saca los choferes (disponibilidad para asignarle un viaje)
 		
 		this.cantClientesThread=0;
 		this.hayClienteHumano=false;
 		//guardo la referecia al recurso compartido en cada choferThread
-		for(i=0;i<choferes.size();i++)
-		{
-			choferes.get(i).setRc(this);
-		}
+//		for(i=0;i<choferes.size();i++)
+//		{
+//			choferes.get(i).setRc(this);
+//		}
 		
 	}
 

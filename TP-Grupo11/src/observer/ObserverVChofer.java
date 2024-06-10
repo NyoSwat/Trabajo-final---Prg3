@@ -10,17 +10,18 @@ import vista.VentanaChofer;
 
 
 
-public class ObservadorVchofer implements Observer {
-	private ChoferThread observable;
-	private Viaje viajeObserrvado;
+public class ObserverVChofer implements Observer {
+	private Observable observable;
+//	private Viaje viajeObserrvado;
 	private VentanaChofer ventana;
-	public ObservadorVchofer(ChoferThread observable, VentanaChofer ventana) {
-		super();
-		this.observable = observable;
+	
+	public ObserverVChofer(Observable observable, VentanaChofer ventana) {
 		this.ventana = ventana;
+		this.observable = observable;
 		this.observable.addObserver(this);
 		
 	}
+	
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(o== this.observable)

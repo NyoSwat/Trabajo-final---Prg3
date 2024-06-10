@@ -1,12 +1,16 @@
 package concurrencia;
 
-import java.util.Observable;
 
+import controlador.ControladorVChofer;
+import modelo.Chofer;
 import modelo.MiObservable;
+import modelo.Sistema;
 import modelo.Viaje;
 
 public class ChoferThread extends MiObservable implements Runnable {
+	
     private RecursoCompartido rc;
+    
     public RecursoCompartido getRc() {
 		return rc;
 	}
@@ -15,18 +19,17 @@ public class ChoferThread extends MiObservable implements Runnable {
 		this.rc = rc;
 	}
 
-	private String nombre;
+	private Chofer chofer;
     private Viaje viaje;
     private int CantdeViajes; //ingresa con la cantidad maxima y decrementa al realizar viaje
     private int CantMaxdeViajes;
     
 	
 
-	public ChoferThread(RecursoCompartido rc, String nombre, Viaje viaje, int cantMaxdeViajes) {
-		super();
+	public ChoferThread(RecursoCompartido rc, Chofer chofer/*, Viaje viaje*/, int cantMaxdeViajes) {
 		this.rc = rc;
-		this.nombre = nombre;
-		this.viaje = viaje;
+		this.chofer = chofer;
+//		this.viaje = viaje;
 		CantdeViajes = cantMaxdeViajes;
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
@@ -37,6 +40,7 @@ public class ChoferThread extends MiObservable implements Runnable {
 
 	public void run() {
 	int i=0;
+		new ControladorVChofer(this.rc,Sistema.getInstance(),this);
 	  while(this.rc.isHayClienteHumano()&& (i<this.CantMaxdeViajes))//dos condiciones 
 	  {	
 		this.rc.tomaViaje(this);
@@ -71,10 +75,7 @@ public class ChoferThread extends MiObservable implements Runnable {
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
 	public String getNombre() {
-		return nombre;
+		return chofer.getNombre();
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 }

@@ -5,20 +5,25 @@ import java.util.Observer;
 
 import concurrencia.ClienteThread;
 import modelo.EventoCliente;
+import modelo.Viaje;
 import vista.VentanaCliente;
 import vista.VentanaGeneral;
 
-public class ObservadorVcliente implements Observer {
-	private ClienteThread observable;
+public class ObservadorCliente implements Observer {
+	
+	private Observable observable; 
 	private Viaje viajeObservado; 
 	//referencia a ventana que informa datos de un cliente
 	private VentanaCliente ventana;
-	public ObservadorVcliente(ClienteThread observable, VentanaCliente ventana,Viaje viaje) {
-		super();
+	private ClienteThread cliente;
+	
+	public ObservadorCliente(Observable observable, VentanaCliente ventana,ClienteThread cliente) {
 		this.observable = observable;
-		this.ventana = ventana;
 		this.observable.addObserver(this);
+		this.ventana = ventana;
+		this.cliente = cliente;
 	}
+	
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(o== this.observable)

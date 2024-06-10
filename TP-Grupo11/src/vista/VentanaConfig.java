@@ -299,19 +299,19 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		principalPanel.add(buttonPanel);
 		this.buttonPanel.setLayout(null);
 		
-				this.saveBtn = new JButton("Guardar Datos");
-				this.saveBtn.setActionCommand("guardarDatos");
-				this.saveBtn.setBounds(480, 5, 120, 25);
-				this.buttonPanel.add(saveBtn);
-				
-				this.deleteDatosBtn = new JButton("Eliminar Datos");
-				this.deleteDatosBtn.setActionCommand("eliminarDatos");
-				this.deleteDatosBtn.setBounds(150, 5, 120, 25);
-				this.buttonPanel.add(deleteDatosBtn);
-				
-				JSeparator separatorChofer = new JSeparator();
-				separatorChofer.setBounds(5, 470, 750, 2);
-				principalPanel.add(separatorChofer);
+		this.saveBtn = new JButton("Guardar Datos");
+		this.saveBtn.setActionCommand("guardarDatos");
+		this.saveBtn.setBounds(480, 5, 120, 25);
+		this.buttonPanel.add(saveBtn);
+		
+		this.deleteDatosBtn = new JButton("Eliminar Datos");
+		this.deleteDatosBtn.setActionCommand("eliminarDatos");
+		this.deleteDatosBtn.setBounds(150, 5, 120, 25);
+		this.buttonPanel.add(deleteDatosBtn);
+		
+		JSeparator separatorChofer = new JSeparator();
+		separatorChofer.setBounds(5, 470, 750, 2);
+		principalPanel.add(separatorChofer);
 	}
 	
 	public void setControlador(ControladorConfig control) {

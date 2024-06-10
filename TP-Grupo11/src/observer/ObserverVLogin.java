@@ -6,7 +6,7 @@ import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
-import controlador.ControladorVCliente;
+import controlador.ControladorCliente;
 import modelo.Sistema;
 import vista.VentanaLogin;
 
@@ -26,8 +26,6 @@ public class ObserverVLogin implements Observer{
 		if( o != this.observable )
 			throw new InvalidParameterException();
 		if(arg.toString().equals("Correcto")) {
-			Thread clienteThread = new Thread(new ClienteThread(RecursoCompartido.getInstance()));//Debe ser Singleto RC?
-			ControladorVCliente usuario = new ControladorVCliente(Sistema.getInstance(),this.ventana);
 			this.ventana.dispose();
 		}
 		else if(arg.toString().equals("Incorrecto")) {
