@@ -54,7 +54,7 @@ public class VentanaCliente extends JFrame {
 		this.textArea.setBounds(200, 10, 226, 251);
 		this.contentPane.add(textArea);
 		
-		this.nombreLabel = new JLabel("New label");
+		this.nombreLabel = new JLabel(msj);
 		this.nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.nombreLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		this.nombreLabel.setBounds(45, 15, 108, 13);

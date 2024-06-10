@@ -39,7 +39,7 @@ public class VentanaChofer extends JFrame {
 		this.nombreLabel = new JLabel("New label");
 		this.nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.nombreLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		this.nombreLabel.setBounds(150, 10, 150, 15);
+		this.nombreLabel.setBounds(100, 10, 250, 15);
 		this.contentPane.add(nombreLabel);
 		
 		this.textArea = new JTextArea();

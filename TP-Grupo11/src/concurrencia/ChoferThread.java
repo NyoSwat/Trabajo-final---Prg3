@@ -34,9 +34,6 @@ public class ChoferThread extends MiObservable implements Runnable {
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
 
-	
-
-	
 
 	public void run() {
 	int i=0;

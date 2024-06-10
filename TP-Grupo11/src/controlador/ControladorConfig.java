@@ -116,6 +116,9 @@ public class ControladorConfig implements ActionListener{
 			ConversorDTO.sistemaDTOToSistema(Sistema.getInstance(), sistemaDTO);
 			persistir.cerrarInput();
 
+			ventanaConfig.setCantClientes(sistemaDTO.getCantClienteSimulacion());
+			ventanaConfig.setCantPedidosCliente(sistemaDTO.getCantPedidosCliente());
+			ventanaConfig.setCantViajesChofer(sistemaDTO.getCantViajeChofer());
 			ventanaConfig.actualizoListaChofer(sistema.listaChoferes());
 			ventanaConfig.actualizoListaVehiculo(sistema.listaVehiculos());
 			ventanaConfig.actualizoListaCliente(sistema.listaUsuarios());
@@ -134,9 +137,10 @@ public class ControladorConfig implements ActionListener{
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirOutput(nombre_archivo);
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
-//			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
-//			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
-//			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
+			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
+			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
+			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
+			
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
 			ventanaConfig.dispose();

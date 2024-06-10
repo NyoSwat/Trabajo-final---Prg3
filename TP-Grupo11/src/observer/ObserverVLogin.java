@@ -34,7 +34,7 @@ public class ObserverVLogin implements Observer{
 			throw new InvalidParameterException();
 		if(arg.toString().equals("Correcto")) {
 			ClienteHumano nuevo = new ClienteHumano(this.rc,this.sistema,this.sistema.getUsuarioLogeado());
-			new ControladorCliente(sistema, ventana, null);
+			new ControladorCliente(this.rc, this.ventana, this.sistema.getUsuarioLogeado());
 			new Thread(nuevo);
 			this.ventana.dispose();
 		}

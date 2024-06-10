@@ -351,7 +351,7 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	}
 	
 	public void setCantHijos(String texto) {
-		this.cantPedidoField.setText(texto);
+		this.cantHijosField.setText(texto);
 	}
 	
 	public String getTipoVehiculo() {
@@ -429,6 +429,18 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	
 	public int getCantViajesChofer() {
 		return Integer.parseInt(this.cantViajesChoferField.getText());
+	}
+	
+	public void setCantPedidosCliente(int cantidad) {
+		this.cantPedidoField.setText(String.valueOf(cantidad));
+	}
+	
+	public void setCantClientes(int cantidad) {
+		this.cantClienteField.setText(String.valueOf(cantidad));
+	}
+	
+	public void setCantViajesChofer(int cantidad) {
+		this.cantViajesChoferField.setText(String.valueOf(cantidad));
 	}
 	
 	@Override

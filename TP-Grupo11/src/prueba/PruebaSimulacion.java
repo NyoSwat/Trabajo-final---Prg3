@@ -18,7 +18,7 @@ public class PruebaSimulacion {
 	public static void main(String[] args) {
 	
 		IPersistencia<Serializable> datos = new PersistenciaBinaria();
-		SistemaDTO sistemaDTO;
+		SistemaDTO sistemaDTO = null;
 		Sistema sistema = Sistema.getInstance();
 		
 		
@@ -34,8 +34,7 @@ public class PruebaSimulacion {
 		catch(ClassNotFoundException e) {
 			
 		}
-		
-		Simulador simu = new Simulador(sistema, 2, 2, 3);
+		Simulador simu = new Simulador(sistema, sistemaDTO.getCantClienteSimulacion(), sistemaDTO.getCantPedidosCliente(), sistemaDTO.getCantViajeChofer());
 		simu.iniciarSimulacion();
 	}
 }

@@ -4,20 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import concurrencia.ClienteThread;
+import concurrencia.RecursoCompartido;
 import modelo.Cliente;
 import modelo.Sistema;
+import modelo.Usuario;
 import vista.VentanaCliente;
 import vista.VentanaLogin;
 
 public class ControladorCliente implements ActionListener{
 	
-	private Sistema sistema;
-	private Cliente cliente ;
+	private RecursoCompartido rc;
+	private Usuario cliente ;
 	private VentanaCliente vista;
 	
-	public ControladorCliente(Sistema sistema,VentanaLogin ventana,Cliente cliente) {
-		this.vista = new VentanaCliente(sistema.getUsuarioLogeado().getNombre());
-		this.sistema = sistema;
+	public ControladorCliente(RecursoCompartido rc,VentanaLogin ventana,Usuario cliente) {
+		this.vista = new VentanaCliente(cliente.getNombre());
+		this.rc = rc;
 		this.cliente = cliente;
 		this.vista.setControlador(this);
 		this.vista.setVisible(true);
@@ -36,6 +38,7 @@ public class ControladorCliente implements ActionListener{
 		}
 		else if(event.getActionCommand().equals("pagar")) {
 			System.out.println("QUiero pagar");
+			rc.pagaViaje(this.cliente);
 		}
 		else if(event.getActionCommand().equals("salir")) {
 			System.out.println("QUiero salir");
