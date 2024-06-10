@@ -56,7 +56,7 @@ public class RecursoCompartido extends Observable{
 		this.vehiculos = vehiculos; 	//array que almacena todos los vehiculos para ver si hay alguno que satisfaga el pedido
 		this.vehiculosDisp = vehiculos;	//array que pone y saca los vehiculos (disponibilidad para asignar al viaje)
 		this.choferes = choferes;
-		this.choferesDisp=choferes;		//array que pone y saca los choferes (disponibilidad para asignarle un viaje)
+//		this.choferesDisp=choferes;		//array que pone y saca los choferes (disponibilidad para asignarle un viaje)
 		
 		this.cantClientesThread=0;
 		this.hayClienteHumano=false;

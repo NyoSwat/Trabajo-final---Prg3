@@ -1,7 +1,7 @@
 package concurrencia;
 
 
-import controlador.ControladorVChofer;
+import controlador.ControladorChofer;
 import modelo.Chofer;
 import modelo.MiObservable;
 import modelo.Sistema;
@@ -40,7 +40,7 @@ public class ChoferThread extends MiObservable implements Runnable {
 
 	public void run() {
 	int i=0;
-		new ControladorVChofer(this.rc,Sistema.getInstance(),this);
+		
 	  while(this.rc.isHayClienteHumano()&& (i<this.CantMaxdeViajes))//dos condiciones 
 	  {	
 		this.rc.tomaViaje(this);
@@ -75,7 +75,7 @@ public class ChoferThread extends MiObservable implements Runnable {
 		CantMaxdeViajes = cantMaxdeViajes;
 	}
 	public String getNombre() {
-		return chofer.getNombre();
+		return this.chofer.getNombre();
 	}
 
 }

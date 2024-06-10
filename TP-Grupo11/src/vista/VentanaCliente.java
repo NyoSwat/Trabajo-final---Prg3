@@ -97,7 +97,7 @@ public class VentanaCliente extends JFrame {
 		
 		this.exitBtn = new JButton("Salir");
 		exitBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		this.exitBtn.setActionCommand("Salir");
+		this.exitBtn.setActionCommand("salir");
 		this.exitBtn.setBounds(112, 50, 75, 25);
 		this.contentPane.add(exitBtn);
 		

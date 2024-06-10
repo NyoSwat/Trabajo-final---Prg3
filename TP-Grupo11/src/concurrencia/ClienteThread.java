@@ -20,13 +20,13 @@ public class ClienteThread extends MiObservable implements Runnable{
 	private int CantMaxdeViajes; 
 	private int CantdeViajes;
 	private Random ran = new Random();
-	private Cliente cliente;
+	private String nombre;
 	
-	public ClienteThread(RecursoCompartido rc, String nombre, DatosPedido datosP, int cantMaxdeViajes) {
+	public ClienteThread(RecursoCompartido rc, String nombre, int cantMaxdeViajes) {
 		super();
 		this.rc = rc;
 		this.nombre = nombre;
-		this.datosP = datosP;
+//		this.datosP = datosP;
 		CantMaxdeViajes = cantMaxdeViajes;
 		
 	}

@@ -9,7 +9,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class PersistenciaXML implements IPersistencia<Serializable>{
+public class PersistenciaBinaria implements IPersistencia<Serializable>{
 	
 	private FileInputStream fileInput;
 	private FileOutputStream fileOutput;

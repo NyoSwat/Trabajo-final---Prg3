@@ -11,7 +11,7 @@ public class SistemaThread extends Thread {
     private ArrayList<Viaje> observable;
     private Viaje viaje;
     
-  public SistemaThread(RecursoCompartido rc,Viaje viaje) {
+  public SistemaThread(RecursoCompartido rc/*,Viaje viaje*/) {
 		this.rc = rc;
 		this.observable=this.rc.getViajes();
 		this.viaje = viaje;

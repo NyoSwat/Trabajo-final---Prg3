@@ -3,6 +3,7 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import concurrencia.RecursoCompartido;
 import modelo.Sistema;
 import observer.ObserverVLogin;
 import vista.VentanaLogin;
@@ -13,12 +14,12 @@ public class ControladorLogin implements ActionListener{
 	private Sistema sistema;
 	private ObserverVLogin ojo;
 	
-	public ControladorLogin(Sistema sistema) {
+	public ControladorLogin(RecursoCompartido rc,Sistema sistema) {
 		this.sistema = sistema;
 		this.vista = new VentanaLogin();
 		this.vista.setControlador(this);
 		this.vista.setVisible(true);
-		this.ojo = new ObserverVLogin(this.vista,sistema);
+		this.ojo = new ObserverVLogin(rc,this.vista,sistema,sistema);
 	}
 
 	@Override

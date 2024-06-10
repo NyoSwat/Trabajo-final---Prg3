@@ -6,6 +6,9 @@ import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
+import concurrencia.ClienteHumano;
+import concurrencia.ClienteThread;
+import concurrencia.RecursoCompartido;
 import controlador.ControladorCliente;
 import modelo.Sistema;
 import vista.VentanaLogin;
@@ -13,10 +16,14 @@ import vista.VentanaLogin;
 public class ObserverVLogin implements Observer{
 	
 	private VentanaLogin ventana;
-	private Observable observable;
+	private Sistema sistema;
+	private Observable observable;//sistema
+	private RecursoCompartido rc;
 	
-	public ObserverVLogin(VentanaLogin ventana,Observable observable) {
+	public ObserverVLogin(RecursoCompartido rc,VentanaLogin ventana,Observable observable,Sistema sistema) {
 		this.ventana = ventana;
+		this.sistema = sistema;
+		this.rc = rc;
 		this.observable = observable;
 		observable.addObserver(this);
 	}
@@ -26,6 +33,9 @@ public class ObserverVLogin implements Observer{
 		if( o != this.observable )
 			throw new InvalidParameterException();
 		if(arg.toString().equals("Correcto")) {
+			ClienteHumano nuevo = new ClienteHumano(this.rc,this.sistema,this.sistema.getUsuarioLogeado());
+			new ControladorCliente(sistema, ventana, null);
+			new Thread(nuevo);
 			this.ventana.dispose();
 		}
 		else if(arg.toString().equals("Incorrecto")) {

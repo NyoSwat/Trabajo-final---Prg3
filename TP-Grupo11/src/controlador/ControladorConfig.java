@@ -21,7 +21,7 @@ import modelo.Usuario;
 import modelo.Vehiculo;
 import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
-import persistencia.PersistenciaXML;
+import persistencia.PersistenciaBinaria;
 import persistencia.SistemaDTO;
 import vista.VentanaConfig;
 import vista.VentanaNuevoCliente;
@@ -110,7 +110,7 @@ public class ControladorConfig implements ActionListener{
 	
 	private void deSerializar() {
 		try {
-			IPersistencia<Serializable> persistir = new PersistenciaXML();
+			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirInput(nombre_archivo);
 			SistemaDTO sistemaDTO = (SistemaDTO) persistir.leer();
 			ConversorDTO.sistemaDTOToSistema(Sistema.getInstance(), sistemaDTO);
@@ -131,7 +131,7 @@ public class ControladorConfig implements ActionListener{
 	
 	private void serializar() {
 		try {
-			IPersistencia<Serializable> persistir = new PersistenciaXML();
+			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 			persistir.abrirOutput(nombre_archivo);
 			SistemaDTO sistemaDTO = ConversorDTO.sistemaToSistemaDTO(Sistema.getInstance());
 //			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
@@ -147,7 +147,7 @@ public class ControladorConfig implements ActionListener{
 	}
 	
 	private void deleteDatos() {
-		IPersistencia<Serializable> persistir = new PersistenciaXML();
+		IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 		persistir.deleteFile(nombre_archivo);
 		ventanaConfig.dispose();
 	}

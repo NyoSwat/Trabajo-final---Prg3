@@ -7,21 +7,25 @@ import modelo.DatosPedido;
 import modelo.MiObservable;
 import modelo.Pedido;
 import modelo.Sistema;
+import modelo.Usuario;
 import modelo.Viaje;
 
 public class ClienteHumano extends MiObservable implements Runnable{
-	Sistema sistema = Sistema.getInstance();
+	
+	private Sistema sistema ;;
 	private RecursoCompartido rc;
-	private String nombre;
-	private Pedido pedido;
+//	private String nombre;
+//	private Pedido pedido;
 	private Viaje viaje;
 	private boolean ventanaActiva;
 	
+	private Usuario usuario;
 	
-	public ClienteHumano(RecursoCompartido rc, String nombre, Pedido pedido) {
+	
+	public ClienteHumano(RecursoCompartido rc,Sistema sistema ,Usuario usuario) {
 		this.rc = rc;
-		this.nombre = nombre;
-		this.pedido = pedido;
+		this.sistema = sistema;
+//		this.pedido = pedido;
 		this.rc.setHayClienteHumano(true);
 	}
 	public void run() {
@@ -32,7 +36,7 @@ public class ClienteHumano extends MiObservable implements Runnable{
 		
 	}
 	public String getNombre() {
-		return nombre;
+		return usuario.getNombre();
 	}
 	
 
