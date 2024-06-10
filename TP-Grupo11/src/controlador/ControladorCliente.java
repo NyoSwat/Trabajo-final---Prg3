@@ -53,6 +53,7 @@ public class ControladorCliente implements ActionListener{
 		}
 		else if(event.getActionCommand().equals("salir")) {
 			System.out.println("QUiero salir");
+			this.rc.terminarCliente();
 			this.vista.dispose();
 		}
 	}

@@ -12,7 +12,7 @@ import modelo.Viaje;
 
 public class ClienteHumano extends MiObservable implements Runnable{
 	
-	private Sistema sistema ;;
+	private Sistema sistema ;
 	private RecursoCompartido rc;
 //	private String nombre;
 //	private Pedido pedido;

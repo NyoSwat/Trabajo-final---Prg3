@@ -391,6 +391,15 @@ public class Sistema extends Observable{
     	pedido = new Pedido(cantPasajeros,zona,mascota,baul,fechaHora);
     	generarViaje(cliente,pedido,distancia);
     }
+    
+    public Pedido crearPedido(int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha) 
+    		throws IllegalArgumentException 
+    {
+    	if(cantPasajeros < 0)
+    		throw new IllegalArgumentException("Cantidad de pasajeros invalida.");
+    	return new Pedido(cantPasajeros,zona,baul,mascota,new GregorianCalendar());
+    		
+    }
 
     /**
      * Metodo que crea el viaje y asigna vehiculo y chofer
@@ -535,6 +544,10 @@ public class Sistema extends Observable{
     
     public void setUsuarioLogeado(Usuario usuario) {
     	this.usuarioLogeado = usuario;
+    }
+    
+    public void addIViaje(IViaje viaje) {
+    	this.viajes.add(viaje);
     }
     
 }

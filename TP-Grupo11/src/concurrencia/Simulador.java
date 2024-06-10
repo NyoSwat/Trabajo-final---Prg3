@@ -44,8 +44,8 @@ public class Simulador {
 			new Thread(nuevo).start();
 		}
 		
-		new Thread(new SistemaThread(this.rc)).start();;
-		
+		new Thread(new SistemaThread(this.rc,this.sistema));
+		new VentanaGeneral();
 	}
 	
 }
