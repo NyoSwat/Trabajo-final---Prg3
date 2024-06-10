@@ -7,13 +7,14 @@ import concurrencia.RecursoCompartido;
 import modelo.Evento;
 import vista.VentanaGeneral;
 
-public class ObservadorVGeneral implements Observer {
-	private RecursoCompartido observable;
+public class ObserverVGeneral implements Observer {
+	
+	private Observable observable; //recurso compartido
 	//referencia a ventana que informa datos generales,cambiar tipo en base a los
     //diseñado por la vista
 	private VentanaGeneral ventana;
    
-	public ObservadorVGeneral(RecursoCompartido observable, VentanaGeneral ventana) {
+	public ObserverVGeneral(RecursoCompartido observable, VentanaGeneral ventana) {
 		super();
 		this.observable = observable;
 		this.ventana = ventana;
@@ -22,14 +23,12 @@ public class ObservadorVGeneral implements Observer {
 
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
-		
-		if(o==this.observable)
-		{	Evento evento = (Evento) arg;
-			this.ventana.appendText(evento.getDescripcion());
-					
+		if(this.observable == o) {
+			String mensaje = (String) arg;
+			this.ventana.agregarComentario(mensaje);
 		}
-		else 
+		else {
 			throw new IllegalArgumentException();
-		
+		}
 	}
 }

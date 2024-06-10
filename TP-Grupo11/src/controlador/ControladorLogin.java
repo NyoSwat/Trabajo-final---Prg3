@@ -14,12 +14,12 @@ public class ControladorLogin implements ActionListener{
 	private Sistema sistema;
 	private ObserverVLogin ojo;
 	
-	public ControladorLogin(RecursoCompartido rc,Sistema sistema) {
+	public ControladorLogin(RecursoCompartido rc,Sistema sistema,int cantPedidos) {
 		this.sistema = sistema;
 		this.vista = new VentanaLogin();
 		this.vista.setControlador(this);
 		this.vista.setVisible(true);
-		this.ojo = new ObserverVLogin(rc,this.vista,sistema,sistema);
+		this.ojo = new ObserverVLogin(rc,this.vista,sistema,cantPedidos);
 	}
 
 	@Override

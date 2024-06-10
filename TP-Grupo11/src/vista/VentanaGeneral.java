@@ -32,10 +32,8 @@ public class VentanaGeneral extends JFrame{
         
     }
     
-  //agrega Eugenia (aviso por si rompe algo) BORRAR COMENTARIO
-    public void appendText(String arg)
-    {
-	    this.area.append(arg+"\n");
+    public void agregarComentario(String mensaje){
+	    this.area.append(mensaje+"\n");
     }
 
 }

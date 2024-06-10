@@ -8,10 +8,14 @@ import excepciones.ExistenteUsuarioException;
 import excepciones.FaltaChoferException;
 import excepciones.FaltaVehiculoException;
 import modelo.Chofer;
+import modelo.Cliente;
 import modelo.EventoChofer;
 import modelo.EventoCliente;
 import modelo.EventoSistema;
+import modelo.IViaje;
 import modelo.Pedido;
+import modelo.Sistema;
+import modelo.Usuario;
 import modelo.Vehiculo;
 import modelo.Viaje;
 //Los carteles de los eventos son muy poco descriptivos ,se podría solucionar con una referecia al viaje
@@ -19,7 +23,7 @@ import modelo.Viaje;
 //
 //Los métodos no están realizando los cambios base, solo planteé una estructura inicial
 public class RecursoCompartido extends Observable{
-	private int cantClientesThread; 
+	
 	private int cantChoferes;
 	private int cantClientesHumano;
 	
@@ -34,16 +38,17 @@ public class RecursoCompartido extends Observable{
 	
 	private Viaje viajeAct; 
 	
-	private ArrayList<Viaje> viajes = new ArrayList<Viaje>();//en espera?
+	private ArrayList<IViaje> viajes = new ArrayList<IViaje>();//en espera?
     private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 	private ArrayList<Vehiculo> vehiculosDisp = new ArrayList<Vehiculo>();//necesito los disponibles
 	private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
 	private ArrayList<ChoferThread> choferesDisp = new ArrayList<ChoferThread>();//disponibles que no se encuentran 
 	//en un viaje
+	private Sistema sistema;
 	
 
 	
-	public RecursoCompartido(ArrayList<Vehiculo> vehiculos,ArrayList<Chofer> choferes) {
+	public RecursoCompartido(Sistema sistema,int cantClientes) {
 	    int i;
 		this.pedidoAceptado = false;
 		this.viajeSolicitado = false;
@@ -52,13 +57,14 @@ public class RecursoCompartido extends Observable{
 		this.viajePago = false;
 		this.viajeFinalizado = false;
 		
-		
-		this.vehiculos = vehiculos; 	//array que almacena todos los vehiculos para ver si hay alguno que satisfaga el pedido
-		this.vehiculosDisp = vehiculos;	//array que pone y saca los vehiculos (disponibilidad para asignar al viaje)
-		this.choferes = choferes;
+		this.sistema = sistema;
+		this.vehiculos = sistema.listaVehiculos(); 	//array que almacena todos los vehiculos para ver si hay alguno que satisfaga el pedido
+		this.vehiculosDisp = sistema.listaVehiculos();	//array que pone y saca los vehiculos (disponibilidad para asignar al viaje)
+		this.choferes = sistema.listaChoferes();
+		this.cantClientesHumano = cantClientes;
+		this.cantChoferes = choferes.size();
 //		this.choferesDisp=choferes;		//array que pone y saca los choferes (disponibilidad para asignarle un viaje)
 		
-		this.cantClientesThread=0;
 		this.hayClienteHumano=false;
 		//guardo la referecia al recurso compartido en cada choferThread
 //		for(i=0;i<choferes.size();i++)
@@ -69,70 +75,57 @@ public class RecursoCompartido extends Observable{
 	}
 
 
+	public Pedido generarPedido(int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha) {
+		return new Pedido(cantPasajeros,zona,mascota,baul,fecha);
+	}
 	
 	
 	
 	//RECHAZA el pedido cuando no hay autos que satisfagan las condiciones pedidas
 	//o cuando NO HAY CHOFERES TRABAJANDO
 	//->es decir cuando no puede entrar a la simulacion
-	void  validarPedido(Pedido p)
-	{  boolean ExisteVehiculo = false;
-   	   int i = 0;
-	   boolean ExisteChofer = choferes.size()>0;
-	 if(ExisteChofer)  
-	 {  while( i < vehiculos.size() && !ExisteVehiculo)
-	   {  if(vehiculos.get(i).getCantMaxPasajeros() >= p.getCantPasajeros()
-   				&& !(p.isBaul()==true && vehiculos.get(i).isBaul()==false) 
-   				&& !(p.isPetFriendly()==true && vehiculos.get(i).isPetFriendly()==false) ) 
-   			ExisteVehiculo = true;
-   		  else
-   			ExisteVehiculo = false;
-   		i++;
-   	}
-	}
-      this.pedidoAceptado= ExisteChofer && ExisteVehiculo;
+	public boolean validarPedido(Pedido pedido,ClienteThread cliente,int distancia){
+   	   	String mensaje;
+   	   	
+   	   	if(cantChoferes > 0){  
+   	   		mensaje = cliente.getCliente().getNombre()+" genero un pedido valido";
+   	   		this.solicitaViaje(cliente,pedido,distancia);
+   	   		setChanged();
+   	   		notifyObservers(mensaje);
+   	   		cliente.setCantPedidos();
+   	   		return true;
+   	   	}
+   	   	else {
+   	   		mensaje = "No se pueden generar mas pedidos. No hay mas choferes disponibles.";
+   	   		setChanged();
+   	   		notifyObservers(mensaje);
+   	   		return false;
+   	   	}
     }
 
 	//clienteThread solicita Viaje sobre pedido aceptado
-	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido)
-	{  EventoCliente evento;
-	   if(cliente.getCantdeViajes()==0)
-		   this.cantClientesThread++; //entra un cliente robot a la simulación
-				 
-		while((this.choferes.size()>0&& this.hayClienteHumano)&&!this.pedidoAceptado)
-	   {  try
-		  {	
-		   	wait();
-		  }
-          catch (InterruptedException e)
-		  {	
-	      }
-	   }
-	   if(this.choferes.size()>0&& this.hayClienteHumano)
-	   {this.pedidoAceptado=false;//////verrrrr
-		   
-		   // Pedido aceptado
-	     //crea viaje
-		 this.viajeAct= new Viaje(cliente,pedido);
-		 this.viajeAct.setVehiculo(null);
-	     cliente.setViaje(this.viajeAct);
-	     
-	     //agrego este viaje a la lista
-	     poneViaje(viajeAct);
-	 
-	     //cambio condicion
-         this.viajeSolicitado=true;
-         //crea el evento ocurrido
-         evento=new EventoCliente("Viaje solicitado",this.viajeAct,cliente);
-         
-         //anuncia evento a ObservadorVchofer
-         cliente.setChangedExternamente(); 
-         cliente.notifyObservers(evento);
-         
-       //anuncia evento a ObservadorVGeneral
- 	    this.setChanged();
- 	    this.notifyObservers(evento);
-      }
+	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido,int distancia){  
+	   String mensaje;
+		while(this.cantChoferes>0 && this.cantClientesHumano > 0 && this.choferes.isEmpty()){  
+			try{	
+				wait();
+			}
+			catch (InterruptedException e){	
+			}
+		}
+		
+		if(this.cantChoferes > 0 && this.cantClientesHumano > 0){
+			//Como el pedido el valido genero el viaje
+			IViaje viaje = this.sistema.crearViaje((Cliente)cliente.getCliente(), pedido, distancia);
+			//Guardo el viaje 
+			this.viajes.add(viaje);
+			mensaje = viaje.getCliente().getNombre()+" solicito un viaje y fue aceptado.";
+		}
+		else {
+			mensaje = cliente.getCliente().getNombre()+" solicito un viaje y fue rechazado por falta de chofer.";
+		}
+		setChanged();
+		notifyObservers(mensaje);
 	}
 	
 	
@@ -399,13 +392,6 @@ public class RecursoCompartido extends Observable{
     	   this.getChoferesDisp().add(chofer);}
        
    }
-   public ArrayList<Viaje> getViajes() {
-		return viajes;
-	}
-
-	public void setViajes(ArrayList<Viaje> viajes) {
-		this.viajes = viajes;
-	}
 
 	public boolean isHayClienteHumano() {
 		return hayClienteHumano;

@@ -16,16 +16,16 @@ import vista.VentanaLogin;
 public class ObserverVLogin implements Observer{
 	
 	private VentanaLogin ventana;
-	private Sistema sistema;
 	private Observable observable;//sistema
 	private RecursoCompartido rc;
+	private int cantPedidos;
 	
-	public ObserverVLogin(RecursoCompartido rc,VentanaLogin ventana,Observable observable,Sistema sistema) {
+	public ObserverVLogin(RecursoCompartido rc,VentanaLogin ventana,Observable observable,int cantPedidos) {
 		this.ventana = ventana;
-		this.sistema = sistema;
 		this.rc = rc;
 		this.observable = observable;
 		observable.addObserver(this);
+		this.cantPedidos = cantPedidos;
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class ObserverVLogin implements Observer{
 		if( o != this.observable )
 			throw new InvalidParameterException();
 		if(arg.toString().equals("Correcto")) {
-			ClienteHumano nuevo = new ClienteHumano(this.rc,this.sistema,this.sistema.getUsuarioLogeado());
-			new ControladorCliente(this.rc, this.ventana, this.sistema.getUsuarioLogeado());
-			new Thread(nuevo);
+			ClienteThread nuevo = new ClienteThread(this.rc,((Sistema)observable).getUsuarioLogeado(),this.cantPedidos);
+			new ControladorCliente(this.rc, this.ventana, nuevo);
+			new Thread(nuevo).start();
 			this.ventana.dispose();
 		}
 		else if(arg.toString().equals("Incorrecto")) {

@@ -422,6 +422,10 @@ public class Sistema extends Observable{
     	finalizarViaje(viaje);
     }
     
+    public IViaje crearViaje(Cliente cliente,Pedido pedido,int distancia) {
+    	return FactoryViaje.armarViaje(cliente,pedido, distancia);
+    }
+    
     /**Asigna el vehiculo correspondiente al pedido realizado
      * <b>pre:</b> viaje debe ser distinto de null
      * @param viaje viaje que se esta preparando

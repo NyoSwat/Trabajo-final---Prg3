@@ -144,5 +144,9 @@ public class VentanaCliente extends JFrame {
 	public void setUsuarioLabel(String nombre) {
 		this.nombreLabel.setText(nombre);
 	}
+	
+	public void agregarComentario(String mensaje) {
+		this.textArea.append(mensaje+"\n");
+	}
 
 }
