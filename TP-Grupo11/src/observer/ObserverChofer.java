@@ -5,16 +5,18 @@ import java.util.Observer;
 
 import concurrencia.ChoferThread;
 import controlador.ControladorChofer;
+import modelo.evento.EventoChofer;
+import vista.VentanaChofer;
 
 
 public class ObserverChofer implements Observer {
-	private Observable observable;
-//	private Viaje viajeObserrvado;
-	private ControladorChofer controlador;
+	
+	private Observable observable;// rc
+	private VentanaChofer vista;
 	private ChoferThread chofer;
 	
-	public ObserverChofer(Observable observable, ControladorChofer controlador,ChoferThread chofer) {
-		this.controlador = controlador;
+	public ObserverChofer(Observable observable, VentanaChofer vista,ChoferThread chofer) {
+		this.vista = vista;
 		this.observable = observable;
 		this.observable.addObserver(this);
 		this.chofer = chofer;
@@ -22,10 +24,9 @@ public class ObserverChofer implements Observer {
 	
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
-		String text = (String)arg;
-		if(text.equalsIgnoreCase("SolicitaViaje")) {
-			System.out.println("entro");
-			this.controlador.actualizaVentana("Se solicito un viaje");
+		if(this.observable == o) {
+//			EventoChofer e = (EventoChofer) arg;
+			
 		}
 	}
 	

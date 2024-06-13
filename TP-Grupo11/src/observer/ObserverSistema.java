@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import concurrencia.SistemaThread;
-import modelo.EventoSistema;
+import modelo.evento.EventoSistema;
 import vista.VentanaGeneral;
 
 public class ObserverSistema implements Observer{

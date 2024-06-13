@@ -45,7 +45,7 @@ public class ControladorCliente implements ActionListener{
 			if(cliente.getViajeTerminado()) {
 				this.rc.pagaViaje(cliente);
 			}else {
-				if(cliente.getViajeAceptado())
+				if(cliente.getViajeTerminado())
 					actualizarInformacion("No se puede pagar: viaje en proceso");
 				else
 					actualizarInformacion("No se puede pagar: sin viajes");

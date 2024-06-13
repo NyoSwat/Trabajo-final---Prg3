@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import concurrencia.ClienteThread;
+import modelo.evento.EventoCliente;
 import vista.VentanaCliente;
 
 public class ObserverCliente implements Observer {
@@ -22,8 +23,10 @@ public class ObserverCliente implements Observer {
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(this.observable == o){  
-			String arg1 = (String) arg;
-			//Como diferencio a que ventana publicar?
+			EventoCliente e = (EventoCliente) arg;
+			if(e.getCliente().equals(cliente)) {
+				ventana.escribeJTextArea(e.getMensaje()+"\n");
+			}
 		}
 	}
 	

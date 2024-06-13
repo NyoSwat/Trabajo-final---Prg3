@@ -18,9 +18,9 @@ public class SistemaThread extends Thread {
     
     public void run() {
 	
-    	while(this.rc.isHayClienteHumano() && this.rc.getCantChoferes() > 0){	
+    	while(this.rc.getCantClientes() > 0 && this.rc.getCantChoferes() > 0){	
     		this.rc.asignaVehiculo(this.vehiculosDisponibles);
-    		UtilThread.espera();
+    		UtilThread.espera(5);
     	}
 	}
 

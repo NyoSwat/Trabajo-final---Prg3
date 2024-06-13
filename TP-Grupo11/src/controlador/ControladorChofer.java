@@ -22,12 +22,9 @@ public class ControladorChofer{
 		this.vista = new VentanaChofer();
 		this.vista.setVisible(true);
 		this.vista.setNombre(chofer.getNombre());
-		this.ojo = new ObserverChofer(rc,this,chofer);
+		this.ojo = new ObserverChofer(rc,vista,chofer);
 	
 	}
 
-	public void actualizaVentana(String texto) {
-		this.vista.agregarComentario(texto);
-	}
 	
 }

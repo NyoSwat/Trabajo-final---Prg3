@@ -16,6 +16,7 @@ public  class Viaje extends MiObservable implements IViaje {
     private double distanciaRecorrida; 
     private Vehiculo vehiculo;
     public static double valorBase = 1000.0; 
+    private boolean estadoViaje = false;
 
     /**
      * Constructor Viaje<br>
@@ -102,6 +103,14 @@ public  class Viaje extends MiObservable implements IViaje {
     	this.chofer = chofer;
     }
 
+    public boolean getEstadoViaje() {
+    	return this.estadoViaje;
+    }
+    
+    public void setEstadoViaje(boolean estado) {
+    	this.estadoViaje = estado;
+    }
+    
     /**
      * Establece un nuevo valor base para los viajes.
      * @param valorBase El nuevo valor base a asignar.

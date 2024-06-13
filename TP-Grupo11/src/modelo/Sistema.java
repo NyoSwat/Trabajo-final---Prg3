@@ -178,7 +178,7 @@ public class Sistema extends Observable{
     	
     	if(chofer != null) {
     		choferes.remove(chofer);
-    		choferes.add(FactoryChofer.crearChofer(nombre, dni, categoria));
+    		//modificar
     	}else {
     		throw new ExistenteChoferException("El chofer no existe");
     	}
@@ -439,7 +439,7 @@ public class Sistema extends Observable{
      * <b>pre:</b> viaje debe ser distinto de null
      * @param viaje viaje que se esta preparando
      */
-    private void asignarVehiculo(IViaje viaje) {
+    public void asignarVehiculo(IViaje viaje) {
     	assert viaje == null:"No se pudo asignar vehiculo, viaje es null.";
     	Integer prioridad = null;
     	Integer prioridadMax = null;
@@ -464,7 +464,7 @@ public class Sistema extends Observable{
      * @param viaje
      * @return retorna el chofer asignado
      */
-    private void asignarChofer(IViaje viaje) {
+    public void asignarChofer(IViaje viaje) {
     	assert viaje == null : "No se pudo asignar chofer,el viaje es null";
     	Chofer choferAsignado = null;
     	

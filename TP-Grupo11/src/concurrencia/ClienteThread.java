@@ -13,8 +13,7 @@ public class ClienteThread extends MiObservable implements Runnable{
 	private int cantViajes;
 	private Random ran = new Random();
 	private Usuario cliente;
-	private boolean viajeTerminado;
-	private boolean viajeAceptado; 
+	private boolean estadoPedido;
 	
 	public ClienteThread(RecursoCompartido rc,Usuario cliente, int cantViajes) {
 		this.rc = rc;
@@ -24,21 +23,27 @@ public class ClienteThread extends MiObservable implements Runnable{
 	}
 	
 	public void run() {
-	 Pedido pedido;
-	 boolean valido;
 	 
-	  while(this.cantViajes > 0 && rc.isHayClienteHumano()){ 
-		 								// cantPasajeros,zona,baul,mascota,calendario
-		 pedido = this.rc.generarPedido(ran.nextInt(11),this.generarZona(ran.nextInt(2)),ran.nextBoolean(),ran.nextBoolean(),new GregorianCalendar());
-		 valido = this.rc.validarPedido(pedido,this,ran.nextInt(70));//solicita aceptacion
-		 UtilThread.espera();
-//		this.rc.solicitaViaje(this, pedido);
-//		UtilThread.espera();
-//		 this.rc.pagaViaje(this);
-		 if(valido)
-			 cantViajes--;
+	  while(this.cantViajes > 0 && rc.getCantClientes() > 0){ 
+		 this.estadoPedido = false;
+		 this.rc.validarPedido(this,ran.nextInt(11),this.generarZona(ran.nextInt(2)),ran.nextBoolean(),ran.nextBoolean(),new GregorianCalendar(),ran.nextInt(70));//solicita aceptacion
+		 UtilThread.espera(5);
+		 if(this.estadoPedido) 
+			 this.rc.pagaViaje(this);
 	  }
 		
+	}
+	
+	public void generarPedido() {
+	}
+	
+	public void PagarViaje() {
+		
+	}
+	
+	public boolean getViajeTerminado() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public String generarZona(int num) {
@@ -57,5 +62,16 @@ public class ClienteThread extends MiObservable implements Runnable{
 	public Usuario getCliente() {
 		return this.cliente;
 	}
+
+	public boolean isEstadoPedido() {
+		return estadoPedido;
+	}
+
+	public void setEstadoPedido(boolean estadoPedido) {
+		this.estadoPedido = estadoPedido;
+	}
+
+
+	
 	
 }

@@ -6,7 +6,6 @@ import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
-import concurrencia.ClienteHumano;
 import concurrencia.ClienteThread;
 import concurrencia.RecursoCompartido;
 import controlador.ControladorCliente;
@@ -35,7 +34,7 @@ public class ObserverVLogin implements Observer{
 		if(arg.toString().equals("Correcto")) {
 			ClienteThread nuevo = new ClienteThread(this.rc,((Sistema)observable).getUsuarioLogeado(),this.cantPedidos);
 			new ControladorCliente(this.rc, this.ventana, nuevo);
-			new Thread(nuevo).start();
+			new Thread(nuevo);
 			this.ventana.dispose();
 		}
 		else if(arg.toString().equals("Incorrecto")) {

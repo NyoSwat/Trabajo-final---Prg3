@@ -54,6 +54,14 @@ public abstract class ViajeDecorador implements IViaje,Comparable<IViaje> {
     public double getDistancia() {
     	return viaje.getDistancia();
     }
+    
+    public boolean getEstadoViaje() {
+    	return viaje.getEstadoViaje();
+    }
+    
+    public void setEstadoViaje(boolean estado) {
+    	viaje.setEstadoViaje(estado);
+    }
 
     /**
      * Obtiene el valor de ValorBase
