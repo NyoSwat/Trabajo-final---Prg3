@@ -149,7 +149,7 @@ public class RecursoCompartido extends Observable{
     		}
     	}
     	
-    	if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0) {
+    	if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0 ) {
     		viaje = this.viajes.get(indexViajeConVehiculo);
     		viaje.setChofer(chofer.getChofer());
     		viaje.setViajeIniciado(true);
@@ -230,7 +230,7 @@ public class RecursoCompartido extends Observable{
 				} catch (InterruptedException e1) {
 				}
 			}
-			if(indexViajeCliente >= 0) {
+			if(indexViajeCliente >= 0 ) {
 				//Metodo pagar
 				this.viajes.get(indexViajeCliente).setViajePagado(true);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
@@ -251,10 +251,10 @@ public class RecursoCompartido extends Observable{
 	public int indexViajeCliente(ClienteThread cliente) {
 		int i = 0;
 		// si viaje no es vacio  && cliente de viaje == cliente  && estado viaje == true (termiando)
-		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado())
+		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && this.viajes.get(i).isViajePagado())
 			i++;
 		
-		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado()) 
+		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && !this.viajes.get(i).isViajePagado()) 
 			return i;
 		else 
 			return -1;
