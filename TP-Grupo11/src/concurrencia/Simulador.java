@@ -39,6 +39,7 @@ public class Simulador {
 	 */
 	public void iniciarSimulacion() {
 		// Crear hilos para choferes
+		System.out.println(sistema.listaChoferes().size());
 		for (Chofer chofer : sistema.listaChoferes()) {
 			ChoferThread nuevo = new ChoferThread(this.rc, chofer, this.cantViajes);
 			new ControladorChofer(this.rc, this.sistema, nuevo);

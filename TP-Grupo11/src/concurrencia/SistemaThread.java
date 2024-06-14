@@ -13,7 +13,7 @@ public class SistemaThread extends Thread {
 	
     private RecursoCompartido rc; // Recurso compartido utilizado por los hilos
     private Sistema sistema; // Referencia al sistema de transporte
-    private ArrayList<Vehiculo> vehiculosDisponibles; // Lista de vehículos disponibles
+    private static ArrayList<Vehiculo> vehiculosDisponibles; // Lista de vehículos disponibles
     
     /**
      * Constructor de SistemaThread.
@@ -23,7 +23,7 @@ public class SistemaThread extends Thread {
     public SistemaThread(RecursoCompartido rc, Sistema sistema) {
 		this.rc = rc;
 		this.sistema = sistema;
-		this.vehiculosDisponibles = sistema.listaVehiculos(); // Todos los vehículos del sistema
+		vehiculosDisponibles = sistema.listaVehiculos(); // Todos los vehículos del sistema
     }
     
     /**
@@ -32,10 +32,7 @@ public class SistemaThread extends Thread {
      */
     public void run() {
     	while (this.rc.getCantClientes() > 0 && this.rc.getCantChoferes() > 0) {	
-    		this.rc.asignaVehiculo(this.vehiculosDisponibles); // Asigna vehículos a los viajes
-    		// Actualiza la lista de vehículos disponibles
-    		this.vehiculosDisponibles = sistema.listaVehiculos();
-    		// UtilThread.espera(5); // Simula el tiempo de espera (opcional)
+    		this.rc.asignaVehiculo(vehiculosDisponibles); // Asigna vehículos a los viajes
     	}
 	}
 
@@ -43,8 +40,8 @@ public class SistemaThread extends Thread {
      * Agrega un vehículo a la lista de vehículos disponibles.
      * @param vehiculo El vehículo a agregar.
      */
-    public void addVehiculo(Vehiculo vehiculo) {
-    	this.vehiculosDisponibles.add(vehiculo);
+    public static void addVehiculo(Vehiculo vehiculo) {
+    	vehiculosDisponibles.add(vehiculo);
     }
 }
 

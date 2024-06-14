@@ -546,8 +546,4 @@ public class Sistema extends Observable{
     	this.usuarioLogeado = usuario;
     }
     
-    public void addIViaje(IViaje viaje) {
-    	this.viajes.add(viaje);
-    }
-    
 }

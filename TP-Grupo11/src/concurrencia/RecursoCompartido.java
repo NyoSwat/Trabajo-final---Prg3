@@ -114,6 +114,7 @@ public class RecursoCompartido extends Observable{
 			}
 			else {
 				//msj de que no hay vehiculos disp
+//				System.out.println("No hay vehiculo disponible para este viaje.");
 			}
 			setChanged();
 			notifyObservers();
@@ -135,8 +136,10 @@ public class RecursoCompartido extends Observable{
 	//choferThread toma un viaje de la lista
     public synchronized void tomaViaje(ChoferThread chofer){ 
     	IViaje viaje = null;
+    	//busco viaje con vehiculo para asignarle chofer
     	int indexViajeConVehiculo = this.indexViajeConVehiculo();
     	
+    	//si no hay viaje con vehiculo lo dejo esperando
     	while(this.cantClientesHumano > 0 && indexViajeConVehiculo < 0){  
     		try{
     			wait();
@@ -151,11 +154,11 @@ public class RecursoCompartido extends Observable{
     		viaje.setChofer(chofer.getChofer());
     		viaje.setViajeIniciado(true);
     		choferesDisp.remove(chofer.getChofer());
+    		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
     	}
     	setChanged();
     	notifyObservers();
     	notifyAll();
-    	System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
 	}
     
     private int indexViajeConVehiculo() {
@@ -173,26 +176,28 @@ public class RecursoCompartido extends Observable{
 		
 	//choferThread finaliza viaje
 	public synchronized void finalizaViaje(ChoferThread chofer){
-		
+		//Busco viaje con chofer(el de parametro) con viaje pagado
 		int indexViajePagado = indexViajePagado(chofer.getChofer());
 		
+		//Si no encuentro lo dejo esperando
 		while(indexViajePagado < 0 && this.cantClientesHumano > 0) {
 			try {
 				wait();
+				indexViajePagado = indexViajePagado(chofer.getChofer());
 			}
 			catch(InterruptedException error) {
 			}
 		}
-		if(indexViajePagado > 0) {
+		if(indexViajePagado >= 0) {
 			IViaje viaje = this.viajes.get(indexViajePagado);
 			this.viajes.remove(viaje);
 			choferesDisp.add(chofer.getChofer());
-//			this.sistema.agregarVehiculo(); //agrega el vehiculo que se uso
+			SistemaThread.addVehiculo(viaje.getVehiculo()); //agrega el vehiculo que se uso
+			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 		}
 		notifyAll();
 		setChanged();
 		notifyObservers();
-		System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 	}
 	
 		
@@ -229,6 +234,7 @@ public class RecursoCompartido extends Observable{
 				//Metodo pagar
 				this.viajes.get(indexViajeCliente).setViajePagado(true);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
+				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 			}
 		}
 		else {
@@ -342,7 +348,7 @@ public class RecursoCompartido extends Observable {
 		// ...
 	}
 }
-*//
+*/
 
     
 	
