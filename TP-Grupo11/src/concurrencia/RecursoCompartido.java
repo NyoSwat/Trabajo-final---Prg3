@@ -222,7 +222,7 @@ public class RecursoCompartido extends Observable{
 		
 		e.setCliente(cliente);
 		
-		if(cliente.isEstadoPedido()) {
+		if(cliente.isEstadoPedido() ) {
 			while(indexViajeCliente < 0 && this.cantChoferes > 0) {
 				try {
 					wait();
@@ -236,15 +236,18 @@ public class RecursoCompartido extends Observable{
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 			}
+			else {
+				System.out.println("viaje no terminado.");
+			}
 		}
 		else {
 			e.setMensaje("no tiene viaje realizado.");
+			System.out.println("no tiene viaje realizado.");
 		}
 		
 		notifyAll();
 		setChanged();
 		notifyObservers(e);
-		System.out.println(cliente.getCliente().getNombre()+" pago su viaje.");
 	}
 	
    
