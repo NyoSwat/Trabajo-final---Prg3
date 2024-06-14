@@ -1,5 +1,6 @@
 package concurrencia;
 
+import java.nio.file.spi.FileSystemProvider;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
@@ -35,7 +36,7 @@ public class ClienteThread extends MiObservable implements Runnable {
 	 * Realiza pedidos de viaje mientras hay clientes disponibles y la cantidad de viajes no ha llegado a cero.
 	 */
 	public void run() {
-		while (this.cantViajes > 0 && rc.getCantClientes() > 0) { 
+		while (this.cantViajes > 0 && rc.getCantClientes() > 0 && rc.getCantChoferes() > 0) { 
 			this.estadoPedido = false;
 			this.rc.validarPedido(this, ran.nextInt(11), generarZona(ran.nextInt(2)), ran.nextBoolean(), ran.nextBoolean(), new GregorianCalendar(), ran.nextInt(70)); // Solicita aceptación del pedido
 			UtilThread.espera(10); // Simula el tiempo de espera del pedido
@@ -44,13 +45,20 @@ public class ClienteThread extends MiObservable implements Runnable {
 				this.cantViajes--; // Se decrementa la cantidad de viajes restantes
 			}
 		}
+		if(rc.getCantClientes() < 0)
+			System.out.println("salir.No hay mas clientes humanos");
+		if(rc.getCantChoferes() < 0)
+			System.out.println("salir.No hay mas choferes disp.");
+		if(this.cantViajes < 0)
+			System.out.println("No hay mas viajes por hacer");
 	}
 	
 	/**
 	 * Genera un pedido de viaje.
 	 */
-	public void generarPedido() {
+	public void generarPedido(int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha) {
 		// Implementación pendiente
+		this.rc.validarPedido(this, cantPasajeros, zona, baul, mascota, fecha, ran.nextInt(70));
 	}
 	
 	/**
@@ -58,6 +66,7 @@ public class ClienteThread extends MiObservable implements Runnable {
 	 */
 	public void PagarViaje() {
 		// Implementación pendiente
+		this.rc.pagaViaje(this);
 	}
 	
 	/**

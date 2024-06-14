@@ -55,13 +55,11 @@ public class ControladorCliente implements ActionListener {
             int cantPasajeros = vista.getCantPasajeros();
             boolean baul = vista.getBaul();
             boolean mascota = vista.getMascota();
-            Pedido pedido = new Pedido(cantPasajeros, zona, mascota, baul, new GregorianCalendar());
-            // Falta agregar la distancia
-            rc.solicitaViaje(cliente, pedido, 1000);
-            System.out.println("Pedido--  \nZona: " + zona + "\nCant Pasajeros: " + cantPasajeros +
-                    "\nBaul: " + baul + "\nMascotas: " + mascota);
+
+            this.rc.validarPedido(cliente, cantPasajeros, zona, baul, mascota, new GregorianCalendar(), cantPasajeros);
+            
         } else if (event.getActionCommand().equals("pagar")) {
-            if (cliente.getViajeTerminado()) {
+            if (cliente.isEstadoPedido()) {
                 this.rc.pagaViaje(cliente);
             } else {
                 if (cliente.getViajeTerminado())

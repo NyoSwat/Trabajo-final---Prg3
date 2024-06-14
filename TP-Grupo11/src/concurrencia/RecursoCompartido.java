@@ -114,6 +114,7 @@ public class RecursoCompartido extends Observable{
 			}
 			else {
 				//msj de que no hay vehiculos disp
+//				System.out.println("No hay vehiculo disponible para este viaje.");
 			}
 			setChanged();
 			notifyObservers();
@@ -135,8 +136,10 @@ public class RecursoCompartido extends Observable{
 	//choferThread toma un viaje de la lista
     public synchronized void tomaViaje(ChoferThread chofer){ 
     	IViaje viaje = null;
+    	//busco viaje con vehiculo para asignarle chofer
     	int indexViajeConVehiculo = this.indexViajeConVehiculo();
     	
+    	//si no hay viaje con vehiculo lo dejo esperando
     	while(this.cantClientesHumano > 0 && indexViajeConVehiculo < 0){  
     		try{
     			wait();
@@ -146,16 +149,16 @@ public class RecursoCompartido extends Observable{
     		}
     	}
     	
-    	if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0) {
+    	if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0 ) {
     		viaje = this.viajes.get(indexViajeConVehiculo);
     		viaje.setChofer(chofer.getChofer());
     		viaje.setViajeIniciado(true);
     		choferesDisp.remove(chofer.getChofer());
+    		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
     	}
     	setChanged();
     	notifyObservers();
     	notifyAll();
-    	System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
 	}
     
     private int indexViajeConVehiculo() {
@@ -173,26 +176,28 @@ public class RecursoCompartido extends Observable{
 		
 	//choferThread finaliza viaje
 	public synchronized void finalizaViaje(ChoferThread chofer){
-		
+		//Busco viaje con chofer(el de parametro) con viaje pagado
 		int indexViajePagado = indexViajePagado(chofer.getChofer());
 		
+		//Si no encuentro lo dejo esperando
 		while(indexViajePagado < 0 && this.cantClientesHumano > 0) {
 			try {
 				wait();
+				indexViajePagado = indexViajePagado(chofer.getChofer());
 			}
 			catch(InterruptedException error) {
 			}
 		}
-		if(indexViajePagado > 0) {
+		if(indexViajePagado >= 0) {
 			IViaje viaje = this.viajes.get(indexViajePagado);
 			this.viajes.remove(viaje);
 			choferesDisp.add(chofer.getChofer());
-//			this.sistema.agregarVehiculo(); //agrega el vehiculo que se uso
+			SistemaThread.addVehiculo(viaje.getVehiculo()); //agrega el vehiculo que se uso
+			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 		}
 		notifyAll();
 		setChanged();
 		notifyObservers();
-		System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 	}
 	
 		
@@ -217,7 +222,7 @@ public class RecursoCompartido extends Observable{
 		
 		e.setCliente(cliente);
 		
-		if(cliente.isEstadoPedido()) {
+		if(cliente.isEstadoPedido() ) {
 			while(indexViajeCliente < 0 && this.cantChoferes > 0) {
 				try {
 					wait();
@@ -225,30 +230,34 @@ public class RecursoCompartido extends Observable{
 				} catch (InterruptedException e1) {
 				}
 			}
-			if(indexViajeCliente >= 0) {
+			if(indexViajeCliente >= 0 ) {
 				//Metodo pagar
 				this.viajes.get(indexViajeCliente).setViajePagado(true);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
+				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
+			}
+			else {
+				System.out.println("viaje no terminado.");
 			}
 		}
 		else {
 			e.setMensaje("no tiene viaje realizado.");
+			System.out.println("no tiene viaje realizado.");
 		}
 		
 		notifyAll();
 		setChanged();
 		notifyObservers(e);
-		System.out.println(cliente.getCliente().getNombre()+" pago su viaje.");
 	}
 	
    
 	public int indexViajeCliente(ClienteThread cliente) {
 		int i = 0;
 		// si viaje no es vacio  && cliente de viaje == cliente  && estado viaje == true (termiando)
-		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado())
+		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && this.viajes.get(i).isViajePagado())
 			i++;
 		
-		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado()) 
+		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && !this.viajes.get(i).isViajePagado()) 
 			return i;
 		else 
 			return -1;
@@ -287,6 +296,62 @@ public class RecursoCompartido extends Observable{
 
 	
 }
+
+
+/**
+package concurrencia;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Observable;
+
+import modelo.Chofer;
+import modelo.Cliente;
+import modelo.IViaje;
+import modelo.Pedido;
+import modelo.Sistema;
+import modelo.Vehiculo;
+import modelo.evento.EventoCliente;
+
+/**
+ * La clase RecursoCompartido representa un recurso compartido utilizado por los hilos de clientes y choferes.
+ * Contiene métodos para validar pedidos, solicitar viajes y asignar vehículos.
+ 
+public class RecursoCompartido extends Observable {
+	
+	private Sistema sistema; // Referencia al sistema
+	private int cantChoferes; // Cantidad de choferes disponibles
+	private int cantClientesHumano; // Cantidad de ventanas (clientes humanos)
+	private ArrayList<Chofer> choferes = new ArrayList<Chofer>(); // Lista de choferes en el sistema
+	private ArrayList<IViaje> viajes = new ArrayList<IViaje>(); // Lista de viajes en espera
+	
+	/**
+	 * Constructor de RecursoCompartido.
+	 * @param sistema El sistema de transporte.
+	 * @param cantClientes La cantidad de ventanas (clientes humanos).
+	 
+	public RecursoCompartido(Sistema sistema, int cantClientes) {
+		this.sistema = sistema;
+		this.choferes = sistema.listaChoferes(); // Todos los choferes del sistema
+		this.cantClientesHumano = cantClientes; // Cantidad de ventanas
+		this.cantChoferes = choferes.size(); // Cantidad de choferes en el sistema
+	}
+
+	// ... (Resto del código)
+
+	//clienteThread solicita Viaje sobre pedido aceptado
+	public synchronized void solicitaViaje(ClienteThread cliente, Pedido pedido, int distancia) {
+		// Implementación pendiente
+		// ...
+	}
+
+	//sistemaThread asigna vehículo
+	public synchronized void asignaVehiculo(ArrayList<Vehiculo> vehiculos) {
+		// Implementación pendiente
+		// ...
+	}
+}
+*/
 
     
 	
