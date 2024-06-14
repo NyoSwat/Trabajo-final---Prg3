@@ -9,10 +9,12 @@ import modelo.Vehiculo;
 public class SistemaThread extends Thread {
 	
     private RecursoCompartido rc;
+    private Sistema sistema;
     private ArrayList<Vehiculo> vehiculosDisponibles;
     
     public SistemaThread(RecursoCompartido rc,Sistema sistema) {
 		this.rc = rc;
+		this.sistema = sistema;
 		this.vehiculosDisponibles = sistema.listaVehiculos();
     }
     
@@ -20,7 +22,9 @@ public class SistemaThread extends Thread {
 	
     	while(this.rc.getCantClientes() > 0 && this.rc.getCantChoferes() > 0){	
     		this.rc.asignaVehiculo(this.vehiculosDisponibles);
-    		UtilThread.espera(5);
+    		//vuelvo a asignarle lista pq 
+    		this.vehiculosDisponibles = sistema.listaVehiculos();
+//    		UtilThread.espera(5);
     	}
 	}
 

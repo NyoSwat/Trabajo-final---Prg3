@@ -4,7 +4,6 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 import modelo.MiObservable;
-import modelo.Pedido;
 import modelo.Usuario;
 
 public class ClienteThread extends MiObservable implements Runnable{
@@ -27,11 +26,12 @@ public class ClienteThread extends MiObservable implements Runnable{
 	  while(this.cantViajes > 0 && rc.getCantClientes() > 0){ 
 		 this.estadoPedido = false;
 		 this.rc.validarPedido(this,ran.nextInt(11),this.generarZona(ran.nextInt(2)),ran.nextBoolean(),ran.nextBoolean(),new GregorianCalendar(),ran.nextInt(70));//solicita aceptacion
-		 UtilThread.espera(5);
-		 if(this.estadoPedido) 
+		 UtilThread.espera(10);
+		 if(this.estadoPedido) {
 			 this.rc.pagaViaje(this);
+			 this.cantViajes--;
+		 }
 	  }
-		
 	}
 	
 	public void generarPedido() {

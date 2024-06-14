@@ -16,7 +16,9 @@ public  class Viaje extends MiObservable implements IViaje {
     private double distanciaRecorrida; 
     private Vehiculo vehiculo;
     public static double valorBase = 1000.0; 
-    private boolean estadoViaje = false;
+    
+    private boolean viajeIniciado = false;
+    private boolean viajePagado = false;
 
     /**
      * Constructor Viaje<br>
@@ -103,12 +105,20 @@ public  class Viaje extends MiObservable implements IViaje {
     	this.chofer = chofer;
     }
 
-    public boolean getEstadoViaje() {
-    	return this.estadoViaje;
+    public boolean isViajeIniciado() {
+    	return this.viajeIniciado;
     }
     
-    public void setEstadoViaje(boolean estado) {
-    	this.estadoViaje = estado;
+    public boolean isViajePagado() {
+    	return this.viajePagado;
+    }
+    
+    public void setViajeIniciado(boolean estado) {
+    	this.viajeIniciado = estado;
+    }
+    
+    public void setViajePagado(boolean estado) {
+    	this.viajePagado = estado;
     }
     
     /**

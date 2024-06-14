@@ -15,18 +15,18 @@ public class ChoferThread extends MiObservable implements Runnable {
 	public ChoferThread(RecursoCompartido rc, Chofer chofer, int cantViajes) {
 		this.rc = rc;
 		this.chofer = chofer;
-//		this.viaje = viaje;
 		this.cantViajes = cantViajes;
 	}
 
 
 	public void run() {
-		while(this.rc.getCantClientes() > 0 && this.cantViajes > 0) { //dos condiciones 	
+		while(this.rc.getCantClientes() > 0 && this.cantViajes > 0) { 	
 			this.rc.tomaViaje(this);
-			UtilThread.espera(5);
+			UtilThread.espera(10);
 			this.rc.finalizaViaje(this);
 			this.cantViajes--;
 		}
+		this.rc.terminarChofer(this.chofer);
 	}
 
 	public int getcantViajes() {
@@ -38,6 +38,10 @@ public class ChoferThread extends MiObservable implements Runnable {
 	}
 	public String getNombre() {
 		return this.chofer.getNombre();
+	}
+	
+	public Chofer getChofer() {
+		return this.chofer;
 	}
 
 }

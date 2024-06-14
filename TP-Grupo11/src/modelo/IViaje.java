@@ -56,7 +56,9 @@ public interface IViaje extends Cloneable,Comparable<IViaje>{
 
 	Object clone() throws CloneNotSupportedException;
 	
-	boolean getEstadoViaje();
-	void setEstadoViaje(boolean estado);
+	boolean isViajeIniciado();
+	boolean isViajePagado();
+	void setViajeIniciado(boolean estado);
+	void setViajePagado(boolean estado);
 
 }

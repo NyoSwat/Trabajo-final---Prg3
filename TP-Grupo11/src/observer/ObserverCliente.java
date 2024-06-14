@@ -23,10 +23,10 @@ public class ObserverCliente implements Observer {
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(this.observable == o){  
-			EventoCliente e = (EventoCliente) arg;
-			if(e.getCliente().equals(cliente)) {
-				ventana.escribeJTextArea(e.getMensaje()+"\n");
-			}
+//			EventoCliente e = (EventoCliente) arg;
+//			if(e.getCliente().equals(cliente)) {
+//				ventana.escribeJTextArea(e.getMensaje()+"\n");
+//			}
 		}
 	}
 	

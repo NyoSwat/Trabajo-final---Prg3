@@ -419,7 +419,7 @@ public class Sistema extends Observable{
     	
     	viaje = FactoryViaje.armarViaje(cliente,pedido,distancia); 
 
-    	asignarVehiculo(viaje);
+    	asignarVehiculo(vehiculos,viaje);
 		System.out.println("vehiculo asignado");
     	asignarChofer(viaje);
     	System.out.println("chofer asignado");
@@ -439,14 +439,14 @@ public class Sistema extends Observable{
      * <b>pre:</b> viaje debe ser distinto de null
      * @param viaje viaje que se esta preparando
      */
-    public void asignarVehiculo(IViaje viaje) {
+    public void asignarVehiculo(ArrayList<Vehiculo> vehiculosDisponibles,IViaje viaje) {
     	assert viaje == null:"No se pudo asignar vehiculo, viaje es null.";
     	Integer prioridad = null;
     	Integer prioridadMax = null;
     	Vehiculo vehiculoAsignado = null;
     	
-    	for (int i = 0; i < vehiculos.size(); i++) {
-			prioridad = vehiculos.get(i).getPrioridad(viaje.getPedido());
+    	for (int i = 0; i < vehiculosDisponibles.size(); i++) {
+			prioridad = vehiculosDisponibles.get(i).getPrioridad(viaje.getPedido());
 			if(prioridadMax == null ||(prioridad != null && prioridad > prioridadMax)) {
 				vehiculoAsignado = vehiculos.get(i);
 				prioridadMax = prioridad;
@@ -454,7 +454,7 @@ public class Sistema extends Observable{
     	}
     	if( vehiculoAsignado != null) {
     		viaje.setVehiculo(vehiculoAsignado);
-    		vehiculos.remove(vehiculos.indexOf(vehiculoAsignado));
+    		vehiculosDisponibles.remove(vehiculosDisponibles.indexOf(vehiculoAsignado));
     	}
     }
     

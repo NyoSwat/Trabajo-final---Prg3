@@ -21,14 +21,10 @@ public class RecursoCompartido extends Observable{
 	private int cantChoferes;
 	private int cantClientesHumano;
 	private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
-	
+	private ArrayList<Chofer> choferesDisp = new ArrayList<Chofer>();//disponibles que no se encuentran en viaje
 	private ArrayList<IViaje> viajes = new ArrayList<IViaje>();//en espera?
-
-	private ArrayList<ChoferThread> choferesDisp = new ArrayList<ChoferThread>();//disponibles que no se encuentran 
-	//en un viaje
 	
 
-	
 	public RecursoCompartido(Sistema sistema,int cantClientes) {
 		this.sistema = sistema;
 		this.choferes = sistema.listaChoferes();		//todos los choferes del sistema
@@ -51,6 +47,7 @@ public class RecursoCompartido extends Observable{
    	   		try {
    	   			pedido = this.sistema.crearPedido(cantPasajeros,zona,baul,mascota,new GregorianCalendar());
    	   			e.setMensaje("genero un pedido valido.");
+   	   			System.out.println(cliente.getCliente().getNombre()+" genero un pedido valido");
    	   			cliente.setEstadoPedido(true);
    	   			this.solicitaViaje(cliente,pedido,distancia);
 	   	   		setChanged();
@@ -58,6 +55,7 @@ public class RecursoCompartido extends Observable{
    	   		}
    	   		catch(IllegalArgumentException error) {
    	   			e.setMensaje("ha realizado un pedido invalido.");
+   	   			System.out.println(cliente.getCliente().getNombre()+" ha generado un pedido invalido");
 	   	   		setChanged();
 	   	   		notifyObservers(e);
 	   	   
@@ -65,6 +63,7 @@ public class RecursoCompartido extends Observable{
    	   	}
    	   	else {
    	   		e.setMensaje("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
+   	   		System.out.println("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
    	   		setChanged();
    	   		notifyObservers(e);
    	   	}
@@ -89,9 +88,11 @@ public class RecursoCompartido extends Observable{
 		//Guardo el viaje 
 			this.viajes.add(viaje);
 			e.setMensaje("solicito un viaje y fue aceptado");
+			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue aceptado.");
 		}
 		else {
 			e.setMensaje(" solicito un viaje y fue rechazado por falta de chofer.");
+			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue rechazado por falta de chofer.");
 		}
 		setChanged();
 		notifyObservers(e);
@@ -107,8 +108,9 @@ public class RecursoCompartido extends Observable{
 		if(indexViajeSinVehiculo >= 0) {
 			if(!vehiculos.isEmpty()) {
 				viaje = this.viajes.get(indexViajeSinVehiculo);
-				this.sistema.asignarVehiculo(viaje);
+				this.sistema.asignarVehiculo(vehiculos,viaje);
 				//msj de que se le asigno un vehiculo
+				System.out.println("Se le asigno vehiculo.");
 			}
 			else {
 				//msj de que no hay vehiculos disp
@@ -146,16 +148,23 @@ public class RecursoCompartido extends Observable{
     	
     	if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0) {
     		viaje = this.viajes.get(indexViajeConVehiculo);
-    		this.sistema.asignarChofer(viaje);
+    		viaje.setChofer(chofer.getChofer());
+    		viaje.setViajeIniciado(true);
+    		choferesDisp.remove(chofer.getChofer());
     	}
+    	setChanged();
+    	notifyObservers();
+    	notifyAll();
+    	System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
 	}
     
     private int indexViajeConVehiculo() {
     	int i = 0;
-    	
-    	while(i < this.viajes.size() && this.viajes.get(i).getVehiculo() == null)
+    	//busca un viaje que tenga vehiculo y no tenga chofer
+    	while(i < this.viajes.size() && this.viajes.get(i).getVehiculo() == null && this.viajes.get(i).getChofer() != null)
     		i++;
-    	if(i < this.viajes.size() && this.viajes.get(i).getVehiculo() != null)
+    	//condicion: que haya viajes, que tenga vehiculo y que no tenga chofer
+    	if(i < this.viajes.size() && this.viajes.get(i).getVehiculo() != null && this.viajes.get(i).getChofer() == null)
     		return i;
     	else
     		return -1;
@@ -165,10 +174,40 @@ public class RecursoCompartido extends Observable{
 	//choferThread finaliza viaje
 	public synchronized void finalizaViaje(ChoferThread chofer){
 		
+		int indexViajePagado = indexViajePagado(chofer.getChofer());
+		
+		while(indexViajePagado < 0 && this.cantClientesHumano > 0) {
+			try {
+				wait();
+			}
+			catch(InterruptedException error) {
+			}
+		}
+		if(indexViajePagado > 0) {
+			IViaje viaje = this.viajes.get(indexViajePagado);
+			this.viajes.remove(viaje);
+			choferesDisp.add(chofer.getChofer());
+//			this.sistema.agregarVehiculo(); //agrega el vehiculo que se uso
+		}
+		notifyAll();
+		setChanged();
+		notifyObservers();
+		System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 	}
+	
 		
 		
-
+	private int indexViajePagado(Chofer chofer) {
+		int i = 0;
+		
+		while( i < this.viajes.size() && !this.viajes.get(i).getChofer().equals(chofer) && !this.viajes.get(i).isViajePagado())
+			i++;
+		
+		if(i < this.viajes.size() && this.viajes.get(i).getChofer().equals(chofer) && this.viajes.get(i).isViajePagado())
+			return i;
+		else
+			return -1;
+	}
 	
 
 
@@ -188,6 +227,7 @@ public class RecursoCompartido extends Observable{
 			}
 			if(indexViajeCliente >= 0) {
 				//Metodo pagar
+				this.viajes.get(indexViajeCliente).setViajePagado(true);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 			}
 		}
@@ -198,16 +238,17 @@ public class RecursoCompartido extends Observable{
 		notifyAll();
 		setChanged();
 		notifyObservers(e);
+		System.out.println(cliente.getCliente().getNombre()+" pago su viaje.");
 	}
 	
    
 	public int indexViajeCliente(ClienteThread cliente) {
 		int i = 0;
 		// si viaje no es vacio  && cliente de viaje == cliente  && estado viaje == true (termiando)
-		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).getEstadoViaje())
+		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado())
 			i++;
 		
-		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).getEstadoViaje()) 
+		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado()) 
 			return i;
 		else 
 			return -1;
@@ -218,8 +259,9 @@ public class RecursoCompartido extends Observable{
 	public void terminarCliente() {
 		this.cantClientesHumano--;
 	}
-	public void terminarChofer() {
+	public void terminarChofer(Chofer chofer) {
 		this.cantChoferes--;
+		this.choferesDisp.remove(chofer);
 	}
 	
 	public int getCantChoferes() {
@@ -231,11 +273,11 @@ public class RecursoCompartido extends Observable{
 	}
 
 
-	public ArrayList<ChoferThread> getChoferesDisp() {
+	public ArrayList<Chofer> getChoferesDisp() {
 		return choferesDisp;
 	}
 
-	public void setChoferesDisp(ArrayList<ChoferThread> choferesDisp) {
+	public void setChoferesDisp(ArrayList<Chofer> choferesDisp) {
 		this.choferesDisp = choferesDisp;
 	}
 	
