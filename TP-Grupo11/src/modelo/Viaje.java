@@ -26,7 +26,6 @@ public  class Viaje extends MiObservable implements IViaje {
      * <b>post:</b>Crea una instancia de Viaje.
      * @param pedido     El pedido asociado al viaje.
      * @param chofer     El chofer asignado al viaje.
-     * @param vehiculo   El vehículo utilizado en el viaje.
      * @param distancia  La distancia total recorrida en el viaje (en kilómetros).
      */
     protected Viaje(Cliente cliente,Pedido pedido,double distancia) {
@@ -40,7 +39,6 @@ public  class Viaje extends MiObservable implements IViaje {
   
     /**
      * Obtiene el cliente vinculado al viaje.
-     * @param cliente
      */
     public Usuario getCliente() {
 		return this.cliente;
