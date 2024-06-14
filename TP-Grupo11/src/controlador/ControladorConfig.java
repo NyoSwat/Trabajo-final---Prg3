@@ -159,8 +159,5 @@ public class ControladorConfig implements ActionListener{
 	private void abrirVentanaNuevoCliente() {
 		ControladorNewCliente CNewCliente = new ControladorNewCliente(ventanaConfig);
 	}
-	
-	
-	
-	
+
 }

@@ -22,7 +22,7 @@ public class Vista extends JFrame {
 
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana principal.
 	 */
 	public Vista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +40,11 @@ public class Vista extends JFrame {
 		contentPane.add(panel);
 	}
 
-	
+	/**
+     * Establece el panel del chofer en la ventana.
+     *
+     * @param panel Panel del chofer a agregar.
+     */
 	public void setPanelChofer(JPanel panel) {
 		this.panel.add(panel);
 		contentPane.add(this.panel);
