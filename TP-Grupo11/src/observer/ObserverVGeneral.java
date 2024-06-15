@@ -4,27 +4,29 @@ import java.util.Observable;
 import java.util.Observer;
 
 import concurrencia.RecursoCompartido;
-import controlador.ControladorVGeneral;
+import modelo.evento.Evento;
+import vista.VentanaGeneral;
 
 public class ObserverVGeneral implements Observer {
 	
 	private Observable observable; //recurso compartido
-	//referencia a ventana que informa datos generales,cambiar tipo en base a los
-    //diseñado por la vista
-	private ControladorVGeneral controlador;
-   
-	public ObserverVGeneral(RecursoCompartido observable, ControladorVGeneral controlador) {
+	private VentanaGeneral vista;
+	
+	public ObserverVGeneral(RecursoCompartido observable, VentanaGeneral vista) {
 		super();
+		this.vista = vista;
 		this.observable = observable;
-		this.controlador = controlador;
 		this.observable.addObserver(this);
 	}
 
 	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
-		String texto = (String)arg;
-		if(texto.equalsIgnoreCase("SolicitaViaje")) {
-			controlador.actualizaVentana("Se solicito un viaje");
+		if(o== this.observable) {
+			Evento e = (Evento) arg;
+			if(e.getChofer() != null )
+				this.vista.agregarComentario(e.getChofer().getNombre()+" "+e.getMensaje());
+			if(e.getCliente() != null)
+				this.vista.agregarComentario(e.getCliente().getNombre()+" "+e.getMensaje());
 		}
 	}
 }

@@ -1,11 +1,14 @@
 package controlador;
 
 import concurrencia.RecursoCompartido;
+import observer.ObserverVGeneral;
 import vista.VentanaGeneral;
 
 public class ControladorVGeneral {
+	
     private RecursoCompartido rc;
     private VentanaGeneral VGeneral;
+    private ObserverVGeneral ojo;
 
     /**
      * Constructor para el controlador de la ventana general.
@@ -22,15 +25,8 @@ public class ControladorVGeneral {
 
         this.rc = rc;
         this.VGeneral = VGeneral;
+        this.ojo = new ObserverVGeneral(rc, VGeneral);
     }
 
-    /**
-     * @post Actualiza la ventana general con un nuevo comentario.
-     *
-     * @param texto Comentario a agregar.
-     */
-    public void actualizaVentana(String texto) {
-        VGeneral.agregarComentario(texto);
-    }
 }
 

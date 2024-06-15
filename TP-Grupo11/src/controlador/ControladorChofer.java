@@ -1,14 +1,11 @@
 package controlador;
 
-import java.util.Observable;
-import java.util.Observer;
 
 import concurrencia.ChoferThread;
 import concurrencia.RecursoCompartido;
 import modelo.Sistema;
 import observer.ObserverChofer;
 import vista.VentanaChofer;
-import vista.Vista;
 
 /**
  * Controlador para la funcionalidad relacionada con los choferes.

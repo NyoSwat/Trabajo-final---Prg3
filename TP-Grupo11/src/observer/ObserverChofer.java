@@ -4,8 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import concurrencia.ChoferThread;
-import controlador.ControladorChofer;
-import modelo.evento.EventoChofer;
+import modelo.evento.Evento;
 import vista.VentanaChofer;
 
 
@@ -22,11 +21,11 @@ public class ObserverChofer implements Observer {
 		this.chofer = chofer;
 	}
 	
-	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(this.observable == o) {
-//			EventoChofer e = (EventoChofer) arg;
-			
+			Evento e = (Evento) arg;
+			if(e.getChofer() != null && e.getChofer().equals(chofer.getChofer()))
+				this.vista.agregarComentario(e.getMensaje());
 		}
 	}
 	

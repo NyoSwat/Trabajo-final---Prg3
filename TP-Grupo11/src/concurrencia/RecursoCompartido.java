@@ -10,11 +10,9 @@ import modelo.IViaje;
 import modelo.Pedido;
 import modelo.Sistema;
 import modelo.Vehiculo;
-import modelo.evento.EventoCliente;
-//Los carteles de los eventos son muy poco descriptivos ,se podría solucionar con una referecia al viaje
-// en los threads PREGUNTAR
-//
-//Los métodos no están realizando los cambios base, solo planteé una estructura inicial
+import modelo.evento.Evento;
+
+
 public class RecursoCompartido extends Observable{
 	
 	private Sistema sistema;
@@ -39,9 +37,9 @@ public class RecursoCompartido extends Observable{
 	//o cuando NO HAY CHOFERES TRABAJANDO
 	//->es decir cuando no puede entrar a la simulacion
 	public void validarPedido(ClienteThread cliente,int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha,int distancia){
-   	   	EventoCliente e = new EventoCliente();
+   	   	Evento e = new Evento();
    	   	Pedido pedido = null;
-   	   	e.setCliente(cliente);
+   	   	e.setCliente((Cliente)cliente.getCliente());
    	   	
    	   	if(cantChoferes > 0){  
    	   		try {
@@ -71,8 +69,8 @@ public class RecursoCompartido extends Observable{
 
 	//clienteThread solicita Viaje sobre pedido aceptado
 	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido,int distancia){  
-		EventoCliente e = new EventoCliente();
-		e.setCliente(cliente);
+		Evento e = new Evento();
+		e.setCliente((Cliente)cliente.getCliente());
 		
 		while(this.cantChoferes > 0 && this.cantClientesHumano > 0 && this.choferes.isEmpty()){  
 			try{	
@@ -102,6 +100,7 @@ public class RecursoCompartido extends Observable{
 	
 	//sistemaThread asigna vehículo
 	public synchronized void asignaVehiculo(ArrayList<Vehiculo> vehiculos){ 
+		Evento e = new Evento();
 		IViaje viaje;
 		int indexViajeSinVehiculo = this.indexViajeSinVehiculo();
 		
@@ -111,13 +110,15 @@ public class RecursoCompartido extends Observable{
 				this.sistema.asignarVehiculo(vehiculos,viaje);
 				//msj de que se le asigno un vehiculo
 				System.out.println("Se le asigno vehiculo.");
+				e.setCliente((Cliente)viaje.getCliente());
 			}
 			else {
 				//msj de que no hay vehiculos disp
 //				System.out.println("No hay vehiculo disponible para este viaje.");
+				e.setMensaje("No hay vehiculos disponible para el viaje.");
 			}
 			setChanged();
-			notifyObservers();
+			notifyObservers(e);
 		}
 		notifyAll();	
 	}
@@ -138,6 +139,8 @@ public class RecursoCompartido extends Observable{
     	IViaje viaje = null;
     	//busco viaje con vehiculo para asignarle chofer
     	int indexViajeConVehiculo = this.indexViajeConVehiculo();
+    	Evento e = new Evento();
+    	e.setChofer(chofer.getChofer());
     	
     	//si no hay viaje con vehiculo lo dejo esperando
     	while(this.cantClientesHumano > 0 && indexViajeConVehiculo < 0){  
@@ -145,7 +148,7 @@ public class RecursoCompartido extends Observable{
     			wait();
     			indexViajeConVehiculo = this.indexViajeConVehiculo();
     		}
-    		catch (InterruptedException e){	
+    		catch (InterruptedException error){	
     		}
     	}
     	
@@ -155,9 +158,13 @@ public class RecursoCompartido extends Observable{
     		viaje.setViajeIniciado(true);
     		choferesDisp.remove(chofer.getChofer());
     		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
+    		e.setMensaje("tomo el viaje de "+viaje.getCliente().getNombre());
+    	}
+    	else {
+    		e.setMensaje("No hay viajes disponibles a tomar");
     	}
     	setChanged();
-    	notifyObservers();
+    	notifyObservers(e);
     	notifyAll();
 	}
     
@@ -178,6 +185,8 @@ public class RecursoCompartido extends Observable{
 	public synchronized void finalizaViaje(ChoferThread chofer){
 		//Busco viaje con chofer(el de parametro) con viaje pagado
 		int indexViajePagado = indexViajePagado(chofer.getChofer());
+		Evento e = new Evento();
+		e.setChofer(chofer.getChofer());
 		
 		//Si no encuentro lo dejo esperando
 		while(indexViajePagado < 0 && this.cantClientesHumano > 0) {
@@ -194,10 +203,11 @@ public class RecursoCompartido extends Observable{
 			choferesDisp.add(chofer.getChofer());
 			SistemaThread.addVehiculo(viaje.getVehiculo()); //agrega el vehiculo que se uso
 			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
+			e.setMensaje("finalizo su viaje.");
 		}
 		notifyAll();
 		setChanged();
-		notifyObservers();
+		notifyObservers(e);
 	}
 	
 		
@@ -217,10 +227,10 @@ public class RecursoCompartido extends Observable{
 
 
 	public synchronized void pagaViaje(ClienteThread cliente){ 
-		EventoCliente e = new EventoCliente();
+		Evento e = new Evento();
 		int indexViajeCliente = this.indexViajeCliente(cliente);
 		
-		e.setCliente(cliente);
+		e.setCliente((Cliente)cliente.getCliente());
 		
 		if(cliente.isEstadoPedido() ) {
 			while(indexViajeCliente < 0 && this.cantChoferes > 0) {
@@ -231,13 +241,13 @@ public class RecursoCompartido extends Observable{
 				}
 			}
 			if(indexViajeCliente >= 0 ) {
-				//Metodo pagar
 				this.viajes.get(indexViajeCliente).setViajePagado(true);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 			}
 			else {
 				System.out.println("viaje no terminado.");
+				e.setMensaje("viaje no terminado.");
 			}
 		}
 		else {
@@ -297,61 +307,4 @@ public class RecursoCompartido extends Observable{
 	
 }
 
-
-/**
-package concurrencia;
-
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Observable;
-
-import modelo.Chofer;
-import modelo.Cliente;
-import modelo.IViaje;
-import modelo.Pedido;
-import modelo.Sistema;
-import modelo.Vehiculo;
-import modelo.evento.EventoCliente;
-
-/**
- * La clase RecursoCompartido representa un recurso compartido utilizado por los hilos de clientes y choferes.
- * Contiene métodos para validar pedidos, solicitar viajes y asignar vehículos.
- 
-public class RecursoCompartido extends Observable {
-	
-	private Sistema sistema; // Referencia al sistema
-	private int cantChoferes; // Cantidad de choferes disponibles
-	private int cantClientesHumano; // Cantidad de ventanas (clientes humanos)
-	private ArrayList<Chofer> choferes = new ArrayList<Chofer>(); // Lista de choferes en el sistema
-	private ArrayList<IViaje> viajes = new ArrayList<IViaje>(); // Lista de viajes en espera
-	
-	/**
-	 * Constructor de RecursoCompartido.
-	 * @param sistema El sistema de transporte.
-	 * @param cantClientes La cantidad de ventanas (clientes humanos).
-	 
-	public RecursoCompartido(Sistema sistema, int cantClientes) {
-		this.sistema = sistema;
-		this.choferes = sistema.listaChoferes(); // Todos los choferes del sistema
-		this.cantClientesHumano = cantClientes; // Cantidad de ventanas
-		this.cantChoferes = choferes.size(); // Cantidad de choferes en el sistema
-	}
-
-	// ... (Resto del código)
-
-	//clienteThread solicita Viaje sobre pedido aceptado
-	public synchronized void solicitaViaje(ClienteThread cliente, Pedido pedido, int distancia) {
-		// Implementación pendiente
-		// ...
-	}
-
-	//sistemaThread asigna vehículo
-	public synchronized void asignaVehiculo(ArrayList<Vehiculo> vehiculos) {
-		// Implementación pendiente
-		// ...
-	}
-}
-*/
-
-    
 	

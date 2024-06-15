@@ -3,6 +3,7 @@ package vista;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -19,6 +20,7 @@ public class VentanaChofer extends JFrame {
     private JPanel contentPane;
     private JLabel nombreLabel;
     private JTextArea textArea;
+	private JScrollPane scrollTextArea;
 
     /**
      * Crea la ventana para el chofer robot.
@@ -42,8 +44,10 @@ public class VentanaChofer extends JFrame {
         this.contentPane.add(nombreLabel);
 
         this.textArea = new JTextArea();
-        this.textArea.setBounds(20, 66, 400, 170);
-        this.contentPane.add(textArea);
+        this.scrollTextArea = new JScrollPane();
+        this.scrollTextArea.setViewportView(textArea);
+        this.scrollTextArea.setBounds(20, 66, 400, 170);
+        this.contentPane.add(scrollTextArea);
     }
 
     /**

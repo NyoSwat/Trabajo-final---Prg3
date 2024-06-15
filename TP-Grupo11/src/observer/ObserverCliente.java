@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import concurrencia.ClienteThread;
-import modelo.evento.EventoCliente;
+import modelo.evento.Evento;
 import vista.VentanaCliente;
 
 public class ObserverCliente implements Observer {
@@ -20,13 +20,12 @@ public class ObserverCliente implements Observer {
 		this.cliente = cliente;
 	}
 	
-	//MODIFICAR DESPUES
 	public void update(Observable o, Object arg) {
 		if(this.observable == o){  
-//			EventoCliente e = (EventoCliente) arg;
-//			if(e.getCliente().equals(cliente)) {
-//				ventana.escribeJTextArea(e.getMensaje()+"\n");
-//			}
+			Evento e = (Evento) arg;
+			if(e.getCliente() != null && e.getCliente().equals(cliente.getCliente())) {
+				ventana.escribeJTextArea(e.getMensaje()+"\n");
+			}
 		}
 	}
 	

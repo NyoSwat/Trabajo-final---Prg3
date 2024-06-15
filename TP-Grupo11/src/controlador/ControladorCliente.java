@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 
 import concurrencia.ClienteThread;
 import concurrencia.RecursoCompartido;
-import modelo.Pedido;
 import observer.ObserverCliente;
 import vista.VentanaCliente;
 import vista.VentanaLogin;

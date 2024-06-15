@@ -2,9 +2,7 @@ package observer;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import concurrencia.SistemaThread;
-import modelo.evento.EventoSistema;
+import modelo.evento.Evento;
 import vista.VentanaGeneral;
 
 public class ObserverSistema implements Observer{
@@ -20,11 +18,12 @@ public class ObserverSistema implements Observer{
     
 	public void update(Observable o, Object arg) {
 		if(o== this.observable) {
-
+			Evento e = (Evento) arg;
+			if(e.getChofer() != null )
+				this.ventana.agregarComentario(e.getChofer().getNombre()+" "+e.getMensaje());
+			if(e.getCliente() != null)
+				this.ventana.agregarComentario(e.getCliente().getNombre()+" "+e.getMensaje());
 		}
-		else 
-		   throw new IllegalArgumentException();
-		
 	}
 
 	

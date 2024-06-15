@@ -7,12 +7,14 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 public class VentanaGeneral extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTextArea textArea;
+	private JScrollPane scrollTextArea;
 
     /**
      * Crea la ventana para la vista general.
@@ -27,8 +29,10 @@ public class VentanaGeneral extends JFrame {
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
         getContentPane().add(titleLabel, BorderLayout.NORTH);
 
-        textArea = new JTextArea();
-        getContentPane().add(textArea, BorderLayout.CENTER);
+        this.textArea = new JTextArea();
+        this.scrollTextArea = new JScrollPane();
+        this.scrollTextArea.setViewportView(textArea);
+        getContentPane().add(scrollTextArea, BorderLayout.CENTER);
         this.setVisible(true);
     }
 

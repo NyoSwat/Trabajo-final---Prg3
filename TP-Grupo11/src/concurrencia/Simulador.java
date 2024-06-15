@@ -2,6 +2,7 @@ package concurrencia;
 
 import controlador.ControladorChofer;
 import controlador.ControladorLogin;
+import controlador.ControladorVGeneral;
 import modelo.Chofer;
 import modelo.Cliente;
 import modelo.Sistema;
@@ -61,7 +62,7 @@ public class Simulador {
 		new Thread(new SistemaThread(this.rc, this.sistema)).start();
 		
 		// Crear ventana general
-		new VentanaGeneral();
+		new ControladorVGeneral(this.rc,new VentanaGeneral());
 	}
 }
 

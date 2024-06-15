@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +34,7 @@ public class VentanaCliente extends JFrame {
 	private JComboBox<String> zonaComboBox;
 	private JTextArea textArea;
 	private JButton pagarBtn;
+	private JScrollPane scrollTextArea;
 
 	/**
 	 * Create the frame.
@@ -51,8 +53,10 @@ public class VentanaCliente extends JFrame {
 		contentPane.setLayout(null);
 		
 		this.textArea = new JTextArea();
-		this.textArea.setBounds(200, 10, 226, 251);
-		this.contentPane.add(textArea);
+		this.scrollTextArea = new JScrollPane();
+		this.scrollTextArea.setViewportView(textArea);
+		this.scrollTextArea.setBounds(200, 10, 226, 251);
+		this.contentPane.add(scrollTextArea);
 		
 		this.nombreLabel = new JLabel(msj);
 		this.nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);

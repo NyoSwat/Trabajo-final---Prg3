@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import excepciones.ExistenteChoferException;
@@ -15,16 +12,12 @@ import modelo.Chofer;
 import modelo.ChoferContratado;
 import modelo.ChoferPermanente;
 import modelo.ChoferTemporario;
-import modelo.FactoryVehiculo;
 import modelo.Sistema;
-import modelo.Usuario;
-import modelo.Vehiculo;
 import persistencia.ConversorDTO;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBinaria;
 import persistencia.SistemaDTO;
 import vista.VentanaConfig;
-import vista.VentanaNuevoCliente;
 
 public class ControladorConfig implements ActionListener{
 	private static final String nombre_archivo = "sistema.dat";
