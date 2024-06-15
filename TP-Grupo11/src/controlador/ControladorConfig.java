@@ -129,6 +129,7 @@ public class ControladorConfig implements ActionListener{
 			persistir.cerrarInput();
 
 			ventanaConfig.setCantClientes(sistemaDTO.getCantClienteSimulacion());
+			ventanaConfig.setCantRobot(sistemaDTO.getCantRobot());
 			ventanaConfig.setCantPedidosCliente(sistemaDTO.getCantPedidosCliente());
 			ventanaConfig.setCantViajesChofer(sistemaDTO.getCantViajeChofer());
 			ventanaConfig.actualizoListaChofer(sistema.listaChoferes());
@@ -155,7 +156,7 @@ public class ControladorConfig implements ActionListener{
 			sistemaDTO.setCantClienteSimulacion(ventanaConfig.getCantClietes());
 			sistemaDTO.setCantPedidosCliente(ventanaConfig.getCantPedidosCliente());
 			sistemaDTO.setCantViajeChofer(ventanaConfig.getCantViajesChofer());
-			
+			sistemaDTO.setCantRobot(ventanaConfig.getCantRobot());
 			persistir.escribir(sistemaDTO);
 			persistir.cerrarOutput();
 			ventanaConfig.dispose();

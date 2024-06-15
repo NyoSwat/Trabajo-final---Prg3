@@ -7,6 +7,9 @@ import concurrencia.ClienteThread;
 import modelo.evento.Evento;
 import vista.VentanaCliente;
 
+/**
+ * Clase observer que observa a recurso compartido e informa de los cambios relacionados a cliente.
+ */
 public class ObserverCliente implements Observer {
 	
 	private Observable observable; //recurso compartido

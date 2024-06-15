@@ -12,6 +12,9 @@ import controlador.ControladorCliente;
 import modelo.Sistema;
 import vista.VentanaLogin;
 
+/**
+ * Clase observer que observa a sistema, informa cuando un usuario se logea e ingresa a su interfaz de sesion.
+ */
 public class ObserverVLogin implements Observer{
 	
 	private VentanaLogin ventana;

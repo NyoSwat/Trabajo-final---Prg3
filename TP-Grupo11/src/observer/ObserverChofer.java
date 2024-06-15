@@ -7,7 +7,9 @@ import concurrencia.ChoferThread;
 import modelo.evento.Evento;
 import vista.VentanaChofer;
 
-
+/**
+ * Clase observer que observa a recurso compartido, informa de los cambios realizados en chofer.
+ */
 public class ObserverChofer implements Observer {
 	
 	private Observable observable;// rc

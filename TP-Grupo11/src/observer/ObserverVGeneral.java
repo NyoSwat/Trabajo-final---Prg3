@@ -7,6 +7,9 @@ import concurrencia.RecursoCompartido;
 import modelo.evento.Evento;
 import vista.VentanaGeneral;
 
+/**
+ * Clase observer que observa a recursos compartidos e informa todos los cambios que suceden en la simulacion.
+ */
 public class ObserverVGeneral implements Observer {
 	
 	private Observable observable; //recurso compartido

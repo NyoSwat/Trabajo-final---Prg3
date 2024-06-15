@@ -17,7 +17,8 @@ public class SistemaDTO implements Serializable {
     private ArrayList<Chofer> choferes; // Lista de choferes en el sistema
     private ArrayList<Vehiculo> vehiculos; // Lista de vehículos disponibles en el sistema
     private ArrayList<Usuario> usuarios; // Lista de usuarios registrados en el sistema
-    private int cantClienteSimulacion; // Cantidad de clientes en la simulación
+    private int cantClienteSimulacion; // Cantidad de clientes humano en la simulación
+    private int cantRobotCliente; //Cantidad de clientes robots en la simulacion
     private int cantPedidosCliente; // Cantidad de pedidos por cliente
     private int cantViajeChofer; // Cantidad de viajes por chofer
 
@@ -127,6 +128,14 @@ public class SistemaDTO implements Serializable {
      */
     public void setCantViajeChofer(int cantViajeChofer) {
         this.cantViajeChofer = cantViajeChofer;
+    }
+    
+    public void setCantRobot(int cantidad) {
+    	this.cantRobotCliente = cantidad;
+    }
+    
+    public int getCantRobot() {
+    	return this.cantRobotCliente;
     }
 }
 

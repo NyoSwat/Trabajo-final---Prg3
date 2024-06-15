@@ -1,5 +1,8 @@
 package modelo;
 
+/**
+ * Esta clase crea el viaje dependiendo las caracteristicas del pedido realizado por el cliente.
+ */
 public class FactoryViaje {
 
 	/**

@@ -12,7 +12,9 @@ import modelo.Sistema;
 import modelo.Vehiculo;
 import modelo.evento.Evento;
 
-
+/**
+ * Monitor de la concurrencia
+ */
 public class RecursoCompartido extends Observable{
 	
 	private Sistema sistema;
@@ -20,7 +22,7 @@ public class RecursoCompartido extends Observable{
 	private int cantClientesHumano;
 	private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
 	private ArrayList<Chofer> choferesDisp = new ArrayList<Chofer>();//disponibles que no se encuentran en viaje
-	private ArrayList<IViaje> viajes = new ArrayList<IViaje>();//en espera?
+	private ArrayList<IViaje> viajes = new ArrayList<IViaje>();//en espera
 	
 	/**
 	 * Constructor para crear un recurso compartido que maneja los choferes y los viajes.

@@ -17,6 +17,7 @@ public class Simulador {
 	private Sistema sistema; // Referencia al sistema de transporte
 	private RecursoCompartido rc; // Recurso compartido utilizado por los hilos
 	private int cantClientes; // Cantidad de clientes (ventanas)
+	private int cantRobots;
 	private int cantPedidos; // Cantidad de pedidos por cliente
 	private int cantViajes; // Cantidad de viajes por chofer
 	
@@ -27,10 +28,11 @@ public class Simulador {
 	 * @param cantPedidos La cantidad de pedidos por cliente.
 	 * @param cantViajes La cantidad de viajes por chofer.
 	 */
-	public Simulador(Sistema sistema, int cantClientes, int cantPedidos, int cantViajes) {
+	public Simulador(Sistema sistema, int cantClientes, int cantPedidos, int cantViajes,int cantRobot) {
 		this.sistema = sistema;
 		this.rc = new RecursoCompartido(sistema, cantClientes);
 		this.cantClientes = cantClientes;
+		this.cantRobots = cantRobot;
 		this.cantPedidos = cantPedidos;
 		this.cantViajes = cantViajes;
 	}
@@ -53,7 +55,7 @@ public class Simulador {
 		}
 		
 		// Crear hilos para clientes robot
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < this.cantRobots; i++) {
 			ClienteThread nuevo = new ClienteThread(this.rc, new Cliente("", "", "Cliente_Robot" + i), cantViajes);
 			new Thread(nuevo).start();
 		}

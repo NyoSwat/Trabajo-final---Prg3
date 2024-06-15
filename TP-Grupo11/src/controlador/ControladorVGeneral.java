@@ -4,6 +4,10 @@ import concurrencia.RecursoCompartido;
 import observer.ObserverVGeneral;
 import vista.VentanaGeneral;
 
+
+/**
+ * Clase para las funcionalidades de la ventana general
+ */
 public class ControladorVGeneral {
 	
     private RecursoCompartido rc;

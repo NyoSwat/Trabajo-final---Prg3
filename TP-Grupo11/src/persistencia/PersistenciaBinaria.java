@@ -9,6 +9,9 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * Clase con las funcionalidades de la persistencia binario.
+ */
 public class PersistenciaBinaria implements IPersistencia<Serializable> {
     private FileInputStream fileInput;
     private FileOutputStream fileOutput;

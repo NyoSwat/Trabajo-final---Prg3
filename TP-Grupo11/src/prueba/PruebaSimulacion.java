@@ -34,7 +34,7 @@ public class PruebaSimulacion {
 		catch(ClassNotFoundException e) {
 			
 		}
-		Simulador simu = new Simulador(sistema, sistemaDTO.getCantClienteSimulacion(), sistemaDTO.getCantPedidosCliente(), sistemaDTO.getCantViajeChofer());
+		Simulador simu = new Simulador(sistema, sistemaDTO.getCantClienteSimulacion(), sistemaDTO.getCantPedidosCliente(), sistemaDTO.getCantViajeChofer(),sistemaDTO.getCantRobot());
 		simu.iniciarSimulacion();
 	}
 }

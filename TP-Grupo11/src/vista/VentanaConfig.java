@@ -53,12 +53,16 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	private JLabel dniLabel;
 	private JLabel nombreLabel;
 	private JLabel cantHijosLabel;
+	private JLabel cantRobotLabel;
+	private JLabel cantViajesChoferLabel;
 	private JTextField cantClienteField;
 	private JTextField cantPedidoField;
 	private JTextField patenteField;
 	private JTextField dniField;
 	private JTextField nombreField;
 	private JTextField cantHijosField;
+	private JTextField cantViajesChoferField;
+	private JTextField cantRobotField;
 	private JList listClientes;
 	private JList listVehiculos;
 	private JList listChoferes;
@@ -77,8 +81,6 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	private JScrollPane scrollUsuarios;
 	private JScrollPane scrollVehiculos;
 	private JScrollPane scrollChoferes;
-	private JLabel cantViajesChoferLabel;
-	private JTextField cantViajesChoferField;
 	
 	/**
 	 * crea la ventana de configuracion de la simulacion
@@ -114,12 +116,12 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		
 		this.cantClienteLabel = new JLabel("Cantidad de clientes");
 		this.cantClienteLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		this.cantClienteLabel.setBounds(8, 20, 120, 15);
+		this.cantClienteLabel.setBounds(10, 25, 120, 15);
 		this.clientePanel.add(cantClienteLabel);
 		
 		this.cantClienteField = new JTextField();
 		this.cantClienteField.addKeyListener(this);
-		this.cantClienteField.setBounds(8, 40, 90, 20);
+		this.cantClienteField.setBounds(115, 20, 50, 20);
 		this.clientePanel.add(cantClienteField);
 		this.cantClienteField.setColumns(10);
 		
@@ -131,12 +133,12 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		
 		this.cantPedidosLabel = new JLabel("Pedidos por Cliente");
 		this.cantPedidosLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		this.cantPedidosLabel.setBounds(8, 70, 110, 15);
+		this.cantPedidosLabel.setBounds(10, 75, 110, 15);
 		this.clientePanel.add(cantPedidosLabel);
 		
 		this.cantPedidoField = new JTextField();
 		this.cantPedidoField.addKeyListener(this);
-		this.cantPedidoField.setBounds(8, 90, 90, 20);
+		this.cantPedidoField.setBounds(115, 70, 50, 20);
 		this.clientePanel.add(cantPedidoField);
 		this.cantPedidoField.setColumns(10);
 		
@@ -150,8 +152,17 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		
 		this.addClienteBtn = new JButton("Agregar");
 		this.addClienteBtn.setActionCommand("ventanaCliente");;
-		this.addClienteBtn.setBounds(182, 87, 80, 25);
+		this.addClienteBtn.setBounds(182, 95, 80, 25);
 		this.clientePanel.add(addClienteBtn);
+		
+		this.cantRobotField = new JTextField();
+		this.cantRobotField.setBounds(115, 45, 50, 19);
+		this.clientePanel.add(cantRobotField);
+		this.cantRobotField.setColumns(10);
+		
+		this.cantRobotLabel = new JLabel("Cantidad Robots");
+		this.cantRobotLabel.setBounds(10, 50, 97, 15);
+		this.clientePanel.add(cantRobotLabel);
 		
 		this.vehiculoPanel = new JPanel();
 		this.vehiculoPanel.setBounds(0, 163, 741, 135);
@@ -242,7 +253,7 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		
 		this.addChoferBtn = new JButton("Agregar");
 		this.addChoferBtn.setActionCommand("agregarChofer");
-		this.addChoferBtn.setBounds(181, 102, 80, 25);
+		this.addChoferBtn.setBounds(181, 128, 80, 25);
 		this.chofePanel.add(addChoferBtn);
 		
 		
@@ -276,14 +287,14 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		this.categoriaComboBox.setBounds(80, 53, 100, 21);
 		this.chofePanel.add(categoriaComboBox);
 		
-		cantViajesChoferLabel = new JLabel("Cantidad de viajes");
-		cantViajesChoferLabel.setBounds(10, 25, 118, 15);
-		chofePanel.add(cantViajesChoferLabel);
+		this.cantViajesChoferLabel = new JLabel("Cantidad de viajes");
+		this.cantViajesChoferLabel.setBounds(10, 25, 118, 15);
+		this.chofePanel.add(cantViajesChoferLabel);
 		
-		cantViajesChoferField = new JTextField();
-		cantViajesChoferField.setBounds(135, 23, 45, 20);
-		chofePanel.add(cantViajesChoferField);
-		cantViajesChoferField.setColumns(10);
+		this.cantViajesChoferField = new JTextField();
+		this.cantViajesChoferField.setBounds(135, 23, 45, 20);
+		this.chofePanel.add(cantViajesChoferField);
+		this.cantViajesChoferField.setColumns(10);
 		
 		JSeparator separatorVehiculo = new JSeparator();
 		separatorVehiculo.setBounds(0, 301, 750, 2);
@@ -558,6 +569,22 @@ public class VentanaConfig extends JFrame implements KeyListener{
      */
     public void setCantViajesChofer(int cantidad) {
         this.cantViajesChoferField.setText(String.valueOf(cantidad));
+    }
+    
+    /**
+     * Obtiene la cantidad de clientes robots para la simulacion
+     * @return valor entero con la cantidad de clientes robots
+     */
+    public int getCantRobot() {
+    	return Integer.parseInt(this.cantRobotField.getText());
+    }
+    
+    /**
+     * Establece la cantidad de clientes robots para la simulacion.
+     * @param cantidad de robots
+     */
+    public void setCantRobot(int cantidad) {
+    	this.cantRobotField.setText(String.valueOf(cantidad));
     }
 
 	

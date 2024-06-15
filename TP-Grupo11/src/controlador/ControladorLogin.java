@@ -8,6 +8,9 @@ import modelo.Sistema;
 import observer.ObserverVLogin;
 import vista.VentanaLogin;
 
+/**
+ * Esta clase es el controlador de la ventana login de usuario, tiene referencia a sistema y observer ventana
+ */
 public class ControladorLogin implements ActionListener {
     private VentanaLogin vista;
     private Sistema sistema;

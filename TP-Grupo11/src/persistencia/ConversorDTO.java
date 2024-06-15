@@ -2,6 +2,9 @@ package persistencia;
 
 import modelo.Sistema;
 
+/**
+ * Esta clase proporciona un sistema de conversion de Persistencia binaria a sistema y viceversa.
+ */
 public class ConversorDTO {
     /**
      * Convierte un objeto Sistema a un objeto SistemaDTO.
