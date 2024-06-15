@@ -133,6 +133,7 @@ public class RecursoCompartido extends Observable{
 				//msj de que se le asigno un vehiculo
 				System.out.println("Se le asigno vehiculo.");
 				e.setCliente((Cliente)viaje.getCliente());
+				e.setMensaje(" se le asigno vehiculo.");
 			}
 			else {
 				//msj de que no hay vehiculos disp

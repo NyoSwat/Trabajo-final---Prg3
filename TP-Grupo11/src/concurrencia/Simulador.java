@@ -53,7 +53,7 @@ public class Simulador {
 		}
 		
 		// Crear hilos para clientes robot
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			ClienteThread nuevo = new ClienteThread(this.rc, new Cliente("", "", "Cliente_Robot" + i), cantViajes);
 			new Thread(nuevo).start();
 		}
