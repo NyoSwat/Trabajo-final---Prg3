@@ -19,8 +19,8 @@ public class ControladorLogin implements ActionListener {
      * @param rc         Recurso compartido utilizado por los hilos.
      * @param sistema    Instancia del sistema principal.
      * @param cantPedidos Cantidad de pedidos.
-     * @pre El recurso compartido y el sistema no deben ser nulos.
-     * @post Se crea una instancia del controlador para el inicio de sesión.
+     * precondicion: El recurso compartido y el sistema no deben ser nulos.
+     * Se crea una instancia del controlador para el inicio de sesión.
      */
     public ControladorLogin(RecursoCompartido rc, Sistema sistema, int cantPedidos) {
         // Precondición: Verificar que el recurso compartido y el sistema no sean nulos

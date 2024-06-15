@@ -8,13 +8,18 @@ import modelo.Usuario;
 import modelo.Vehiculo;
 
 @SuppressWarnings("serial")
+
+/**
+ * Clase que representa un objeto de transferencia de datos (DTO) para el sistema.
+ * Contiene listas de choferes, vehículos y usuarios, así como contadores para simulaciones y estadísticas.
+ */
 public class SistemaDTO implements Serializable {
-    private ArrayList<Chofer> choferes = new ArrayList<Chofer>();
-    private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-    private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-    private int cantClienteSimulacion;
-    private int cantPedidosCliente;
-    private int cantViajeChofer;
+    private ArrayList<Chofer> choferes; // Lista de choferes en el sistema
+    private ArrayList<Vehiculo> vehiculos; // Lista de vehículos disponibles en el sistema
+    private ArrayList<Usuario> usuarios; // Lista de usuarios registrados en el sistema
+    private int cantClienteSimulacion; // Cantidad de clientes en la simulación
+    private int cantPedidosCliente; // Cantidad de pedidos por cliente
+    private int cantViajeChofer; // Cantidad de viajes por chofer
 
     /**
      * Obtiene la lista de choferes.

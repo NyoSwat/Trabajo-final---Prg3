@@ -27,8 +27,8 @@ public class ControladorCliente implements ActionListener {
      * @param rc       Recurso compartido utilizado por los hilos.
      * @param ventana  Ventana de inicio de sesión.
      * @param cliente  Hilo del cliente.
-     * @pre El recurso compartido y la ventana no deben ser nulos.
-     * @post Se crea una instancia del controlador para el cliente.
+     * precondicion: El recurso compartido y la ventana no deben ser nulos.
+     * Se crea una instancia del controlador para el cliente.
      */
     public ControladorCliente(RecursoCompartido rc, VentanaLogin ventana, ClienteThread cliente) {
         // Precondición: Verificar que el recurso compartido y la ventana no sean nulos
@@ -48,7 +48,10 @@ public class ControladorCliente implements ActionListener {
         assert this.ojo != null : "El observador del cliente no puede ser nulo después de la creación";
     }
 
-    @Override
+    /**
+     * Maneja las acciones realizadas en la interfaz de usuario relacionadas con pedidos y pagos.
+     * @param event El evento de acción que se ha producido.
+     */
     public void actionPerformed(ActionEvent event) {
         if (event.getActionCommand().equals("generarPedido")) {
             String zona = vista.getZona();
@@ -74,6 +77,10 @@ public class ControladorCliente implements ActionListener {
         }
     }
 
+    /**
+     * Actualiza la información mostrada en la interfaz de usuario.
+     * @param texto El mensaje a mostrar en la interfaz de usuario.
+     */
     public void actualizarInformacion(String texto) {
         this.vista.escribeJTextArea(texto);
     }

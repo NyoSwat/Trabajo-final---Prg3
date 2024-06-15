@@ -16,6 +16,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 
+/**
+ * Clase VentanaNuevoCliente que extiende de JDialog, utilizada para crear y mostrar una ventana de diálogo para la creación de un nuevo cliente.
+ */
 public class VentanaNuevoCliente extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +37,8 @@ public class VentanaNuevoCliente extends JDialog {
 	private JButton addClienteBtn;
 
 	/**
-	 * Create the frame.
+	 * Constructor para VentanaNuevoCliente que inicializa la ventana con los componentes necesarios para crear un nuevo cliente.
+	 * Configura el cierre, tamaño, y la capacidad de redimensionar la ventana. Además, inicializa y agrega los paneles y componentes para la entrada de datos del cliente.
 	 */
 	public VentanaNuevoCliente() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -115,35 +119,69 @@ public class VentanaNuevoCliente extends JDialog {
 		this.titlePanel.add(separator);
 	}
 
+	/**
+	 * Asigna el controlador para manejar las acciones del botón de agregar cliente.
+	 * 
+	 * @param control El controlador que maneja las acciones del botón.
+	 */
 	public void setControlador(ControladorNewCliente control) {
-		this.addClienteBtn.addActionListener(control);
+	    this.addClienteBtn.addActionListener(control);
 	}
-	
-	
+
+	/**
+	 * Obtiene el nombre del cliente ingresado en el campo correspondiente.
+	 * 
+	 * @return El nombre del cliente como una cadena de texto.
+	 */
 	public String getNombreCliente() {
-		return this.nombreField.getText();
+	    return this.nombreField.getText();
 	}
-	
+
+	/**
+	 * Establece el nombre del cliente en el campo correspondiente.
+	 * 
+	 * @param texto El nombre del cliente a establecer.
+	 */
 	public void setNombreCliente(String texto) {
-		this.nombreField.setText(texto);
+	    this.nombreField.setText(texto);
 	}
-	
+
+	/**
+	 * Obtiene el nombre de usuario del cliente ingresado en el campo correspondiente.
+	 * 
+	 * @return El nombre de usuario del cliente como una cadena de texto.
+	 */
 	public String getUsuarioCliente() {
-		return this.usuarioField.getText();
+	    return this.usuarioField.getText();
 	}
-	
+
+	/**
+	 * Establece el nombre de usuario del cliente en el campo correspondiente.
+	 * 
+	 * @param texto El nombre de usuario del cliente a establecer.
+	 */
 	public void setUsuarioCliente(String texto) {
-		this.usuarioField.setText(texto);
+	    this.usuarioField.setText(texto);
 	}
-	
+
+	/**
+	 * Obtiene la contraseña del cliente ingresada en el campo correspondiente.
+	 * 
+	 * @return La contraseña del cliente como una cadena de texto.
+	 */
 	public String getContrasenaCliente() {
-		return this.contrasenaFiled.getText();
+	    return this.contrasenaFiled.getText();
 	}
-	
+
+	/**
+	 * Establece la contraseña del cliente en el campo correspondiente.
+	 * 
+	 * @param texto La contraseña del cliente a establecer.
+	 */
 	public void setContrasenaCliente(String texto) {
-		this.contrasenaFiled.setText(texto);
+	    this.contrasenaFiled.setText(texto);
 	}
-	
+
 	
 	
 }

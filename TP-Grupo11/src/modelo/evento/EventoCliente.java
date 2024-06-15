@@ -18,8 +18,8 @@ public class EventoCliente {
      *
      * @param cliente Cliente asociado al evento.
      * @param mensaje Mensaje del evento.
-     * @pre El cliente y el mensaje no deben ser nulos.
-     * @post Se crea un objeto EventoCliente con los valores dados.
+     * precondicion: El cliente y el mensaje no deben ser nulos.
+     * Se crea un objeto EventoCliente con los valores dados.
      */
     public EventoCliente(ClienteThread cliente, String mensaje) {
         // Precondición: Verificar que el cliente y el mensaje no sean nulos

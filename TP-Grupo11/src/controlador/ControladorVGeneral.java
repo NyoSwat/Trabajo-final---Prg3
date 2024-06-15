@@ -12,8 +12,8 @@ public class ControladorVGeneral {
      *
      * @param rc       Recurso compartido utilizado por los hilos.
      * @param VGeneral Ventana general a controlar.
-     * @pre El recurso compartido y la ventana general no deben ser nulos.
-     * @post Se crea una instancia del controlador para la ventana general.
+     * precondicion: El recurso compartido y la ventana general no deben ser nulos.
+     * Se crea una instancia del controlador para la ventana general.
      */
     public ControladorVGeneral(RecursoCompartido rc, VentanaGeneral VGeneral) {
         // Precondición: Verificar que el recurso compartido y la ventana general no sean nulos
@@ -25,7 +25,7 @@ public class ControladorVGeneral {
     }
 
     /**
-     * @post Actualiza la ventana general con un nuevo comentario.
+     * Actualiza la ventana general con un nuevo comentario.
      *
      * @param texto Comentario a agregar.
      */

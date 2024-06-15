@@ -35,7 +35,6 @@ public class ChoferContratado extends Chofer {
     /**
      * Calcula el sueldo del empleado contratado.
      * @return double con sueldo del empleado contratado.
-     * @throws ExistenteChoferException 
      */
     @Override
     public double getSueldo() {

@@ -10,15 +10,45 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 
+/**
+ * Clase Vista que extiende de JFrame para crear la interfaz gráfica de usuario.
+ */
 public class Vista extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JScrollPane clientePanel;
-	private JScrollPane choferPanel;
-	private JScrollPane generalPanel;
-	private JPanel panel_1;
-	private JPanel panel;
+    /**
+     * Identificador único para la serialización de la clase.
+     */
+    private static final long serialVersionUID = 1L;
+    
+    /**
+     * Panel principal de contenido de la ventana.
+     */
+    private JPanel contentPane;
+    
+    /**
+     * Panel con barras de desplazamiento para la sección de clientes.
+     */
+    private JScrollPane clientePanel;
+    
+    /**
+     * Panel con barras de desplazamiento para la sección de choferes.
+     */
+    private JScrollPane choferPanel;
+    
+    /**
+     * Panel con barras de desplazamiento para la sección general.
+     */
+    private JScrollPane generalPanel;
+    
+    /**
+     * Panel secundario dentro de la ventana.
+     */
+    private JPanel panel_1;
+    
+    /**
+     * Otro panel secundario dentro de la ventana.
+     */
+    private JPanel panel;
 
 
 	/**

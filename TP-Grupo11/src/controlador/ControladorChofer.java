@@ -25,8 +25,8 @@ public class ControladorChofer {
      * @param rc     Recurso compartido utilizado por los hilos.
      * @param sistema Instancia del sistema principal.
      * @param chofer Hilo del chofer.
-     * @pre El sistema y el recurso compartido no deben ser nulos.
-     * @post Se crea una instancia del controlador para el chofer.
+     * precondicion: El sistema y el recurso compartido no deben ser nulos.
+     * Se crea una instancia del controlador para el chofer.
      */
     public ControladorChofer(RecursoCompartido rc, Sistema sistema, ChoferThread chofer) {
         // Precondición: Verificar que el sistema y el recurso compartido no sean nulos

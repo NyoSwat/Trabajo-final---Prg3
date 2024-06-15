@@ -11,11 +11,10 @@ import modelo.Pedido;
 import modelo.Sistema;
 import modelo.Vehiculo;
 import modelo.evento.EventoCliente;
-//Los carteles de los eventos son muy poco descriptivos ,se podría solucionar con una referecia al viaje
-// en los threads PREGUNTAR
-//
-//Los métodos no están realizando los cambios base, solo planteé una estructura inicial
-public class RecursoCompartido extends Observable{
+
+
+
+public class RecursoCompartido extends Observable {
 	
 	private Sistema sistema;
 	private int cantChoferes;
@@ -24,7 +23,13 @@ public class RecursoCompartido extends Observable{
 	private ArrayList<Chofer> choferesDisp = new ArrayList<Chofer>();//disponibles que no se encuentran en viaje
 	private ArrayList<IViaje> viajes = new ArrayList<IViaje>();//en espera?
 	
-
+	/**
+	 * Constructor para crear un recurso compartido que maneja los choferes y los viajes.
+	 * Inicializa el sistema con la lista de choferes y establece la cantidad de clientes humanos y choferes.
+	 *
+	 * @param sistema El sistema que contiene la lista de choferes y gestiona los viajes.
+	 * @param cantClientes La cantidad inicial de clientes humanos (ventanas).
+	 */
 	public RecursoCompartido(Sistema sistema,int cantClientes) {
 		this.sistema = sistema;
 		this.choferes = sistema.listaChoferes();		//todos los choferes del sistema
@@ -35,9 +40,19 @@ public class RecursoCompartido extends Observable{
 
 
 	
-	//RECHAZA el pedido cuando no hay autos que satisfagan las condiciones pedidas
-	//o cuando NO HAY CHOFERES TRABAJANDO
-	//->es decir cuando no puede entrar a la simulacion
+	/**
+	 * Valida y procesa un pedido de un cliente. Si hay choferes disponibles y el pedido cumple con las condiciones,
+	 * se genera un pedido válido y se solicita un viaje. Si no se cumplen las condiciones o no hay choferes,
+	 * se notifica que el pedido es inválido o que no hay choferes disponibles.
+	 *
+	 * @param cliente El hilo del cliente que realiza el pedido.
+	 * @param cantPasajeros La cantidad de pasajeros para el viaje.
+	 * @param zona La zona donde se solicita el viaje.
+	 * @param baul Indica si se requiere espacio de baúl en el vehículo.
+	 * @param mascota Indica si el cliente llevará una mascota.
+	 * @param fecha La fecha en la que se solicita el viaje.
+	 * @param distancia La distancia estimada del viaje.
+	 */
 	public void validarPedido(ClienteThread cliente,int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha,int distancia){
    	   	EventoCliente e = new EventoCliente();
    	   	Pedido pedido = null;
@@ -100,7 +115,13 @@ public class RecursoCompartido extends Observable{
 	}
 	
 	
-	//sistemaThread asigna vehículo
+	/**
+	 * Asigna un vehículo a un viaje que no tiene vehículo asignado.
+	 * Si hay viajes sin vehículo y vehículos disponibles, se asigna el primer vehículo disponible al viaje.
+	 * Notifica a todos los observadores del cambio y luego notifica a todos los hilos en espera.
+	 *
+	 * @param vehiculos La lista de vehículos disponibles para asignar a los viajes.
+	 */
 	public synchronized void asignaVehiculo(ArrayList<Vehiculo> vehiculos){ 
 		IViaje viaje;
 		int indexViajeSinVehiculo = this.indexViajeSinVehiculo();
@@ -133,33 +154,44 @@ public class RecursoCompartido extends Observable{
 			return -1;
 	}
 	
-	//choferThread toma un viaje de la lista
-    public synchronized void tomaViaje(ChoferThread chofer){ 
-    	IViaje viaje = null;
-    	//busco viaje con vehiculo para asignarle chofer
-    	int indexViajeConVehiculo = this.indexViajeConVehiculo();
-    	
-    	//si no hay viaje con vehiculo lo dejo esperando
-    	while(this.cantClientesHumano > 0 && indexViajeConVehiculo < 0){  
-    		try{
-    			wait();
-    			indexViajeConVehiculo = this.indexViajeConVehiculo();
-    		}
-    		catch (InterruptedException e){	
-    		}
-    	}
-    	
-    	if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0 ) {
-    		viaje = this.viajes.get(indexViajeConVehiculo);
-    		viaje.setChofer(chofer.getChofer());
-    		viaje.setViajeIniciado(true);
-    		choferesDisp.remove(chofer.getChofer());
-    		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
-    	}
-    	setChanged();
-    	notifyObservers();
-    	notifyAll();
+	/**
+	 * Método sincronizado para que un chofer tome un viaje de la lista.
+	 * Este método asigna un viaje a un chofer si hay un viaje disponible con vehículo.
+	 * 
+	 * @param chofer El hilo del chofer que intenta tomar un viaje.
+	 * Precondicion: La cantidad de clientes humanos debe ser mayor que 0.
+	 * Postcondicion: Si hay un viaje con vehículo disponible, el chofer es asignado a ese viaje,
+	 *       se marca el viaje como iniciado y se elimina el chofer de la lista de choferes disponibles.
+	 *       Se notifica a todos los observadores y se notifica a todos los hilos en espera.
+	 */
+	public synchronized void tomaViaje(ChoferThread chofer){ 
+	    IViaje viaje = null;
+	    // Busco viaje con vehículo para asignarle chofer
+	    int indexViajeConVehiculo = this.indexViajeConVehiculo();
+	    
+	    // Si no hay viaje con vehículo, lo dejo esperando
+	    while(this.cantClientesHumano > 0 && indexViajeConVehiculo < 0){  
+	        try{
+	            wait();
+	            indexViajeConVehiculo = this.indexViajeConVehiculo();
+	        }
+	        catch (InterruptedException e){  
+	        }
+	    }
+	    
+	    // Si hay clientes humanos y un viaje con vehículo disponible
+	    if(this.cantClientesHumano > 0 && indexViajeConVehiculo >= 0 ) {
+	        viaje = this.viajes.get(indexViajeConVehiculo);
+	        viaje.setChofer(chofer.getChofer());
+	        viaje.setViajeIniciado(true);
+	        choferesDisp.remove(chofer.getChofer());
+	        System.out.println(chofer.getChofer().getNombre()+" tomó un viaje.");
+	    }
+	    setChanged();
+	    notifyObservers();
+	    notifyAll();
 	}
+
     
     private int indexViajeConVehiculo() {
     	int i = 0;
@@ -174,184 +206,209 @@ public class RecursoCompartido extends Observable{
     }
 		
 		
-	//choferThread finaliza viaje
-	public synchronized void finalizaViaje(ChoferThread chofer){
-		//Busco viaje con chofer(el de parametro) con viaje pagado
-		int indexViajePagado = indexViajePagado(chofer.getChofer());
-		
-		//Si no encuentro lo dejo esperando
-		while(indexViajePagado < 0 && this.cantClientesHumano > 0) {
-			try {
-				wait();
-				indexViajePagado = indexViajePagado(chofer.getChofer());
-			}
-			catch(InterruptedException error) {
-			}
-		}
-		if(indexViajePagado >= 0) {
-			IViaje viaje = this.viajes.get(indexViajePagado);
-			this.viajes.remove(viaje);
-			choferesDisp.add(chofer.getChofer());
-			SistemaThread.addVehiculo(viaje.getVehiculo()); //agrega el vehiculo que se uso
-			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
-		}
-		notifyAll();
-		setChanged();
-		notifyObservers();
-	}
+    /**
+     * Finaliza un viaje asociado al chofer.
+     *
+     * @param chofer Chofer que finaliza el viaje.
+     * precondicion: La lista de viajes no debe ser nula.
+     * postcondicion: Si existe un viaje pagado asociado al chofer, se elimina de la lista de viajes y se agrega el vehículo utilizado.
+     *       Se notifica a los observadores.
+     */
+    public synchronized void finalizaViaje(ChoferThread chofer) {
+        // Busco el índice del primer viaje pagado asociado al chofer
+        int indexViajePagado = indexViajePagado(chofer.getChofer());
+
+        // Si no encuentro un viaje pagado, lo dejo esperando
+        while (indexViajePagado < 0 && this.cantClientesHumano > 0) {
+            try {
+                wait();
+                indexViajePagado = indexViajePagado(chofer.getChofer());
+            } catch (InterruptedException error) {
+                // Manejo de excepción
+            }
+        }
+
+        if (indexViajePagado >= 0) {
+            IViaje viaje = this.viajes.get(indexViajePagado);
+            this.viajes.remove(viaje);
+            choferesDisp.add(chofer.getChofer());
+            SistemaThread.addVehiculo(viaje.getVehiculo()); // Agrega el vehículo que se usó
+            System.out.println(chofer.getChofer().getNombre() + " finalizó su viaje.");
+        }
+
+        notifyAll();
+        setChanged();
+        notifyObservers();
+    }
+
 	
 		
 		
+	/**
+	 * Busca el índice del primer viaje pagado asociado a un chofer específico.
+	 *
+	 * @param chofer Chofer para el cual se busca el viaje pagado.
+	 * @return indice del viaje pagado o -1 si no se encuentra ninguno.
+	 * Precondicion: La lista de viajes no debe ser nula.
+	 * Se verifica si existe un viaje pagado asociado al chofer dado.
+	 */
 	private int indexViajePagado(Chofer chofer) {
-		int i = 0;
-		
-		while( i < this.viajes.size() && !this.viajes.get(i).getChofer().equals(chofer) && !this.viajes.get(i).isViajePagado())
-			i++;
-		
-		if(i < this.viajes.size() && this.viajes.get(i).getChofer().equals(chofer) && this.viajes.get(i).isViajePagado())
-			return i;
-		else
-			return -1;
+	    int i = 0;
+
+	    while (i < this.viajes.size() && !this.viajes.get(i).getChofer().equals(chofer) && !this.viajes.get(i).isViajePagado()) {
+	        i++;
+	    }
+
+	    if (i < this.viajes.size() && this.viajes.get(i).getChofer().equals(chofer) && this.viajes.get(i).isViajePagado()) {
+	        return i;
+	    } else {
+	        return -1;
+	    }
 	}
+
 	
 
 
-	public synchronized void pagaViaje(ClienteThread cliente){ 
-		EventoCliente e = new EventoCliente();
-		int indexViajeCliente = this.indexViajeCliente(cliente);
-		
-		e.setCliente(cliente);
-		
-		if(cliente.isEstadoPedido() ) {
-			while(indexViajeCliente < 0 && this.cantChoferes > 0) {
-				try {
-					wait();
-					indexViajeCliente = this.indexViajeCliente(cliente);
-				} catch (InterruptedException e1) {
-				}
-			}
-			if(indexViajeCliente >= 0 ) {
-				//Metodo pagar
-				this.viajes.get(indexViajeCliente).setViajePagado(true);
-				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
-				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
-			}
-			else {
-				System.out.println("viaje no terminado.");
-			}
-		}
-		else {
-			e.setMensaje("no tiene viaje realizado.");
-			System.out.println("no tiene viaje realizado.");
-		}
-		
-		notifyAll();
-		setChanged();
-		notifyObservers(e);
+	/**
+	 * Realiza el pago de un viaje asociado al cliente.
+	 *
+	 * @param cliente Cliente que realiza el pago.
+	 * precondicion: La lista de viajes no debe ser nula.
+	 * postcondicion: Si existe un viaje asociado al cliente y está marcado como finalizado, se marca como pagado.
+	 *       Se notifica a los observadores.
+	 */
+	public synchronized void pagaViaje(ClienteThread cliente) {
+	    EventoCliente e = new EventoCliente();
+	    int indexViajeCliente = this.indexViajeCliente(cliente);
+
+	    e.setCliente(cliente);
+
+	    if (cliente.isEstadoPedido()) {
+	        while (indexViajeCliente < 0 && this.cantChoferes > 0) {
+	            try {
+	                wait();
+	                indexViajeCliente = this.indexViajeCliente(cliente);
+	            } catch (InterruptedException e1) {
+	                // Manejo de excepción
+	            }
+	        }
+	        if (indexViajeCliente >= 0) {
+	            // Método para realizar el pago
+	            this.viajes.get(indexViajeCliente).setViajePagado(true);
+	            e.setMensaje("le paga el viaje al chofer " + this.viajes.get(indexViajeCliente).getChofer().getNombre());
+	            System.out.println(cliente.getCliente().getNombre() + " le paga el viaje al chofer " + this.viajes.get(indexViajeCliente).getChofer().getNombre());
+	        } else {
+	            System.out.println("viaje no terminado.");
+	        }
+	    } else {
+	        e.setMensaje("no tiene viaje realizado.");
+	        System.out.println("no tiene viaje realizado.");
+	    }
+
+	    notifyAll();
+	    setChanged();
+	    notifyObservers(e);
 	}
+
 	
    
+	/**
+	 * Busca el índice del primer viaje asociado a un cliente específico que está iniciado pero no pagado.
+	 *
+	 * @param cliente Cliente para el cual se busca el viaje.
+	 * @return indice del viaje o -1 si no se encuentra ninguno.
+	 * precondicion: La lista de viajes no debe ser nula.
+	 * postcondicion: Se verifica si existe un viaje asociado al cliente que está iniciado pero no pagado.
+	 */
 	public int indexViajeCliente(ClienteThread cliente) {
-		int i = 0;
-		// si viaje no es vacio  && cliente de viaje == cliente  && estado viaje == true (termiando)
-		while(i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && this.viajes.get(i).isViajePagado())
-			i++;
-		
-		if(i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && !this.viajes.get(i).isViajePagado()) 
-			return i;
-		else 
-			return -1;
+	    int i = 0;
+
+	    // Busca el primer viaje que cumple las condiciones
+	    while (i < viajes.size() && !viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && this.viajes.get(i).isViajePagado()) {
+	        i++;
+	    }
+
+	    if (i < viajes.size() && viajes.get(i).getCliente().equals(cliente.getCliente()) && viajes.get(i).isViajeIniciado() && !this.viajes.get(i).isViajePagado()) {
+	        return i;
+	    } else {
+	        return -1;
+	    }
 	}
+
 	
    
     
-	public void terminarCliente() {
-		this.cantClientesHumano--;
-	}
-	public void terminarChofer(Chofer chofer) {
-		this.cantChoferes--;
-		this.choferesDisp.remove(chofer);
-	}
-	
-	public int getCantChoferes() {
-		return this.cantChoferes;
-	}
-	
-	public int getCantClientes() {
-		return this.cantClientesHumano;
-	}
-
-
-	public ArrayList<Chofer> getChoferesDisp() {
-		return choferesDisp;
-	}
-
-	public void setChoferesDisp(ArrayList<Chofer> choferesDisp) {
-		this.choferesDisp = choferesDisp;
-	}
-	
-	public ArrayList<Chofer> getChoferes() {
-		return choferes;
-	}
-
-	
-}
-
-
-/**
-package concurrencia;
-
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Observable;
-
-import modelo.Chofer;
-import modelo.Cliente;
-import modelo.IViaje;
-import modelo.Pedido;
-import modelo.Sistema;
-import modelo.Vehiculo;
-import modelo.evento.EventoCliente;
-
-/**
- * La clase RecursoCompartido representa un recurso compartido utilizado por los hilos de clientes y choferes.
- * Contiene métodos para validar pedidos, solicitar viajes y asignar vehículos.
- 
-public class RecursoCompartido extends Observable {
-	
-	private Sistema sistema; // Referencia al sistema
-	private int cantChoferes; // Cantidad de choferes disponibles
-	private int cantClientesHumano; // Cantidad de ventanas (clientes humanos)
-	private ArrayList<Chofer> choferes = new ArrayList<Chofer>(); // Lista de choferes en el sistema
-	private ArrayList<IViaje> viajes = new ArrayList<IViaje>(); // Lista de viajes en espera
-	
 	/**
-	 * Constructor de RecursoCompartido.
-	 * @param sistema El sistema de transporte.
-	 * @param cantClientes La cantidad de ventanas (clientes humanos).
-	 
-	public RecursoCompartido(Sistema sistema, int cantClientes) {
-		this.sistema = sistema;
-		this.choferes = sistema.listaChoferes(); // Todos los choferes del sistema
-		this.cantClientesHumano = cantClientes; // Cantidad de ventanas
-		this.cantChoferes = choferes.size(); // Cantidad de choferes en el sistema
-	}
+	 * Representa una clase que gestiona la terminación de clientes y choferes.
+	 */
+	public class GestorClientesChoferes {
 
-	// ... (Resto del código)
+	    private int cantClientesHumano; // Cantidad de clientes humanos
+	    private int cantChoferes; // Cantidad de choferes disponibles
+	    private ArrayList<Chofer> choferesDisp; // Lista de choferes disponibles
+	    private ArrayList<Chofer> choferes; // Lista completa de choferes
 
-	//clienteThread solicita Viaje sobre pedido aceptado
-	public synchronized void solicitaViaje(ClienteThread cliente, Pedido pedido, int distancia) {
-		// Implementación pendiente
-		// ...
-	}
+	    /**
+	     * Decrementa la cantidad de clientes humanos.
+	     * Precondicion: La cantidad de clientes humanos debe ser mayor que 0.
+	     * La cantidad de clientes humanos se reduce en 1.
+	     */
+	    public void terminarCliente() {
+	        this.cantClientesHumano--;
+	    }
 
-	//sistemaThread asigna vehículo
-	public synchronized void asignaVehiculo(ArrayList<Vehiculo> vehiculos) {
-		// Implementación pendiente
-		// ...
+	    /**
+	     * Termina un chofer y lo elimina de la lista de choferes disponibles.
+	     * @param chofer El chofer a terminar.
+	     * precondicion: La cantidad de choferes disponibles debe ser mayor que 0.
+	     * La cantidad de choferes disponibles se reduce en 1.
+	       El chofer especificado se elimina de la lista de choferes disponibles.
+	     */
+	    public void terminarChofer(Chofer chofer) {
+	        this.cantChoferes--;
+	        this.choferesDisp.remove(chofer);
+	    }
+
+	    /**
+	     * Obtiene la cantidad actual de choferes disponibles.
+	     * @return La cantidad de choferes disponibles.
+	     */
+	    public int getCantChoferes() {
+	        return this.cantChoferes;
+	    }
+
+	    /**
+	     * Obtiene la cantidad actual de clientes humanos.
+	     * @return La cantidad de clientes humanos.
+	     */
+	    public int getCantClientes() {
+	        return this.cantClientesHumano;
+	    }
+
+	    /**
+	     * Obtiene la lista de choferes disponibles.
+	     * @return La lista de choferes disponibles.
+	     */
+	    public ArrayList<Chofer> getChoferesDisp() {
+	        return choferesDisp;
+	    }
+
+	    /**
+	     * Establece la lista de choferes disponibles.
+	     * @param choferesDisp La nueva lista de choferes disponibles.
+	     */
+	    public void setChoferesDisp(ArrayList<Chofer> choferesDisp) {
+	        this.choferesDisp = choferesDisp;
+	    }
+
+	    /**
+	     * Obtiene la lista completa de choferes.
+	     * @return La lista completa de choferes.
+	     */
+	    public ArrayList<Chofer> getChoferes() {
+	        return choferes;
+	    }
 	}
 }
-*/
-
     
 	

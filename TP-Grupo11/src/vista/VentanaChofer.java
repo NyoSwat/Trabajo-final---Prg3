@@ -9,7 +9,9 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 
-
+/*
+ * Clase que representa la ventana de interfaz de chofer para el cliente. 
+ */
 public class VentanaChofer extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final int start_x = 30;

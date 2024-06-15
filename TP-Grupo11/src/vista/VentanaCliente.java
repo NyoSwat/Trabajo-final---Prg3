@@ -17,26 +17,33 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.DefaultComboBoxModel;
 
+/**
+ * Clase que representa la ventana de interfaz de usuario para el cliente.
+ * Contiene los componentes de la interfaz para interactuar con el sistema y realizar pedidos.
+ */
 public class VentanaCliente extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JLabel nombreLabel;
-	private JLabel nuevoPedidoLabel;
-	private JLabel zonaLabel;
-	private JLabel cantPasajerosLabel;
-	private JTextField cantPasajerosField;
-	private JRadioButton petRadioBtn;
-	private JRadioButton baulRadioBtn;
-	private JButton exitBtn;
-	private JButton generarPedidoBtn;
-	private JComboBox<String> zonaComboBox;
-	private JTextArea textArea;
-	private JButton pagarBtn;
+    private static final long serialVersionUID = 1L; // Identificador único para la serialización
+    private JPanel contentPane; // Panel principal de contenido
+    private JLabel nombreLabel; // Etiqueta para el nombre
+    private JLabel nuevoPedidoLabel; // Etiqueta para nuevo pedido
+    private JLabel zonaLabel; // Etiqueta para la zona
+    private JLabel cantPasajerosLabel; // Etiqueta para la cantidad de pasajeros
+    private JTextField cantPasajerosField; // Campo de texto para ingresar la cantidad de pasajeros
+    private JRadioButton petRadioBtn; // Botón de radio para seleccionar si es pet-friendly
+    private JRadioButton baulRadioBtn; // Botón de radio para seleccionar si se requiere baúl
+    private JButton exitBtn; // Botón para salir de la aplicación
+    private JButton generarPedidoBtn; // Botón para generar un nuevo pedido
+    private JComboBox<String> zonaComboBox; // ComboBox para seleccionar la zona
+    private JTextArea textArea; // Area de texto para mostrar información al usuario
+    private JButton pagarBtn; // Botón para realizar el pago
 
-	/**
-	 * Create the frame.
-	 */
+
+    /**
+     * Constructor de VentanaCliente que inicializa la ventana con los componentes necesarios.
+     * 
+     * @param msj El mensaje o título para la ventana del cliente.
+     */
 	public VentanaCliente(String msj) {
 		super(msj);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -119,37 +126,78 @@ public class VentanaCliente extends JFrame {
 	}
 
 	
+	/**
+	 * Asigna el controlador para manejar las acciones de los botones de la interfaz.
+	 * 
+	 * @param control El controlador que maneja las acciones.
+	 */
 	public void setControlador(ControladorCliente control) {
-		this.exitBtn.addActionListener(control);
-		this.generarPedidoBtn.addActionListener(control);
-		this.pagarBtn.addActionListener(control);
+	    this.exitBtn.addActionListener(control);
+	    this.generarPedidoBtn.addActionListener(control);
+	    this.pagarBtn.addActionListener(control);
 	}
-	
+
+	/**
+	 * Obtiene el estado de selección del botón de radio para requerir baúl.
+	 * 
+	 * @return true si el botón de baúl está seleccionado, false en caso contrario.
+	 */
 	public boolean getBaul() {
-		return this.baulRadioBtn.isSelected();
+	    return this.baulRadioBtn.isSelected();
 	}
-	
+
+	/**
+	 * Obtiene el estado de selección del botón de radio para permitir mascotas.
+	 * 
+	 * @return true si el botón de mascotas está seleccionado, false en caso contrario.
+	 */
 	public boolean getMascota() {
-		return this.petRadioBtn.isSelected();
+	    return this.petRadioBtn.isSelected();
 	}
 
+	/**
+	 * Obtiene la cantidad de pasajeros ingresada por el usuario.
+	 * 
+	 * @return La cantidad de pasajeros como un entero.
+	 */
 	public int getCantPasajeros() {
-		return Integer.parseInt(this.cantPasajerosField.getText());
-	}
-	
-	public String getZona() {
-		return this.zonaComboBox.getItemAt(this.zonaComboBox.getSelectedIndex());
-	}
-	
-	public void setUsuarioLabel(String nombre) {
-		this.nombreLabel.setText(nombre);
-	}
-	
-	public void agregarComentario(String mensaje) {
-		this.textArea.append(mensaje+"\n");
+	    return Integer.parseInt(this.cantPasajerosField.getText());
 	}
 
-	public void escribeJTextArea(String texto) {
-		this.textArea.append(texto + "\n");
+	/**
+	 * Obtiene la zona seleccionada por el usuario desde el ComboBox.
+	 * 
+	 * @return La zona seleccionada como una cadena de texto.
+	 */
+	public String getZona() {
+	    return this.zonaComboBox.getItemAt(this.zonaComboBox.getSelectedIndex());
 	}
+
+	/**
+	 * Establece el nombre del usuario en la etiqueta correspondiente.
+	 * 
+	 * @param nombre El nombre del usuario a mostrar en la etiqueta.
+	 */
+	public void setUsuarioLabel(String nombre) {
+	    this.nombreLabel.setText(nombre);
+	}
+
+	/**
+	 * Agrega un comentario al área de texto de la interfaz.
+	 * 
+	 * @param mensaje El mensaje a agregar en el área de texto.
+	 */
+	public void agregarComentario(String mensaje) {
+	    this.textArea.append(mensaje + "\n");
+	}
+
+	/**
+	 * Escribe texto en el área de texto de la interfaz, seguido por un salto de línea.
+	 * 
+	 * @param texto El texto a escribir en el área de texto.
+	 */
+	public void escribeJTextArea(String texto) {
+	    this.textArea.append(texto + "\n");
+	}
+
 }

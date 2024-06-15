@@ -26,12 +26,19 @@ import persistencia.SistemaDTO;
 import vista.VentanaConfig;
 import vista.VentanaNuevoCliente;
 
+/**
+ * Controlador para la configuración del sistema, implementa el patrón Singleton y ActionListener.
+ * Gestiona la interfaz de configuración y la serialización/deserialización de los datos del sistema.
+ */
 public class ControladorConfig implements ActionListener{
 	private static final String nombre_archivo = "sistema.dat";
 	private static ControladorConfig instance = null;
 	private VentanaConfig ventanaConfig;
 	private Sistema sistema;
 	
+    /**
+     * Constructor privado que inicializa la ventana de configuración y deserializa los datos del sistema.
+     */
 	private ControladorConfig() {
 		this.ventanaConfig = new VentanaConfig();
 		this.sistema = Sistema.getInstance();
@@ -40,13 +47,22 @@ public class ControladorConfig implements ActionListener{
 		this.deSerializar();
 	}
 	
+    /**
+     * Proporciona acceso a la única instancia de la clase, creándola si aún no existe.
+     * @return La instancia única de ControladorConfig.
+     */
 	public static ControladorConfig getInstance() {
 		if(instance == null)
 			instance = new ControladorConfig();
 		return instance;
 	}
 
-	@Override
+	/**
+	 * Maneja las acciones realizadas en la interfaz de configuración del sistema.
+	 * Dependiendo del comando de acción, ejecuta la lógica para agregar choferes y vehículos,
+	 * abrir la ventana de nuevo cliente, cambiar categorías, guardar o eliminar datos.
+	 * @param evento El evento de acción que se ha producido.
+	 */
 	public void actionPerformed(ActionEvent evento) {
 		
 		if(evento.getActionCommand().equals("agregarChofer")) {
@@ -107,7 +123,10 @@ public class ControladorConfig implements ActionListener{
 		}
 	}
 	
-	
+	/**
+	 * Deserializa los datos del sistema desde un archivo y actualiza el estado del sistema con estos datos.
+	 * Lee el archivo de persistencia, convierte los datos del DTO al sistema y actualiza la configuración de la ventana.
+	 */
 	private void deSerializar() {
 		try {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
@@ -131,7 +150,10 @@ public class ControladorConfig implements ActionListener{
 		}
 	}
 	
-	
+	/**
+	 * Serializa el estado actual del sistema y lo guarda en un archivo.
+	 * Utiliza el patrón DTO para transferir los datos del sistema a un objeto que puede ser serializado.
+	 */
 	private void serializar() {
 		try {
 			IPersistencia<Serializable> persistir = new PersistenciaBinaria();
@@ -150,12 +172,19 @@ public class ControladorConfig implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Elimina el archivo de persistencia que contiene los datos serializados del sistema.
+	 */
 	private void deleteDatos() {
 		IPersistencia<Serializable> persistir = new PersistenciaBinaria();
 		persistir.deleteFile(nombre_archivo);
 		ventanaConfig.dispose();
 	}
 	
+	/**
+	 * Abre la ventana para crear un nuevo cliente.
+	 * Crea una instancia del controlador asociado a la ventana de nuevo cliente y la muestra.
+	 */
 	private void abrirVentanaNuevoCliente() {
 		ControladorNewCliente CNewCliente = new ControladorNewCliente(ventanaConfig);
 	}

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+
 public class VentanaGeneral extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTextArea textArea;

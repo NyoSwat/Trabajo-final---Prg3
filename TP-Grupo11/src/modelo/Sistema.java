@@ -92,7 +92,7 @@ public class Sistema extends Observable{
 
 	/**
 	 * Agrega un vehiculo nuevo al sistema.
-	 * <b>pre</b> : la patente no puede estar vacia y la cantidad de pasajeros 
+	 * precondicion: la patente no puede estar vacia y la cantidad de pasajeros 
 	 * no puede ser menor a 0.
 	 * @param tipo : Tipo de vehiculo (Automovil, Moto o Combi)
 	 * @param patente : Patente del vehiculo a agregar.
@@ -133,7 +133,7 @@ public class Sistema extends Observable{
     
 	/**
      * Consulta un chofer existente 
-     * <b>pre:</b>el chofer no debe ser null ni vacio
+     * precondicion: el chofer no debe ser null ni vacio
      * @param dni: dni del chofer a consultar
      * @throws IllegalArgumentException en caso de que el chofer no exista
      * @throws ExistenteChoferException 
@@ -154,7 +154,15 @@ public class Sistema extends Observable{
     	return null;
     }
     
-    
+    /**
+     * Agrega un nuevo chofer a la lista de choferes si pasa todas las validaciones.
+     * Valida que el DNI y el nombre del chofer no estén vacíos, que el DNI contenga solo números,
+     * y que el nombre sea de entre 4 y 20 caracteres alfabéticos. Si el chofer ya existe, lanza una excepción.
+     *
+     * @param chofer El chofer a agregar.
+     * @throws ExistenteChoferException Si el chofer con el mismo DNI ya existe.
+     * @throws IllegalArgumentException Si los parámetros del chofer son inválidos.
+     */ 
     public void agregarChofer(Chofer chofer) throws ExistenteChoferException,IllegalArgumentException {
     	if(chofer.getDni().equals("") || chofer.getDni().equals(null) || !chofer.getDni().matches("^[0-9]+$") || 
     			chofer.getNombre().equals("") || chofer.getNombre().equals(null) || !chofer.getNombre().matches("^[a-zA-Z\\s]{4,20}$") ){
@@ -311,7 +319,6 @@ public class Sistema extends Observable{
      * @param usuario Usuario al hacer el reporte
      * @param fechaInicial 
      * @param fechaFinal
-     * @throws ExistenteUsuarioException Se lanza cuando el cliente a reportar no existe
      */
     public ArrayList<IViaje> reporteViajesCliente(Usuario usuario, Date fechaInicial, Date fechaFinal) {
     	ArrayList<IViaje> viajeCliente = new ArrayList<IViaje>();
@@ -392,6 +399,19 @@ public class Sistema extends Observable{
     	generarViaje(cliente,pedido,distancia);
     }
     
+    
+    /**
+     * Crea un nuevo pedido con los parámetros especificados.
+     * Valida que la cantidad de pasajeros sea positiva antes de crear el pedido.
+     *
+     * @param cantPasajeros La cantidad de pasajeros para el pedido.
+     * @param zona La zona donde se solicita el pedido.
+     * @param baul Indica si se requiere espacio de baúl en el vehículo.
+     * @param mascota Indica si el cliente llevará una mascota.
+     * @param fecha La fecha en la que se solicita el pedido.
+     * @return Pedido El nuevo pedido creado con los parámetros dados.
+     * @throws IllegalArgumentException Si la cantidad de pasajeros es negativa.
+     */
     public Pedido crearPedido(int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha) 
     		throws IllegalArgumentException 
     {
@@ -431,12 +451,22 @@ public class Sistema extends Observable{
     	finalizarViaje(viaje);
     }
     
-    public IViaje crearViaje(Cliente cliente,Pedido pedido,int distancia) {
-    	return FactoryViaje.armarViaje(cliente,pedido, distancia);
+    /**
+     * Crea un viaje utilizando los datos del cliente, el pedido y la distancia.
+     * Delega la creación del viaje al método de fábrica 'armarViaje' de la clase 'FactoryViaje'.
+     *
+     * @param cliente El cliente que solicita el viaje.
+     * @param pedido El pedido asociado al viaje.
+     * @param distancia La distancia estimada del viaje.
+     * @return IViaje La instancia del viaje creada.
+     */
+    public IViaje crearViaje(Cliente cliente, Pedido pedido, int distancia) {
+        return FactoryViaje.armarViaje(cliente, pedido, distancia);
     }
+
     
     /**Asigna el vehiculo correspondiente al pedido realizado
-     * <b>pre:</b> viaje debe ser distinto de null
+     * precondicion: viaje debe ser distinto de null
      * @param viaje viaje que se esta preparando
      */
     public void asignarVehiculo(ArrayList<Vehiculo> vehiculosDisponibles,IViaje viaje) {
@@ -460,7 +490,7 @@ public class Sistema extends Observable{
     
     /**
      * Asigna el chofer correspondiente al pedido realizado
-     * <b>pre:</b> el viaje debe ser distinto de null
+     * precondicion: el viaje debe ser distinto de null
      * @param viaje
      * @return retorna el chofer asignado
      */
@@ -477,7 +507,7 @@ public class Sistema extends Observable{
     
     /**
      * Finaliza el viaje
-     * <b>pre:</b> el viaje tiene que estar iniciado, distinto de null
+     * precondicion: el viaje tiene que estar iniciado, distinto de null
      * @param viaje
      * @throws InterruptedException 
      */
@@ -502,7 +532,7 @@ public class Sistema extends Observable{
     }
     
     /**
-     * <b>pre:<\b> chofer distinto de null 
+     * precondicion: chofer distinto de null 
      * @param chofer Chofer a calcular el salario
      * @return Double con el sueldo del chofer ingresado
      * @throws IllegalArgumentException 
@@ -514,36 +544,67 @@ public class Sistema extends Observable{
     		throw new ExistenteChoferException("Error, chofer a calcular sueldo no existe.");
 		return chofer.getSueldo();
     }
-    // necesario para parte 2
-    public Pedido CreaPedido2(int cantPasajeros, String zona, boolean petFriendly, boolean baul,GregorianCalendar fechaHora)
-    {   return new Pedido(cantPasajeros,zona,petFriendly,baul,fechaHora);
-      
+
+    /**
+     * Crea un nuevo pedido con los parámetros dados.
+     * 
+     * @param cantPasajeros La cantidad de pasajeros para el pedido.
+     * @param zona La zona donde se solicita el pedido.
+     * @param petFriendly Indica si el pedido es amigable con mascotas.
+     * @param baul Indica si se requiere espacio de baúl en el vehículo.
+     * @param fechaHora La fecha y hora en la que se solicita el pedido.
+     * @return Pedido El nuevo pedido creado con los parámetros proporcionados.
+     */
+    public Pedido CreaPedido2(int cantPasajeros, String zona, boolean petFriendly, boolean baul, GregorianCalendar fechaHora) {
+        return new Pedido(cantPasajeros, zona, petFriendly, baul, fechaHora);
     }
+
     
     
-    public void logearse(ObserverVLogin ojo,String usuario,String contrasena) {
-    	String mensaje = "Incorrecto";
-    	int i = 0;
-    	while(i < this.usuarios.size() && !this.usuarios.get(i).getUsuario().equals(usuario)) {
-    		i++;
-    	}
-    	
-		if(i<this.usuarios.size() && this.usuarios.get(i).getUsuario().equals(usuario) && this.usuarios.get(i).getPassword().equals(contrasena)) {
-    		mensaje = "Correcto";
-    		setUsuarioLogeado(this.usuarios.get(i));
-    	}
-    	
-    	this.setChanged();
-//    	this.notifyObservers(mensaje);
-    	ojo.update(this,mensaje); //Hago esto para que no notifique a todos, solo al que lo lanza--- No se si es correcto 
+    /**
+     * Intenta iniciar sesión con las credenciales proporcionadas.
+     *
+     * @param ojo       Observador que recibirá la notificación del resultado del inicio de sesión.
+     * @param usuario   Nombre de usuario.
+     * @param contrasena Contraseña del usuario.
+     * precondicion: La lista de usuarios no debe ser nula.
+     * Se verifica si el usuario y la contraseña son válidos. Si es correcto, se establece el usuario como logeado.
+     */
+    public void logearse(ObserverVLogin ojo, String usuario, String contrasena) {
+        String mensaje = "Incorrecto";
+        int i = 0;
+        while (i < this.usuarios.size() && !this.usuarios.get(i).getUsuario().equals(usuario)) {
+            i++;
+        }
+
+        if (i < this.usuarios.size() && this.usuarios.get(i).getUsuario().equals(usuario) && this.usuarios.get(i).getPassword().equals(contrasena)) {
+            mensaje = "Correcto";
+            setUsuarioLogeado(this.usuarios.get(i));
+        }
+
+        this.setChanged();
+        // this.notifyObservers(mensaje);
+        ojo.update(this, mensaje); // Hago esto para que no notifique a todos, solo al que lo lanza--- No se si es correcto
     }
+
     
+    /**
+     * Obtiene el usuario que está actualmente logeado en el sistema.
+     *
+     * @return Usuario El usuario logeado.
+     */
     public Usuario getUsuarioLogeado() {
-    	return this.usuarioLogeado;
+        return this.usuarioLogeado;
     }
-    
+
+    /**
+     * Establece el usuario logeado en el sistema.
+     *
+     * @param usuario El usuario a logear en el sistema.
+     */
     public void setUsuarioLogeado(Usuario usuario) {
-    	this.usuarioLogeado = usuario;
+        this.usuarioLogeado = usuario;
     }
+
     
 }

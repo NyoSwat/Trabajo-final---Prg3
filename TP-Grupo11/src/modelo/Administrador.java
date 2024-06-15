@@ -19,8 +19,6 @@ public class Administrador extends Usuario {
      * @param usuario  Nombre de usuario del administrador.
      * @param password Contraseña del administrador.
      * @param nombre   Nombre completo del administrador.
-     * @throws ExistenteUsuarioException 
-     * @throws IllegalArgumentException 
      */
     public Administrador(Sistema sistema, String usuario, String password, String nombre) {
     	super(usuario, password, nombre);

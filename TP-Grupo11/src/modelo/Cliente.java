@@ -24,15 +24,29 @@ public class Cliente extends Usuario{
     }
     
     
-    public void hacerPedido(String zona,boolean mascota,boolean baul,int cantPasajeros,int distancia) 
-    		throws IllegalArgumentException, 
-    		ExistenteUsuarioException, 
-    		FaltaVehiculoException, 
-    		FaltaChoferException, 
-    		InterruptedException 
-    {
-    	Sistema.getInstance().generarPedido(this,cantPasajeros,distancia,zona,mascota,baul,new GregorianCalendar());
+    /**
+     * Realiza un pedido en el sistema.
+     * 
+     * @param zona La zona donde se realizará el pedido.
+     * @param mascota Indica si se permite llevar mascota.
+     * @param baul Indica si se requiere espacio de baúl.
+     * @param cantPasajeros La cantidad de pasajeros para el pedido.
+     * @param distancia La distancia del viaje del pedido.
+     * @throws IllegalArgumentException Si los argumentos no son válidos.
+     * @throws ExistenteUsuarioException Si el usuario ya existe.
+     * @throws FaltaVehiculoException Si falta un vehículo para realizar el pedido.
+     * @throws FaltaChoferException Si falta un chofer para realizar el pedido.
+     * @throws InterruptedException Si el hilo es interrumpido durante la ejecución.
+     */
+    public void hacerPedido(String zona, boolean mascota, boolean baul, int cantPasajeros, int distancia) 
+            throws IllegalArgumentException, 
+            ExistenteUsuarioException, 
+            FaltaVehiculoException, 
+            FaltaChoferException, 
+            InterruptedException {
+        Sistema.getInstance().generarPedido(this, cantPasajeros, distancia, zona, mascota, baul, new GregorianCalendar());
     }
+
 
     
     /**

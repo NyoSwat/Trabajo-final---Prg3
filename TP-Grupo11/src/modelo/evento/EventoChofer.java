@@ -18,8 +18,8 @@ public class EventoChofer {
      *
      * @param chofer  Chofer asociado al evento.
      * @param mensaje Mensaje del evento.
-     * @pre El chofer y el mensaje no deben ser nulos.
-     * @post Se crea un objeto EventoChofer con los valores dados.
+     * precondicion: El chofer y el mensaje no deben ser nulos.
+     *  Se crea un objeto EventoChofer con los valores dados.
      */
     public EventoChofer(Chofer chofer, String mensaje) {
         // Precondición: Verificar que el chofer y el mensaje no sean nulos
