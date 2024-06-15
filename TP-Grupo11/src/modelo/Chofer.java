@@ -31,7 +31,6 @@ public abstract class Chofer implements Serializable,Cloneable{
     /**
      * Obtiene el sueldo del chofer según su categoría.
      * @return double con sueldo del chofer.
-     * @throws ExistenteChoferException 
      */
     public abstract double getSueldo();
     
@@ -67,7 +66,6 @@ public abstract class Chofer implements Serializable,Cloneable{
 	/**
      *Devuelve una representación en forma de cadena de Chofer.
 	*@return String que representa a Chofer.
-	 * @throws  
 	*/
 	public String toString() {
 		DecimalFormat formato = new DecimalFormat("#.##");

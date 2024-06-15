@@ -13,14 +13,19 @@ public class ChoferPermanente extends ChoferEmpleado {
 	private GregorianCalendar fechaIngreso = new GregorianCalendar(); // Fecha de ingreso del empleado a la empresa
     
 	/**
-     * Constructor para crear un objeto Permanente.<br>
-     * <b>pre:</b> dni distinto de null, no vacio y valido.
-     * 			nombre distinto de null, no vacio y valido.
-     */
-    public ChoferPermanente(String dni,String nombre,int cantidadHijos) {
-    	super(dni, nombre);
-    	setCantidadHijos(cantidadHijos);
-    }
+	 * Constructor para crear un objeto ChoferPermanente.
+	 * Precondición: El DNI debe ser distinto de null, no vacío y válido.
+	 * El nombre debe ser distinto de null, no vacío y válido.
+	 * 
+	 * @param dni El DNI del chofer permanente.
+	 * @param nombre El nombre del chofer permanente.
+	 * @param cantidadHijos La cantidad de hijos del chofer permanente.
+	 */
+	public ChoferPermanente(String dni, String nombre, int cantidadHijos) {
+	    super(dni, nombre);
+	    setCantidadHijos(cantidadHijos);
+	}
+
     
     /**Método que le asigna otro valor al atributo plusAntiguedad.
      *@param plusAntiguedad:de tipo double con nuevo valor de plusAntiguedad.

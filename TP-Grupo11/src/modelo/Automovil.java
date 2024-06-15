@@ -11,8 +11,10 @@ public class Automovil extends Vehiculo {
 	
 	/**
      * Constructor para crear un objeto Automovil.
-     * <b>pre:</b> patente, baul, pet validados y distinto de null.
+     * precondicion: patente, baul, pet validados y distinto de null.
      * @param patente:parámetro de tipo String que representa la patente del automóvil.
+     * @param baul: parametro de tipo boolean que indica la el deseo de diponibilidad de un baul
+     * @param pet: parametro de tipo boolean que indica la el deseo de diponibilidad de transporte de mascotas
      */
     public Automovil(String patente,boolean baul,boolean pet) {
     	super(patente, baul, pet);

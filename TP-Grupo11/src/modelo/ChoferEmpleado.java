@@ -12,6 +12,7 @@ public abstract class ChoferEmpleado extends Chofer {
 
 	/**Constructor para crear un chofer de tipo Empleado.
      * @param nombre: de tipo String, nombre del empleado
+     * @param dni: dni del empleado
      */
     public ChoferEmpleado(String dni, String nombre) {
 		super(dni, nombre);
@@ -28,7 +29,7 @@ public abstract class ChoferEmpleado extends Chofer {
     
     /**
      * Asigna el porcentaje del aporte
-     * @param double aporte : porcentaje que le retira el estado.
+     * @param aportes: porcentaje que le retira el estado.
      */
     public void setAportes(double aportes) {
     	if(aportes<0 || aportes>1)

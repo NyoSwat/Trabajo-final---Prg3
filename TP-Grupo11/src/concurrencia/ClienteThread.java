@@ -54,11 +54,20 @@ public class ClienteThread extends MiObservable implements Runnable {
 	
 	/**
 	 * Genera un pedido de viaje.
+	 *
+	 * @param cantPasajeros Cantidad de pasajeros en el viaje.
+	 * @param zona          Zona del viaje (Sin Asfaltar, Estandar, Peligrosa).
+	 * @param baul          Indica si se requiere espacio en el baúl (true) o no (false).
+	 * @param mascota       Indica si se llevará una mascota (true) o no (false).
+	 * @param fecha         Fecha y hora del pedido de viaje.
+	 * @pre El recurso compartido (rc) no debe ser nulo.
+	 * @post Se valida el pedido y se asigna un número de viaje aleatorio.
 	 */
-	public void generarPedido(int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha) {
-		// Implementación pendiente
-		this.rc.validarPedido(this, cantPasajeros, zona, baul, mascota, fecha, ran.nextInt(70));
+	public void generarPedido(int cantPasajeros, String zona, boolean baul, boolean mascota, GregorianCalendar fecha) {
+	    // Implementación pendiente
+	    this.rc.validarPedido(this, cantPasajeros, zona, baul, mascota, fecha, ran.nextInt(70));
 	}
+
 	
 	/**
 	 * Realiza el pago del viaje.

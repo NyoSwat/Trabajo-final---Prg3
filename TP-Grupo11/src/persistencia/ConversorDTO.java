@@ -8,8 +8,8 @@ public class ConversorDTO {
      *
      * @param sistema Objeto Sistema a convertir.
      * @return Objeto SistemaDTO resultante.
-     * @pre El objeto Sistema no debe ser nulo.
-     * @post Se crea un objeto SistemaDTO a partir del Sistema dado.
+     * precondicion: El objeto Sistema no debe ser nulo.
+     * Se crea un objeto SistemaDTO a partir del Sistema dado.
      */
     public static SistemaDTO sistemaToSistemaDTO(Sistema sistema) {
         // Precondición: Verificar que el objeto Sistema no sea nulo
@@ -27,8 +27,8 @@ public class ConversorDTO {
      *
      * @param sistema    Objeto Sistema a actualizar.
      * @param sistemaDTO Objeto SistemaDTO con los datos a asignar.
-     * @pre El objeto Sistema y el objeto SistemaDTO no deben ser nulos.
-     * @post Se actualiza el objeto Sistema con los datos del SistemaDTO dado.
+     * precondicion: El objeto Sistema y el objeto SistemaDTO no deben ser nulos.
+     *  Se actualiza el objeto Sistema con los datos del SistemaDTO dado.
      */
     public static void sistemaDTOToSistema(Sistema sistema, SistemaDTO sistemaDTO) {
         // Precondición: Verificar que los objetos Sistema y SistemaDTO no sean nulos

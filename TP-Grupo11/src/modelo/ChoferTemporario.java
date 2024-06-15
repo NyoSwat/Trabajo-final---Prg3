@@ -31,7 +31,6 @@ public class ChoferTemporario extends ChoferEmpleado {
      * Se calcula salario mensual en base a un sueldo básico, un plus por cantidad de viajes y 
      * y un descuento por aportes jubilatorios
      * @return double con sueldo del empleado temporal.
-     * @throws ExistenteChoferException 
      */
     @Override
     public double getSueldo() {    	
@@ -44,7 +43,6 @@ public class ChoferTemporario extends ChoferEmpleado {
      * Devuelve una representación en forma de cadena de Temporario.
      * La cadena resultante contiene la cantidad de viajes realizados en el mes.
      * @return String que representa la cantidad de viajes realizados por Empleado Temporario.
-     * @throws ExistenteChoferException 
      */
     @Override
     public String toString(){

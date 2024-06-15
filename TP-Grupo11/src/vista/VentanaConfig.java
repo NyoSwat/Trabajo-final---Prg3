@@ -29,6 +29,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 
+/**
+ * Clase de configuración de ventana que extiende de JFrame e implementa KeyListener.
+ */
 public class VentanaConfig extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
@@ -76,8 +79,9 @@ public class VentanaConfig extends JFrame implements KeyListener{
 	private JScrollPane scrollChoferes;
 	private JLabel cantViajesChoferLabel;
 	private JTextField cantViajesChoferField;
+	
 	/**
-	 * Create the frame.
+	 * crea la ventana de configuracion de la simulacion
 	 */
 	public VentanaConfig() {
 		super("Configuracion Simulacion");
@@ -326,74 +330,154 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		
 	}
 
+	/**
+	 * Obtiene el nombre del chofer.
+	 * 
+	 * @return el nombre del chofer como una cadena de texto
+	 */
 	public String getNombreChofer() {
 		return this.nombreField.getText();
 	}
-	
+
+	/**
+	 * Establece el nombre del chofer.
+	 * 
+	 * @param texto el nombre del chofer
+	 */
 	public void setNombreChofer(String texto) {
 		this.nombreField.setText(texto);
 	}
-	
+
+	/**
+	 * Obtiene el DNI (Documento Nacional de Identidad) del chofer.
+	 * 
+	 * @return el DNI del chofer como una cadena de texto
+	 */
 	public String getDniChofer() {
 		return this.dniField.getText();
 	}
-	
+
+	/**
+	 * Establece el DNI (Documento Nacional de Identidad) del chofer.
+	 * 
+	 * @param dni el DNI del chofer
+	 */
 	public void setDniChofer(String dni) {
 		this.dniField.setText(dni);
 	}
-	
+
+	/**
+	 * Obtiene la categoría del chofer.
+	 * 
+	 * @return la categoría del chofer como una cadena de texto
+	 */
 	public String getCategoriaChofer() {
 		return this.categoriaComboBox.getItemAt(this.categoriaComboBox.getSelectedIndex());
 	}
 
+	/**
+	 * Obtiene la cantidad de hijos que tiene un chofer.
+	 * 
+	 * @return la cantidad de hijos como una cadena de texto
+	 */
 	public String getCantHijos() {
 		return this.cantHijosField.getText();
 	}
-	
+
+	/**
+	 * Establece la cantidad de hijos que tiene un chofer.
+	 * 
+	 * @param texto la cantidad de hijos
+	 */
 	public void setCantHijos(String texto) {
 		this.cantHijosField.setText(texto);
 	}
-	
+
+	/**
+	 * Obtiene el tipo de vehículo.
+	 * 
+	 * @return el tipo de vehículo como una cadena de texto
+	 */
 	public String getTipoVehiculo() {
 		return this.typeVehiculoComboBox.getItemAt(this.typeVehiculoComboBox.getSelectedIndex());
 	}
-	
-	public String getPatente() {
-		return this.patenteField.getText();
-	}
-	
-	public void setPatente(String texto) {
-		this.patenteField.setText(texto);
-	}
-	
-	public boolean getBaul() {
-		return this.baulChkBox.isSelected();
-	}
-	
-	public boolean getMascota() {
-		return this.petFriendlyChkBox.isSelected();
-	}
 
-	public void actualizoListaChofer(ArrayList<Chofer> choferes) {
-		this.list_choferes.clear();
-		for(Chofer chofer : choferes) {
-			this.list_choferes.addElement(chofer);
-		}
-	}
-	public void actualizoListaVehiculo(ArrayList<Vehiculo> vehiculos) {
-		this.list_vehiculos.clear();
-		for(Vehiculo vehiculo : vehiculos) {
-			this.list_vehiculos.addElement(vehiculo);
-		}
-	}
-	public void actualizoListaCliente(ArrayList<Usuario> usuarios) {
-		this.list_usuarios.clear();
-		for(Usuario usuario : usuarios) {
-			this.list_usuarios.addElement(usuario);
-		}
-	}
-	
-	public void changeCategoria() {
+    /**
+     * Obtiene el número de patente del vehículo.
+     *
+     * @return el número de patente como una cadena de texto
+     */
+    public String getPatente() {
+        return this.patenteField.getText();
+    }
+
+    /**
+     * Establece el número de patente del vehículo.
+     *
+     * @param texto el número de patente
+     */
+    public void setPatente(String texto) {
+        this.patenteField.setText(texto);
+    }
+
+    /**
+     * Verifica si el vehículo tiene baúl.
+     *
+     * @return verdadero si tiene baúl, falso en caso contrario
+     */
+    public boolean getBaul() {
+        return this.baulChkBox.isSelected();
+    }
+
+    /**
+     * Verifica si el vehículo es amigable con mascotas.
+     *
+     * @return verdadero si es amigable con mascotas, falso en caso contrario
+     */
+    public boolean getMascota() {
+        return this.petFriendlyChkBox.isSelected();
+    }
+
+    /**
+     * Actualiza la lista de choferes.
+     *
+     * @param choferes una lista (ArrayList) de choferes para actualizar
+     */
+    public void actualizoListaChofer(ArrayList<Chofer> choferes) {
+        this.list_choferes.clear();
+        for(Chofer chofer : choferes) {
+            this.list_choferes.addElement(chofer);
+        }
+    }
+
+    /**
+     * Actualiza la lista de vehículos.
+     *
+     * @param vehiculos una lista (ArrayList) de vehículos para actualizar
+     */
+    public void actualizoListaVehiculo(ArrayList<Vehiculo> vehiculos) {
+        this.list_vehiculos.clear();
+        for(Vehiculo vehiculo : vehiculos) {
+            this.list_vehiculos.addElement(vehiculo);
+        }
+    }
+
+    /**
+     * Actualiza la lista de clientes.
+     *
+     * @param usuarios una lista (ArrayList) de usuarios para actualizar
+     */
+    public void actualizoListaCliente(ArrayList<Usuario> usuarios) {
+        this.list_usuarios.clear();
+        for(Usuario usuario : usuarios) {
+            this.list_usuarios.addElement(usuario);
+        }
+    }
+
+    /**
+     * Cambia la visibilidad y selección basado en la categoría del chofer.
+     */
+		public void changeCategoria() {
 		if(this.categoriaComboBox.getSelectedItem().equals("Permanente")) {
 			this.cantHijosField.setVisible(true);
 			this.cantHijosLabel.setVisible(true);
@@ -404,6 +488,9 @@ public class VentanaConfig extends JFrame implements KeyListener{
 		}
 	}
 	
+	/**
+	 * Cambia la visibilidad y selección basado en el tipo de vehículo.
+	 */
 	public void changeTypeVehiculo() {
 		if(this.typeVehiculoComboBox.getSelectedItem().equals("Moto")) {
 			this.baulChkBox.setVisible(false);
@@ -418,30 +505,61 @@ public class VentanaConfig extends JFrame implements KeyListener{
 			this.petFriendlyChkBox.setSelected(true);
 		}
 	}
-	
+
+	/**
+	 * Obtiene la cantidad de pedidos de un cliente.
+	 * 
+	 * @return la cantidad de pedidos como un entero
+	 */
 	public int getCantPedidosCliente() {
 		return Integer.parseInt(this.cantPedidoField.getText());
 	}
-	
+
+	/**
+	 * Obtiene la cantidad de clientes.
+	 * 
+	 * @return la cantidad de clientes como un entero
+	 */
 	public int getCantClietes() {
 		return Integer.parseInt(this.cantClienteField.getText());
 	}
-	
+
+	/**
+	 * Obtiene la cantidad de viajes realizados por un chofer.
+	 * 
+	 * @return la cantidad de viajes como un entero
+	 */
 	public int getCantViajesChofer() {
 		return Integer.parseInt(this.cantViajesChoferField.getText());
 	}
-	
+
+	/**
+	 * Establece la cantidad de pedidos de un cliente.
+	 * 
+	 * @param cantidad la cantidad de pedidos
+	 */
 	public void setCantPedidosCliente(int cantidad) {
 		this.cantPedidoField.setText(String.valueOf(cantidad));
 	}
-	
-	public void setCantClientes(int cantidad) {
-		this.cantClienteField.setText(String.valueOf(cantidad));
-	}
-	
-	public void setCantViajesChofer(int cantidad) {
-		this.cantViajesChoferField.setText(String.valueOf(cantidad));
-	}
+
+    /**
+     * Establece la cantidad de clientes.
+     *
+     * @param cantidad la cantidad de clientes
+     */
+    public void setCantClientes(int cantidad) {
+        this.cantClienteField.setText(String.valueOf(cantidad));
+    }
+
+    /**
+     * Establece la cantidad de viajes realizados por un chofer.
+     *
+     * @param cantidad la cantidad de viajes
+     */
+    public void setCantViajesChofer(int cantidad) {
+        this.cantViajesChoferField.setText(String.valueOf(cantidad));
+    }
+
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {

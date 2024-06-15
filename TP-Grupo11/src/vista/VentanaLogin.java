@@ -32,7 +32,8 @@ public class VentanaLogin extends JFrame {
 
 
 	/**
-	 * Create the frame.
+	 * Constructor para VentanaLogin que inicializa la ventana con los componentes necesarios para el inicio de sesión.
+	 * Configura el cierre, tamaño, y la capacidad de redimensionar la ventana. Además, inicializa y agrega los paneles y componentes para la entrada de datos de inicio de sesión.
 	 */
 	public VentanaLogin() {
 		super("Inicio Sesion");
@@ -91,17 +92,30 @@ public class VentanaLogin extends JFrame {
 		panel.add(separator);
 	}
 	
+	/**
+	 * Asigna el controlador para los botones de ingresar y registrar.
+	 * @param control El controlador que maneja las acciones de los botones.
+	 */
 	public void setControlador(ControladorLogin control) {
-		this.ingresarBtn.addActionListener(control);
-		this.registerBtn.addActionListener(control);
+	    this.ingresarBtn.addActionListener(control); // Añade el controlador al botón ingresar
+	    this.registerBtn.addActionListener(control); // Añade el controlador al botón registrar
 	}
-	
+
+	/**
+	 * Obtiene el nombre de usuario ingresado en el campo correspondiente.
+	 * @return El nombre de usuario como una cadena de texto.
+	 */
 	public String getUsuario() {
-		return this.usuarioField.getText();
+	    return this.usuarioField.getText(); // Devuelve el texto del campo usuarioField
 	}
-	
+
+	/**
+	 * Obtiene la contraseña ingresada en el campo correspondiente.
+	 * @return La contraseña como una cadena de texto.
+	 */
 	public String getPassword() {
-		return this.passwordField.getText();
+	    return this.passwordField.getText(); // Devuelve el texto del campo passwordField
 	}
+
 	
 }
