@@ -38,7 +38,7 @@ public class ClienteThread extends MiObservable implements Runnable {
 		while (this.cantViajes > 0 && rc.getCantClientes() > 0 && rc.getCantChoferes() > 0) { 
 			this.estadoPedido = false;
 			this.rc.validarPedido(this, ran.nextInt(11), generarZona(ran.nextInt(2)), ran.nextBoolean(), ran.nextBoolean(), new GregorianCalendar(), ran.nextInt(70)); // Solicita aceptación del pedido
-			UtilThread.espera(10); // Simula el tiempo de espera del pedido
+			UtilThread.espera(15); // Simula el tiempo de espera del pedido
 			if (this.estadoPedido) {
 				this.rc.pagaViaje(this); // El cliente paga el viaje
 				this.cantViajes--; // Se decrementa la cantidad de viajes restantes

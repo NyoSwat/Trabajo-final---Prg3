@@ -10,10 +10,6 @@ public class PruebaVConfig {
 		
 		ControladorConfig controlConfig = ControladorConfig.getInstance();
 		
-		Sistema sistema = Sistema.getInstance();
-		System.out.println(sistema.listaUsuarios());
-		System.out.println(sistema.listaChoferes());
-		System.out.println(sistema.listaVehiculos());
 		
 	}
 }

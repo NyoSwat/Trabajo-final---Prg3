@@ -14,7 +14,7 @@ public class UtilThread {
      */
     public static void espera(int tiempo) {  
         try {
-            Thread.sleep(r.nextInt(tiempo) * 1000); // Convierte el tiempo a milisegundos
+            Thread.sleep((10+r.nextInt(tiempo)) * 1000); // Convierte el tiempo a milisegundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

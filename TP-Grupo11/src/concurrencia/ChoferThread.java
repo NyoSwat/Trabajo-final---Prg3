@@ -32,8 +32,8 @@ public class ChoferThread extends MiObservable implements Runnable {
 	public void run() {
 		while(this.rc.getCantClientes() > 0 && this.cantViajes > 0) { 	
 			this.rc.tomaViaje(this); // El chofer toma un viaje
-			UtilThread.espera(10); // Simula el tiempo de espera del viaje
 			this.rc.finalizaViaje(this); // El chofer finaliza el viaje
+			UtilThread.espera(15); // Simula el tiempo de espera del viaje
 			this.cantViajes--; // Se decrementa la cantidad de viajes restantes
 		}
 		this.rc.terminarChofer(this.chofer); // El chofer termina su trabajo

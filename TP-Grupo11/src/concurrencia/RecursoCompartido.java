@@ -63,7 +63,7 @@ public class RecursoCompartido extends Observable{
    	   		try {
    	   			pedido = this.sistema.crearPedido(cantPasajeros,zona,baul,mascota,new GregorianCalendar());
    	   			e.setMensaje("genero un pedido valido.");
-   	   			System.out.println(cliente.getCliente().getNombre()+" genero un pedido valido");
+//   	   			System.out.println(cliente.getCliente().getNombre()+" genero un pedido valido");
    	   			cliente.setEstadoPedido(true);
    	   			this.solicitaViaje(cliente,pedido,distancia);
 	   	   		setChanged();
@@ -71,7 +71,7 @@ public class RecursoCompartido extends Observable{
    	   		}
    	   		catch(IllegalArgumentException error) {
    	   			e.setMensaje("ha realizado un pedido invalido.");
-   	   			System.out.println(cliente.getCliente().getNombre()+" ha generado un pedido invalido");
+//   	   			System.out.println(cliente.getCliente().getNombre()+" ha generado un pedido invalido");
 	   	   		setChanged();
 	   	   		notifyObservers(e);
 	   	   
@@ -79,7 +79,7 @@ public class RecursoCompartido extends Observable{
    	   	}
    	   	else {
    	   		e.setMensaje("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
-   	   		System.out.println("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
+//   	   		System.out.println("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
    	   		setChanged();
    	   		notifyObservers(e);
    	   	}
@@ -104,11 +104,11 @@ public class RecursoCompartido extends Observable{
 		//Guardo el viaje 
 			this.viajes.add(viaje);
 			e.setMensaje("solicito un viaje y fue aceptado");
-			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue aceptado.");
+//			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue aceptado.");
 		}
 		else {
 			e.setMensaje(" solicito un viaje y fue rechazado por falta de chofer.");
-			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue rechazado por falta de chofer.");
+//			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue rechazado por falta de chofer.");
 		}
 		setChanged();
 		notifyObservers(e);
@@ -133,7 +133,7 @@ public class RecursoCompartido extends Observable{
 				viaje = this.viajes.get(indexViajeSinVehiculo);
 				this.sistema.asignarVehiculo(vehiculos,viaje);
 				//msj de que se le asigno un vehiculo
-				System.out.println("Se le asigno vehiculo.");
+//				System.out.println("Se le asigno vehiculo.");
 				e.setCliente((Cliente)viaje.getCliente());
 				e.setMensaje(" se le asigno vehiculo.");
 			}
@@ -191,7 +191,7 @@ public class RecursoCompartido extends Observable{
     		viaje.setChofer(chofer.getChofer());
     		viaje.setViajeIniciado(true);
     		choferesDisp.remove(chofer.getChofer());
-    		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
+//    		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
     		e.setMensaje("tomo el viaje de "+viaje.getCliente().getNombre());
     	}
     	else {
@@ -247,12 +247,12 @@ public class RecursoCompartido extends Observable{
 			this.viajes.remove(viaje);
 			choferesDisp.add(chofer.getChofer());
 			SistemaThread.addVehiculo(viaje.getVehiculo()); //agrega el vehiculo que se uso
-			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
+//			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 			e.setMensaje("finalizo su viaje.");
 		}
-		notifyAll();
 		setChanged();
 		notifyObservers(e);
+		notifyAll();
 	}
 	
 		
@@ -307,21 +307,21 @@ public class RecursoCompartido extends Observable{
 			if(indexViajeCliente >= 0 ) {
 				this.viajes.get(indexViajeCliente).setViajePagado(true);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
-				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
+//				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 			}
 			else {
-				System.out.println("viaje no terminado.");
+//				System.out.println("viaje no terminado.");
 				e.setMensaje("viaje no terminado.");
 			}
 		}
 		else {
 			e.setMensaje("no tiene viaje realizado.");
-			System.out.println("no tiene viaje realizado.");
+//			System.out.println("no tiene viaje realizado.");
 		}
 		
-		notifyAll();
 		setChanged();
 		notifyObservers(e);
+		notifyAll();
 	}
 
 	
