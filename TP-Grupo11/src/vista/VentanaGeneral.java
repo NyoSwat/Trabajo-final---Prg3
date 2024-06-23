@@ -23,7 +23,7 @@ public class VentanaGeneral extends JFrame {
     public VentanaGeneral() {
         setTitle("Simulación de Viaje");
         setSize(500, 800);
-        setLocation(1400, MAXIMIZED_VERT);
+        setLocation(1000, MAXIMIZED_VERT);
 
         JLabel titleLabel = new JLabel("Vista General");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);

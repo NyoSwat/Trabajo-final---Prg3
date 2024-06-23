@@ -36,11 +36,10 @@ public class ClienteThread extends MiObservable implements Runnable {
 	 */
 	public void run() {
 		while (this.cantViajes > 0 && rc.getCantClientes() > 0 && rc.getCantChoferes() > 0) { 
-			this.estadoPedido = false;
 			this.rc.validarPedido(this, ran.nextInt(11), generarZona(ran.nextInt(2)), ran.nextBoolean(), ran.nextBoolean(), new GregorianCalendar(), ran.nextInt(70)); // Solicita aceptación del pedido
 			UtilThread.espera(15); // Simula el tiempo de espera del pedido
-			if (this.estadoPedido) {
 				this.rc.pagaViaje(this); // El cliente paga el viaje
+			if (this.estadoPedido) {
 				this.cantViajes--; // Se decrementa la cantidad de viajes restantes
 			}
 		}
@@ -64,7 +63,6 @@ public class ClienteThread extends MiObservable implements Runnable {
 	 * @post Se valida el pedido y se asigna un número de viaje aleatorio.
 	 */
 	public void generarPedido(int cantPasajeros, String zona, boolean baul, boolean mascota, GregorianCalendar fecha) {
-	    // Implementación pendiente
 	    this.rc.validarPedido(this, cantPasajeros, zona, baul, mascota, fecha, ran.nextInt(70));
 	}
 
@@ -73,7 +71,6 @@ public class ClienteThread extends MiObservable implements Runnable {
 	 * Realiza el pago del viaje.
 	 */
 	public void PagarViaje() {
-		// Implementación pendiente
 		this.rc.pagaViaje(this);
 	}
 	
@@ -82,7 +79,6 @@ public class ClienteThread extends MiObservable implements Runnable {
 	 * @return true si el viaje está terminado, false en caso contrario.
 	 */
 	public boolean getViajeTerminado() {
-		// Implementación pendiente
 		return false;
 	}
 
@@ -122,7 +118,7 @@ public class ClienteThread extends MiObservable implements Runnable {
 	public boolean isEstadoPedido() {
 		return estadoPedido;
 	}
-
+	
 	/**
 	 * Establece el estado del pedido (aceptado o no).
 	 * @param estadoPedido true si el pedido ha sido aceptado, false en caso contrario.

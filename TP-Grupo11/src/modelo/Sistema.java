@@ -411,12 +411,30 @@ public class Sistema extends Observable{
      * @param fecha La fecha en la que se solicita el pedido.
      * @return Pedido El nuevo pedido creado con los parámetros dados.
      * @throws IllegalArgumentException Si la cantidad de pasajeros es negativa.
+     * @throws ExistenteVehiculoException Si no hay vehiculo que satisfaga el pedido
      */
     public Pedido crearPedido(int cantPasajeros,String zona,boolean baul,boolean mascota,GregorianCalendar fecha) 
-    		throws IllegalArgumentException 
+    		throws IllegalArgumentException, 
+    		ExistenteVehiculoException 
     {
+    	boolean hayVehiculo = false;
+    	int i = 0;
+    	
+    	while(i < this.vehiculos.size() && !hayVehiculo) {
+    		if(vehiculos.get(i).getCantMaxPasajeros() >= cantPasajeros 
+    				&& !(baul==true && vehiculos.get(i).isBaul()==false) 
+    				&& !(mascota==true && vehiculos.get(i).isPetFriendly()==false) )
+    			hayVehiculo = true;
+    		i++;
+    	}
+    	
+    	
     	if(cantPasajeros < 0)
     		throw new IllegalArgumentException("Cantidad de pasajeros invalida.");
+    	
+    	if(!hayVehiculo)
+    		throw new ExistenteVehiculoException("No hay vehiculo apto para este viaje.");
+    	
     	return new Pedido(cantPasajeros,zona,baul,mascota,new GregorianCalendar());
     		
     }

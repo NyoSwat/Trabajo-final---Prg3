@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 
+import excepciones.ExistenteVehiculoException;
 import modelo.Chofer;
 import modelo.Cliente;
 import modelo.IViaje;
@@ -27,7 +28,6 @@ public class RecursoCompartido extends Observable{
 	/**
 	 * Constructor para crear un recurso compartido que maneja los choferes y los viajes.
 	 * Inicializa el sistema con la lista de choferes y establece la cantidad de clientes humanos y choferes.
-	 *
 	 * @param sistema El sistema que contiene la lista de choferes y gestiona los viajes.
 	 * @param cantClientes La cantidad inicial de clientes humanos (ventanas).
 	 */
@@ -45,7 +45,6 @@ public class RecursoCompartido extends Observable{
 	 * Valida y procesa un pedido de un cliente. Si hay choferes disponibles y el pedido cumple con las condiciones,
 	 * se genera un pedido válido y se solicita un viaje. Si no se cumplen las condiciones o no hay choferes,
 	 * se notifica que el pedido es inválido o que no hay choferes disponibles.
-	 *
 	 * @param cliente El hilo del cliente que realiza el pedido.
 	 * @param cantPasajeros La cantidad de pasajeros para el viaje.
 	 * @param zona La zona donde se solicita el viaje.
@@ -59,31 +58,40 @@ public class RecursoCompartido extends Observable{
    	   	Pedido pedido = null;
    	   	e.setCliente((Cliente)cliente.getCliente());
    	   	
-   	   	if(cantChoferes > 0){  
-   	   		try {
-   	   			pedido = this.sistema.crearPedido(cantPasajeros,zona,baul,mascota,new GregorianCalendar());
-   	   			e.setMensaje("genero un pedido valido.");
-//   	   			System.out.println(cliente.getCliente().getNombre()+" genero un pedido valido");
-   	   			cliente.setEstadoPedido(true);
-   	   			this.solicitaViaje(cliente,pedido,distancia);
+   	   	if(!cliente.isEstadoPedido()) {
+	   	   	if(cantChoferes > 0){  
+	   	   		try {
+	   	   			pedido = this.sistema.crearPedido(cantPasajeros,zona,baul,mascota,new GregorianCalendar());
+	   	   			e.setMensaje("genero un pedido valido.");
+	   	   			cliente.setEstadoPedido(true);
+		   	   		setChanged();
+		   	   		notifyObservers(e);
+		   	   		this.solicitaViaje(cliente,pedido,distancia);
+	   	   		}
+	   	   		catch(IllegalArgumentException error) {
+	   	   			e.setMensaje(error.getMessage());
+		   	   		setChanged();
+		   	   		notifyObservers(e);
+	   	   		}
+	   	   		catch(ExistenteVehiculoException error) {
+	   	   			e.setMensaje(error.getMessage());
+	   	   			setChanged();
+	   	   			notifyObservers(e);
+	   	   		}
+	   	   	}
+	   	   	else {
+	   	   		e.setMensaje("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
 	   	   		setChanged();
 	   	   		notifyObservers(e);
-   	   		}
-   	   		catch(IllegalArgumentException error) {
-   	   			e.setMensaje("ha realizado un pedido invalido.");
-//   	   			System.out.println(cliente.getCliente().getNombre()+" ha generado un pedido invalido");
-	   	   		setChanged();
-	   	   		notifyObservers(e);
-	   	   
-   	   		}
-   	   	}
+	   	   	}
+	   	}
    	   	else {
-   	   		e.setMensaje("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
-//   	   		System.out.println("No se pueden generar mas pedidos. No hay mas choferes disponibles.");
+   	   		e.setMensaje("ya tiene pedido realizado.");
    	   		setChanged();
    	   		notifyObservers(e);
    	   	}
-    }
+   	   		
+	}
 
 	//clienteThread solicita Viaje sobre pedido aceptado
 	public synchronized void solicitaViaje(ClienteThread cliente,Pedido pedido,int distancia){  
@@ -104,11 +112,9 @@ public class RecursoCompartido extends Observable{
 		//Guardo el viaje 
 			this.viajes.add(viaje);
 			e.setMensaje("solicito un viaje y fue aceptado");
-//			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue aceptado.");
 		}
 		else {
 			e.setMensaje(" solicito un viaje y fue rechazado por falta de chofer.");
-//			System.out.println(cliente.getCliente().getNombre()+" solicito un viaje y fue rechazado por falta de chofer.");
 		}
 		setChanged();
 		notifyObservers(e);
@@ -132,14 +138,10 @@ public class RecursoCompartido extends Observable{
 			if(!vehiculos.isEmpty()) {
 				viaje = this.viajes.get(indexViajeSinVehiculo);
 				this.sistema.asignarVehiculo(vehiculos,viaje);
-				//msj de que se le asigno un vehiculo
-//				System.out.println("Se le asigno vehiculo.");
 				e.setCliente((Cliente)viaje.getCliente());
 				e.setMensaje(" se le asigno vehiculo.");
 			}
 			else {
-				//msj de que no hay vehiculos disp
-//				System.out.println("No hay vehiculo disponible para este viaje.");
 				e.setMensaje("No hay vehiculos disponible para el viaje.");
 			}
 			setChanged();
@@ -191,7 +193,6 @@ public class RecursoCompartido extends Observable{
     		viaje.setChofer(chofer.getChofer());
     		viaje.setViajeIniciado(true);
     		choferesDisp.remove(chofer.getChofer());
-//    		System.out.println(chofer.getChofer().getNombre()+" tomo un viaje.");
     		e.setMensaje("tomo el viaje de "+viaje.getCliente().getNombre());
     	}
     	else {
@@ -247,7 +248,6 @@ public class RecursoCompartido extends Observable{
 			this.viajes.remove(viaje);
 			choferesDisp.add(chofer.getChofer());
 			SistemaThread.addVehiculo(viaje.getVehiculo()); //agrega el vehiculo que se uso
-//			System.out.println(chofer.getChofer().getNombre()+" finalizo su viaje.");
 			e.setMensaje("finalizo su viaje.");
 		}
 		setChanged();
@@ -306,17 +306,15 @@ public class RecursoCompartido extends Observable{
 			}
 			if(indexViajeCliente >= 0 ) {
 				this.viajes.get(indexViajeCliente).setViajePagado(true);
+				cliente.setEstadoPedido(false);
 				e.setMensaje("le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
-//				System.out.println(cliente.getCliente().getNombre()+" le paga el viaje al chofer "+this.viajes.get(indexViajeCliente).getChofer().getNombre());
 			}
 			else {
-//				System.out.println("viaje no terminado.");
 				e.setMensaje("viaje no terminado.");
 			}
 		}
 		else {
 			e.setMensaje("no tiene viaje realizado.");
-//			System.out.println("no tiene viaje realizado.");
 		}
 		
 		setChanged();

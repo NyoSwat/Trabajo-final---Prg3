@@ -10,11 +10,14 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 
-public class VentanaLogin extends JFrame {
+public class VentanaLogin extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private static final int start_y = 50;
@@ -59,6 +62,8 @@ public class VentanaLogin extends JFrame {
 		this.panel.add(usuarioLabel);
 		
 		this.usuarioField = new JTextField();
+		this.usuarioField.addKeyListener(this);
+		this.usuarioField.setActionCommand("Ingresar");
 		this.usuarioField.setBounds(128, 70, 150, 25);
 		this.panel.add(usuarioField);
 		
@@ -68,6 +73,8 @@ public class VentanaLogin extends JFrame {
 		this.panel.add(passwordLabel);
 		
 		this.passwordField = new JTextField();
+		this.passwordField.addKeyListener(this);
+		this.passwordField.setActionCommand("Ingresar");
 		this.passwordField.setBounds(128, 110, 150, 25);
 		this.panel.add(passwordField);
 		
@@ -99,6 +106,8 @@ public class VentanaLogin extends JFrame {
 	public void setControlador(ControladorLogin control) {
 	    this.ingresarBtn.addActionListener(control); // Añade el controlador al botón ingresar
 	    this.registerBtn.addActionListener(control); // Añade el controlador al botón registrar
+	    this.usuarioField.addActionListener(control);
+	    this.passwordField.addActionListener(control);
 	}
 
 	/**
@@ -115,6 +124,24 @@ public class VentanaLogin extends JFrame {
 	 */
 	public String getPassword() {
 	    return this.passwordField.getText(); // Devuelve el texto del campo passwordField
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
